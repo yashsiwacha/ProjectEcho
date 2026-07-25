@@ -1,0 +1,36 @@
+# Java
+target/
+*.class
+
+# Maven
+.mvn/
+
+# IntelliJ
+.idea/
+
+# VS Code
+.vscode/settings.json
+
+# macOS
+.DS_Store
+
+# Logs
+*.log
+
+# Environment
+.env
+.env.*
+
+# Docker
+data/
+
+# Build
+build/
+out/
+
+# Node
+node_modules/
+
+# Terraform
+*.tfstate
+.terraform/
