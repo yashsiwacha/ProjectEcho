@@ -20,7 +20,7 @@ Redis
 
 Build
 
-Gradle
+Maven (multi-module, parent pom.xml + 7 module POMs)
 
 Containers
 

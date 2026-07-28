@@ -10,7 +10,7 @@ Architecture
 
 Backend
 
-[ ] Gradle Scaffold
+[ ] Maven build consolidation (see DAR-0001 F-05, F-09)
 
 [ ] Auth Module
 

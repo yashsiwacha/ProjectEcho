@@ -1,4 +1,25 @@
-## Project Manifest — ProjectEcho
+# Project Manifest — ProjectEcho
+
+**Document ID:** NAV-0001
+**Document Type:** Navigation Document
+**Status:** Active
+**Version:** 1.1
+**Classification:** Internal
+**Owner:** Documentation & Architecture Engineering
+**Date:** 2026-07-28
+**Review Cadence:** On every change to the governance corpus
+
+> **Open conflict — read before relying on this document.** This manifest's
+> "Documentation Hierarchy" below ranks itself above ADRs, while
+> [Documentation Standard §4](docs/reference/standards/DOCUMENTATION_STANDARD.md)
+> ranks it below them. The disagreement is unresolved and awaits a founder
+> decision — see [CR-014](docs/reports/engineering/CONFLICT_REGISTER.md#cr-014).
+> Until it is settled, treat the vision and philosophy statements here as
+> *uncited* rather than as governing.
+>
+> Repository-wide open conflicts: [Conflict Register](docs/reports/engineering/CONFLICT_REGISTER.md).
+
+---
 
 Executive Summary
 
@@ -41,12 +62,17 @@ Technology Stack
 - Java 21
 - Spring Boot 3
 - Spring AI
-- Gradle / Maven modules (backend uses Maven)
+- Maven (multi-module; no Gradle build exists, and no Maven wrapper — see DAR-0001 F-09, F-17)
 - PostgreSQL, Redis
 - Flyway
 - Docker Compose
 - OrbStack
 - REST, WebSocket, JWT
+
+Stack discrepancies against the repository (do not treat this list as
+verified): Kafka is built and deployed but appears in no approved stack
+list (CR-006); Spring AI is in the approved stack but appears in no POM
+(CR-007). See the Conflict Register.
 
 Documentation Hierarchy
 
@@ -111,36 +137,54 @@ Repository Workflow
 
 Current Project Status
 
-- Phase: Architecture
-- Implementation: Not started (backend scaffolding planned)
+- Phase: Architecture — **blocked.** Four S1/S2 conflicts await founder
+  decisions (CR-001 product identity, CR-002 missing FGM, CR-003 missing
+  CIF, CR-009 EAF/CIF conflicts). See `PROJECT_STATUS.md`.
+- Implementation: **started, contrary to plan.** 7 Maven modules, 15 Java
+  files and a 532-line test class are committed. No module produces a
+  bootable jar, so the repository builds no deployable. Whether this code
+  should exist under ADR-0002 Decision 001 is open — CR-005.
 
 Current Phase
 
 Architecture — EAF and ADRs in progress. See `docs/eaf/` and `docs/adr/`.
+The EAF cannot be ratified while CR-009 is open, so the EAD has no
+ratified parent.
 
 Current Milestones
 
-- ADR-0002 Approved
-- ARBR-0001 Approved
-- EAF Rev 2 drafted
+Statuses below are derived. The authoritative status of any document is
+in that document's own metadata block (Documentation Standard §2).
+
+- ADR-001 — Approved, Frozen
+- ADR-0002 — Approved, Frozen
+- ARBR-0001 — **Proposed for Founder Approval** (not approved; FD-001 to
+  FD-004 unresolved — CR-008)
+- EAF Rev 2 — Draft, unratified
 
 Completed Work
 
 - Repository layout and governance scaffolding
+- ADR-001 (Career Intelligence Framework Foundations)
 - ADR-0002 (Modular Monolith)
-- ARBR-0001
+- ARBR-0001 issued (review complete; approval not recorded)
+- Documentation Standard, DAR-0001 audit, Conflict Register
 
 Pending Work
 
-- EAD (Engineering Architecture Document)
-- Backend scaffold (Maven modules) — not implemented
-- Frontend scaffold
+- FGM and CIF — both absent and both blocking (CR-002, CR-003)
+- EAD (Engineering Architecture Document) — blocked
+- Backend: 7 Maven modules exist but produce no deployable; disposition
+  under ADR-0002 is undecided (CR-005)
+- Frontend scaffold — `frontend/` is empty
 - AI Gateway and Rule Engine design
 
 Roadmap (high level)
 
-- Phase 0 — Repository & Governance (complete)
-- Phase 1 — Architecture (current)
+- Phase 0 — Repository & Governance (**not complete** — the FGM, the
+  governance model this phase was meant to establish, does not exist;
+  CR-002)
+- Phase 1 — Architecture (current, blocked)
 - Phase 2 — Engineering Design
 - Phase 3 — Backend Scaffold
 - Phase 4 — Frontend
@@ -150,17 +194,37 @@ Roadmap (high level)
 
 Known Risks
 
+- The repository documents two mutually exclusive products under one name.
+  This is the single largest risk and blocks the PRD, EAD and EDF (CR-001).
 - Observability remains a documented gap in EAF (see EAF Self-Review).
-- Implementation not started; migration risk if code is written before EAD.
+- Code was written before the EAD, which is the migration risk this list
+  previously described as hypothetical. It has occurred (CR-005).
+- Two Frozen ADRs cite documents that do not exist — the FGM, the CIF, and
+  Product Impact Report 001 (CR-002, CR-003, CR-011). Freeze semantics and
+  amendment procedure are therefore undefined.
 - Single-VPS deployment may require re-evaluation for scale.
 
 Important Documents
 
-- docs/eaf/EAF-v1.0-revision-2.md
-- docs/adr/ADR-0002-modular-monolith-foundational-architecture.md
-- docs/ENGINEERING_GUIDE.md
-- docs/PROJECT_VISION.md
-- .ai/context/* (roadmap, decisions, changelog)
+- [Documentation Index](docs/INDEX.md)
+- [Project Status](PROJECT_STATUS.md)
+- [Conflict Register](docs/reports/engineering/CONFLICT_REGISTER.md)
+- [DAR-0001 — Documentation & Repository Audit](docs/reports/engineering/DAR-0001-documentation-audit.md)
+- [Documentation Standard](docs/reference/standards/DOCUMENTATION_STANDARD.md)
+- [ADR-001 — Career Intelligence Framework Foundations](docs/adr/ADR-001-career-intelligence-framework-foundations.md)
+- [ADR-0002 — Modular Monolith](docs/adr/ADR-0002-modular-monolith-foundational-architecture.md)
+- [ARBR-0001](docs/arbr/ARBR-0001.md)
+- [EAF v1.0 Revision 2](docs/eaf/EAF-v1.0-revision-2.md)
+- `.ai/context/*` (roadmap, decisions, changelog)
+
+The following describe the event-delivery product and are subject to
+CR-001 — do not treat them as current until product identity is settled:
+[docs/ENGINEERING_GUIDE.md](docs/ENGINEERING_GUIDE.md),
+[docs/PROJECT_VISION.md](docs/PROJECT_VISION.md),
+`docs/archive/architecture/*`.
+
+Framework documents that do not yet exist: **FGM**, **CIF**, **EAD**,
+**EDF**, **PRD**, **RAR**, **GAR** — *Not yet available.*
 
 Repository Standards
 

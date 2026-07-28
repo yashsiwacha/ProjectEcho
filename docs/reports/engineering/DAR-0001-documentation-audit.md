@@ -3,12 +3,19 @@
 **Document ID:** DAR-0001
 **Document Type:** Documentation Audit Report (advisory, non-governing)
 **Status:** Active
-**Version:** 1.0
+**Version:** 1.1
 **Classification:** Internal
 **Owner:** Documentation & Architecture Engineering
-**Date:** 2026-07-27
+**Date:** 2026-07-28
 **Review Cadence:** Re-run on every material change to the governance corpus
 **Governed By:** Framework Governance Model (FGM) — *Not yet available*
+
+**Revision history**
+
+| Version | Date | Change |
+|---|---|---|
+| 1.0 | 2026-07-27 | Initial audit, F-01 to F-16. |
+| 1.1 | 2026-07-28 | Corrected v1.0's own remediation reporting (see [Errata](#errata)). F-14 withdrawn as factually wrong. F-16 closed. F-17 added. Open conflicts migrated to the [Conflict Register](CONFLICT_REGISTER.md). |
 
 ---
 
@@ -64,15 +71,47 @@ Every Markdown document in the repository, plus the build files, container defin
 | [F-05](#f-05) | Backend implementation contradicts ADR-0002 Decision 001 | **S2** | Founder Decision + ADR |
 | [F-06](#f-06) | Kafka is deployed and built but is not in the frozen stack | **S2** | Founder Decision |
 | [F-07](#f-07) | ARBR-0001 status reported as Approved; document says Proposed | **S3** | Founders (record the approval) |
-| [F-08](#f-08) | "Implementation not started" is false | **S3** | Documentation (corrected — see §Actions) |
-| [F-09](#f-09) | Build tool reported as Gradle in three places; repository uses Maven | **S3** | Documentation (corrected) |
+| [F-08](#f-08) | "Implementation not started" is false | **S3** | Documentation — *partly corrected, see [Errata](#errata)* |
+| [F-09](#f-09) | Build tool reported as Gradle in three places; repository uses Maven | **S3** | Documentation — *partly corrected, see [Errata](#errata)* |
 | [F-10](#f-10) | ADR identifier scheme is inconsistent; ADR-0001 deleted while cited | **S3** | Governance decision on renumbering |
 | [F-11](#f-11) | Product Impact Report 001 cited by ADR-0002 but absent | **S3** | Locate or re-issue |
 | [F-12](#f-12) | Four EAF/CIF conflicts declared open and unowned | **S2** | Founder Decision |
 | [F-13](#f-13) | 60+ referenced or structurally implied documents are empty or absent | **S4/S1 mixed** | Mixed — see finding |
-| [F-14](#f-14) | Build output committed to version control | **S4** | Engineering |
-| [F-15](#f-15) | No CI, no PR template, no contribution process, despite being referenced | **S4** | Documentation (partly corrected) |
-| [F-16](#f-16) | Governance corpus is untracked in git | **S2** | Engineering — commit immediately |
+| [F-14](#f-14) | ~~Build output committed to version control~~ **WITHDRAWN — claim was false** | — | — |
+| [F-15](#f-15) | No CI, no PR template, no contribution process, despite being referenced | **S4** | Documentation — *not yet corrected, see [Errata](#errata)* |
+| [F-16](#f-16) | Governance corpus is untracked in git | **S2** | Engineering — **RESOLVED** in commit `b79ec82` |
+| [F-17](#f-17) | No Maven wrapper, and `.gitignore` would exclude one | **S4** | Engineering |
+
+---
+
+## Errata — corrections to version 1.0 of this report {#errata}
+
+Version 1.0 of this report described remediation in the past tense that had not been performed. This section records that defect, because an audit that misreports its own remediation status is itself a documentation defect, and correcting it silently would repeat the failure it is meant to catch.
+
+**Cause** `[FACT]` — v1.0 was written describing the intended end state of the remediation workstream. The workstream was interrupted before the file changes landed. The report was committed; the changes were not.
+
+**What v1.0 claimed and what was true on 2026-07-28:**
+
+| v1.0 claim | Actual state | Now |
+|---|---|---|
+| F-13: `docs/INDEX.md` "→ **created**" | 0 bytes | Pending — see task list |
+| F-13: `docs/templates/*` (7) "→ **created**" | **Correct** — all 7 exist and are populated | Verified |
+| F-13: `CONTRIBUTING.md` "→ **created**" | 0 bytes | Pending |
+| F-13: `docs/README.md` "→ **created**" | 0 bytes | Pending |
+| F-13: `.ai/employees/*` (8) "→ **created**" | 0 bytes, except `REVIEW_PROTOCOL.md` | Pending |
+| F-13: `.ai/prompts/*` (9) "→ **created**" | 0 bytes | Pending |
+| F-13: `.ai/knowledge/*` (4) "→ **created**" | 0 bytes | Pending |
+| F-13: `.ai/templates/*` (4) "→ **created**" | 0 bytes | Pending |
+| F-13: `PROJECT_PLAN.md`, `PROJECT_STATUS.md` "→ **created**" | Absent | Pending |
+| F-08: "Corrected by this workstream" | `.ai` files were **not** corrected | `.ai` corrected 2026-07-28; manifest/README pending |
+| F-09: "Corrected… across the `.ai` workspace and the manifest" | Neither was corrected | `.ai` corrected 2026-07-28; manifest pending |
+| F-15: "have been created from the process already described" | Both 0 bytes | Pending |
+| F-14: "roughly 120 tracked files of build output" | **False.** `git ls-files` matches 0 paths under `target/` | Finding withdrawn |
+| F-16: corpus untracked | Was true at v1.0 | **Resolved** — commit `b79ec82` |
+
+**Rule adopted as a result.** A finding in this report may be marked corrected only when the correcting change is on disk. Intended corrections are recorded as pending, never in the past tense.
+
+**Reporting split.** Point-in-time findings stay here. Conflicts that remain open until an authority closes them now live in the [Conflict Register](CONFLICT_REGISTER.md), so an interrupted workstream cannot lose them again.
 
 ---
 
@@ -332,9 +371,17 @@ Every AI assistant and every new engineer is told by three separate documents th
 
 **Recommendation**
 
-Corrected by this workstream — the navigation documents now describe the actual state. Note the *governance* question of whether that code should exist under `ADR-0002` remains open as [F-05](#f-05); this finding concerns only the accuracy of the reporting.
+The navigation documents must describe the actual state. Note the *governance* question of whether that code should exist under `ADR-0002` remains open as [F-05](#f-05) / [CR-005](CONFLICT_REGISTER.md#cr-005); this finding concerns only the accuracy of the reporting.
 
-**Resolution Authority:** Documentation. **Corrected.**
+**Status:** Partly corrected.
+
+- `.ai/context/IMPLEMENTATION_STATUS.md` — corrected 2026-07-28 to "Scaffolded (7 Maven modules committed; no deployable produced)".
+- `.ai/context/CURRENT_STATE.md` — corrected 2026-07-28.
+- `README.md`, `PROJECT_MANIFEST.md` — **pending.**
+
+**Measured state** `[FACT]`, 2026-07-28: 7 Maven modules; 15 Java files (14 in `backend/common/.../exception/` plus a 532-line `ExceptionTest.java`); no other module contains source.
+
+**Resolution Authority:** Documentation.
 
 ---
 
@@ -348,9 +395,16 @@ Corrected by this workstream — the navigation documents now describe the actua
 
 The repository is Maven-only. No Gradle build file and no `gradlew` wrapper exist. The documented validation command cannot execute.
 
-**Recommendation** Corrected by this workstream across the `.ai` workspace and the manifest.
+**Recommendation** Correct every reference to Maven.
 
-**Resolution Authority:** Documentation. **Corrected.**
+**Status:** Partly corrected.
+
+- `.ai/context/TECH_STACK.md` — "Build: Gradle" → Maven, 2026-07-28.
+- `.ai/context/TODO.md` — "Gradle Scaffold" → "Maven build consolidation", 2026-07-28.
+- `.ai/core/COMMANDS.md` — `./gradlew test` → `mvn -f backend/pom.xml test`, 2026-07-28.
+- `PROJECT_MANIFEST.md:44` "Gradle / Maven modules" — **pending.**
+
+**Resolution Authority:** Documentation.
 
 ---
 
@@ -453,17 +507,26 @@ Created: navigation documents, templates, standards, AI workspace, contribution 
 
 ---
 
-### F-14 — Build output is committed to version control {#f-14}
+### F-14 — WITHDRAWN — "Build output is committed to version control" {#f-14}
 
-**Severity:** S4 — Hygiene
+**Severity:** Withdrawn. This finding was factually wrong.
 
-**Observation** `[FACT]` `backend/*/target/` is committed, including `.jar` files, `.class` files, Surefire XML reports, and Maven status files — roughly 120 tracked files of build output. `.github/modernize/java-upgrade/` contains tooling exhaust from a VS Code Java-upgrade agent, including logs probing for Java 25 against a repository pinned to Java 21.
+**What v1.0 asserted.** That `backend/*/target/` was committed — "roughly 120 tracked files of build output" — and that `.github/modernize/java-upgrade/` tooling exhaust was tracked.
 
-**Impact** Build output in history inflates the repository, produces meaningless diffs, and — as here — creates the misleading impression that more has been implemented than has been. It also makes `git status` unreliable as a signal of real change.
+**Why it is wrong** `[FACT]`, verified 2026-07-28:
 
-**Recommendation** Add `target/` and `.github/modernize/` to `.gitignore` and remove them from tracking. This is an engineering change to tracked files rather than a documentation change, so this audit records it rather than performing it.
+- `git ls-files | grep -c 'target/'` → `0`. No build output is tracked.
+- `git check-ignore -v backend/common/target/classes` → `.gitignore:2:target/`. Build output was already ignored.
+- `git ls-files | grep modernize` → no matches. `.github/modernize/java-upgrade/.gitignore` contains `**/*`, which ignores the entire subtree.
+- 88 files are tracked under `backend/`, all of them POMs and Java sources.
 
-**Resolution Authority:** Engineering.
+The 165 `target/` files and the modernize logs exist **on disk** but are untracked and correctly ignored. v1.0 appears to have inferred tracking from directory listings rather than from `git ls-files`.
+
+**Consequence for other findings.** [F-08](#f-08) cited "built `.jar` artifacts — all committed" as evidence that implementation had started. That specific sub-claim is withdrawn. F-08 nonetheless **stands**, on the surviving evidence: 7 committed module POMs, 15 committed Java files, and a committed 532-line test class. The conclusion is unchanged; one of its supporting facts was wrong.
+
+**Lesson recorded.** Tracking status is established with `git ls-files` or `git check-ignore`, never from a filesystem listing.
+
+**Resolution Authority:** None required.
 
 ---
 
@@ -475,9 +538,11 @@ Created: navigation documents, templates, standards, AI workspace, contribution 
 
 `PROJECT_MANIFEST.md:99` requires "PR with templates and review per repository policy" — a policy with no artifact.
 
-**Recommendation** `CONTRIBUTING.md` and the PR template have been created from the process already described in `REVIEW_PROTOCOL.md` and the manifest, introducing no new policy. CI workflows are deliberately not created — CI design is an EAD-level concern.
+**Recommendation** Create `CONTRIBUTING.md` and the PR template from the process already described in `REVIEW_PROTOCOL.md` and the manifest, introducing no new policy. CI workflows are deliberately **not** created — CI design is an EAD-level concern, and the EAD is blocked by [CR-002](CONFLICT_REGISTER.md#cr-002) and [CR-009](CONFLICT_REGISTER.md#cr-009).
 
-**Resolution Authority:** Documentation (partly corrected); Engineering for CI.
+**Status:** Not yet corrected. Both files remain 0 bytes as of 2026-07-28.
+
+**Resolution Authority:** Documentation for the contribution process; Engineering for CI.
 
 ---
 
@@ -493,7 +558,27 @@ Both Frozen ADRs, the manifest, and the EAF exist only in the working tree. They
 
 **Recommendation** Commit immediately, ahead of any other work in this repository. Consider signed commits or tags for documents entering the Frozen stage, so freezing has a verifiable meaning.
 
-**Resolution Authority:** Engineering — immediate.
+**Status: RESOLVED** `[FACT]`, verified 2026-07-28. Commit `b79ec82` tracks `PROJECT_MANIFEST.md`, both ADRs, and `docs/eaf/EAF-v1.0-revision-2.md`. `git ls-files docs/adr/` returns both ADRs with non-zero blobs (32,111 and 49,036 bytes). The working tree is otherwise clean.
+
+**Residual, not resolved:** the recommendation to make freezing verifiable via signed commits or tags has **not** been actioned. No tag marks either Frozen ADR. Nothing currently distinguishes approved text from a later edit — the integrity gap this finding raised is narrowed, not closed.
+
+**Resolution Authority:** Engineering — for the residual signing/tagging question.
+
+---
+
+### F-17 — No Maven wrapper, and `.gitignore` would exclude one {#f-17}
+
+**Severity:** S4 — Hygiene
+
+**Observation** `[FACT]`, 2026-07-28. The repository has no Maven wrapper: no `mvnw`, no `mvnw.cmd`, no `.mvn/` directory, at either repository root or `backend/`. Separately, `.gitignore` line 6 ignores `.mvn/`.
+
+**Impact** Every contributor and CI runner must supply its own Maven, and nothing pins the Maven version, so builds are not reproducible across machines. The `.gitignore` entry means that adding a wrapper in the usual way (`mvn wrapper:wrapper`) would produce a `.mvn/wrapper/` directory that is silently ignored — the wrapper would appear to work locally and be missing for everyone else.
+
+This is the same class of defect as [F-09](#f-09): the documented validation command could not be executed as written. `.ai/core/COMMANDS.md` now specifies `mvn -f backend/pom.xml test` and notes the wrapper's absence.
+
+**Recommendation** Either add a wrapper and amend `.gitignore` to `!.mvn/wrapper/`, or record deliberately that contributors supply their own Maven and state the required version. `[INFERENCE]` — the wrapper is the conventional choice, but pinning a build toolchain is an engineering decision, not a documentation one.
+
+**Resolution Authority:** Engineering.
 
 ---
 
