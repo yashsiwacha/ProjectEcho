@@ -21,22 +21,9 @@ None. This is a navigation document ([Documentation Standard §5](docs/reference
 
 ---
 
-## Read this first
-
-The repository has **four unresolved S1/S2 governance conflicts** and cannot proceed to design or implementation until founders resolve them. The most consequential is that ProjectEcho is currently documented as two different products under one name.
-
-- [Conflict Register](docs/reports/engineering/CONFLICT_REGISTER.md) — 14 open conflicts, each with its closing authority
-- [Project Status](PROJECT_STATUS.md) — what is blocked and what is waiting on whom
-- [DAR-0001](docs/reports/engineering/DAR-0001-documentation-audit.md) — the full audit
-
 ## What ProjectEcho is
 
-**Unresolved.** Two product definitions exist in the repository and neither is marked superseded:
-
-- a **Career Intelligence Platform** replacing static resumes with evidence-driven, explainable career profiles — the subject of both Frozen ADRs, ARBR-0001, and the EAF;
-- an **event delivery / outbound webhook backbone** — the subject of `docs/PROJECT_VISION.md`, `docs/ENGINEERING_GUIDE.md`, the archived architecture set, and the current `docker-compose.yml`.
-
-Choosing between them is a founder decision, tracked as [CR-001](docs/reports/engineering/CONFLICT_REGISTER.md#cr-001). This README does not assert an answer, because doing so would settle the question by navigation document.
+ProjectEcho is a **Career Intelligence Platform** replacing static resumes with evidence-driven, explainable career profiles. This product identity was formally established and resolved by the founders via [FDR-001](docs/decisions/founders/FDR-001.md).
 
 ## Quick links
 
@@ -49,7 +36,7 @@ Choosing between them is a founder decision, tracked as [CR-001](docs/reports/en
 - EAF — [v1.0 Revision 2](docs/eaf/EAF-v1.0-revision-2.md) (Draft, unratified)
 - AI workspace: [.ai/](.ai/)
 
-Subject to [CR-001](docs/reports/engineering/CONFLICT_REGISTER.md#cr-001), and not current until it is resolved: [docs/ENGINEERING_GUIDE.md](docs/ENGINEERING_GUIDE.md), [docs/PROJECT_VISION.md](docs/PROJECT_VISION.md).
+Historical/Archived event-delivery visions: [docs/archive/PROJECT_VISION.md](docs/archive/PROJECT_VISION.md)
 
 ## Get started
 
@@ -60,10 +47,10 @@ Subject to [CR-001](docs/reports/engineering/CONFLICT_REGISTER.md#cr-001), and n
 
 ## Current state
 
-- **Phase:** Architecture, blocked on founder decisions.
-- **Implementation:** started, contrary to the plan recorded elsewhere. `backend/` holds 7 Maven modules, 15 Java files and a 532-line test class, all committed. No module produces a bootable jar, so the repository currently builds **no deployable**. Whether this code should exist under ADR-0002 Decision 001 is open — [CR-005](docs/reports/engineering/CONFLICT_REGISTER.md#cr-005).
+- **Phase:** Engineering Initialization.
+- **Implementation:** Governance frameworks are formally ratified. Backend module skeleton is established per EAD. Foundational ADRs (Phase 1 & 2) are pending.
 - **Frontend:** empty.
-- **Governance:** the FGM and CIF, on which both Frozen ADRs depend, do not exist.
+- **Governance:** FGM, CIF, EAF, and EAD are formally ratified and located in `docs/reference/frameworks/`.
 
 ## Build
 

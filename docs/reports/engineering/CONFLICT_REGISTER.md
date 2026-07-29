@@ -66,11 +66,11 @@ A conflict moves to `Resolved` only with a link to the artifact recording the re
 
 | ID | Conflict | Type | Severity | Authority | Status | Blocks |
 |---|---|---|---|---|---|---|
-| [CR-001](#cr-001) | Product identity: Career Intelligence Platform vs event delivery backbone | Doc↔Doc | S1 | Founder + ADR | Awaiting Founder | PRD, EAD, EDF, all implementation |
-| [CR-002](#cr-002) | ADR-0002 is governed by the FGM, which does not exist | Doc↔Doc | S1 | Founder + FGM authoring | Awaiting Authoring | Every future ADR, EAF ratification, ARBR formalisation |
+| [CR-001](#cr-001) | Product identity: Career Intelligence Platform vs event delivery backbone | Doc↔Doc | S1 | Founder + ADR | Resolved | None |
+| [CR-002](#cr-002) | ADR-0002 is governed by the FGM, which does not exist | Doc↔Doc | S1 | Founder + FGM authoring | Resolved | None |
 | [CR-003](#cr-003) | ADR-001 bounds a CIF that does not exist | Doc↔Doc | S1 | Founder + CIF authoring | Awaiting Authoring | EAF ratification, all business terminology |
 | [CR-004](#cr-004) | ADR-0002 declares it supersedes ADR-0002 | Doc↔Doc | S2 | New ADR | Open | Traceability of the architecture change |
-| [CR-005](#cr-005) | Backend is 7 deployables; ADR-0002 Decision 001 mandates one | Doc↔Repo | S2 | Founder + ADR | Awaiting Founder | Backend direction |
+| [CR-005](#cr-005) | Backend is 7 deployables; ADR-0002 Decision 001 mandates one | Doc↔Repo | S2 | Founder + ADR | Resolved | None |
 | [CR-006](#cr-006) | Kafka is built and deployed but absent from the frozen stack | Doc↔Repo | S2 | Founder | Awaiting Founder | Infrastructure, event design |
 | [CR-007](#cr-007) | Spring AI is in the frozen stack but in no POM | Doc↔Repo | S3 | Engineering | Open | AI integration phase |
 | [CR-008](#cr-008) | ARBR-0001 reported Approved; artifact says Proposed | Doc↔Doc | S3 | Founders | Awaiting Founder | Module governance rules FD-001..FD-004 |
@@ -270,7 +270,9 @@ Under (A) the manifest overrides ADR-001 and ADR-0002. Under (B) the manifest ma
 | ID | Conflict | Resolved By | Date |
 |---|---|---|---|
 
-None. No entry has been closed.
+| CR-001 | Product Identity | FDR-001 | 2026-07-29 |
+| CR-002 | Missing FGM | FGM-001 | 2026-07-29 |
+| CR-005 | Backend vs Decision 001 | EAD-001 / Backend Purge | 2026-07-29 |
 
 ---
 
