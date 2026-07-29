@@ -20,13 +20,13 @@
     <description>Parent build for the ProjectEcho backend services.</description>
 
     <modules>
-        <module>common</module>
-        <module>gateway</module>
-        <module>auth</module>
-        <module>user</module>
-        <module>notification</module>
-        <module>workflow</module>
-        <module>memory</module>
+        <module>echo-common</module>
+        <module>echo-identity</module>
+        <module>echo-passport</module>
+        <module>echo-competency</module>
+        <module>echo-evidence</module>
+        <module>echo-intelligence</module>
+        <module>echo-bootstrap</module>
     </modules>
 
     <properties>
