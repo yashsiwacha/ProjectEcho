@@ -42,7 +42,7 @@ This standard derives its conventions from the structures already used by [ADR-0
 
 - [Documentation Index](../../INDEX.md)
 - [Documentation Audit — DAR-0001](../../reports/engineering/DAR-0001-documentation-audit.md)
-- [Writing Style](../../../.ai/core/STYLE_GUIDE.md)
+- [Writing Style](../../../.ai/archive/core/STYLE_GUIDE.md)
 
 ---
 
@@ -61,7 +61,7 @@ The bold key/value form is used rather than YAML front matter because it is the 
 | **Status** | Lifecycle stage. See §2. |
 | **Version** | Semantic version of the document, not of the system. |
 | **Classification** | `Public`, `Internal`, or `Restricted`. |
-| **Owner** | The accountable role, not a person's name. Roles are defined in [`.ai/employees/`](../../../.ai/employees/). |
+| **Owner** | The accountable role, not a person's name. Roles are defined in [`.ai/archive/employees/`](../../../.ai/archive/employees/). |
 | **Date** | ISO-8601 date of the current version. |
 | **Review Cadence** | When this document must be re-examined even if nothing changed. |
 
@@ -192,7 +192,7 @@ Documentation work does not resolve governance conflicts. When a conflict, contr
 2. State, for each finding: **Observation**, **Evidence** (file and line), **Impact**, **Affected Documents**, **Recommendation**, and **Resolution Authority** — the specific founder decision, ADR, or framework update required.
 3. Change nothing in the conflicting documents beyond adding a link to the finding.
 
-Findings are classified using the evidence tags from the [Review Protocol](../../../.ai/employees/REVIEW_PROTOCOL.md): `[FACT]`, `[OBSERVATION]`, `[INFERENCE]`, `[SPECULATION]`.
+Findings are classified using the evidence tags from the [Review Protocol](../../../.ai/workflows/REVIEW_PROTOCOL.md): `[FACT]`, `[OBSERVATION]`, `[INFERENCE]`, `[SPECULATION]`.
 
 ---
 
@@ -210,7 +210,7 @@ When a document uses a term from either set, it uses it with exactly that meanin
 
 ## 10. Writing Rules
 
-Derived from [`.ai/core/STYLE_GUIDE.md`](../../../.ai/core/STYLE_GUIDE.md):
+Derived from [`.ai/archive/core/STYLE_GUIDE.md`](../../../.ai/archive/core/STYLE_GUIDE.md):
 
 - Precise engineering language. No marketing language.
 - Deterministic statements. State assumptions explicitly.

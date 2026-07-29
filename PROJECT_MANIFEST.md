@@ -104,23 +104,23 @@ Folder Explanations
 
 - `backend/`: multi-module Maven projects; each submodule contains standard `src/main` and `src/test` trees and `pom.xml`.
 - `docs/`: Governance and architecture documents, ADRs, templates, and engineering guides.
-- `.ai/`: AI workspace and project memory for assistants; contains `context`, `employees`, `prompts`, `templates`, `sessions`.
+- `.ai/`: AI workspace and operational memory for assistants; contains `state`, `workflows`, `templates`, `archive`.
 - `infrastructure/`: deployment artifacts (docker, database scripts) and environment configs.
 
 AI Workspace
 
 Location: `.ai/`
 Contains: context, employees, prompts, templates, sessions, agents.
-Purpose: project memory and controlled assistant behavior. See `.ai/context/*` and `.ai/employees/*`.
+Purpose: operational memory and controlled assistant behavior. See `.ai/state/*` and `.ai/workflows/*`.
 
 AI Employees
 
-Predefined roles: Founder, Chief Product Officer, Chief Intelligence Officer, Principal Software Architect, Principal Research Scientist, Software Engineer, Code Reviewer. See `.ai/employees/`.
+See `.ai/workflows/AGENTS.md` for role boundaries and rules.
 
 Development Workflow
 
 1. Read `PROJECT_MANIFEST.md` → `README.md` → `docs/INDEX.md` → relevant ADRs.
-2. Follow Review Protocol in `.ai/employees/REVIEW_PROTOCOL.md` for design changes.
+2. Follow Review Protocol in `.ai/workflows/REVIEW_PROTOCOL.md` for design changes.
 3. Open an ADR/ARBR for decisions that change architecture or governance.
 4. Implement via feature branches; require PR with templates and review per repository policy.
 
@@ -128,7 +128,7 @@ Documentation Workflow
 
 - All significant design changes produce/modify ADRs and ARBRs.
 - Use templates in `docs/templates/` for ADR, ARBR, EAD, EDF, PRD.
-- Update `.ai/context/DECISIONS.md` and `.ai/context/CHANGELOG.md` when a decision is approved.
+- Update the relevant `docs/adr/` document and `PROJECT_STATUS.md` when a decision is approved.
 
 Repository Workflow
 
@@ -215,7 +215,7 @@ Important Documents
 - [ADR-0002 — Modular Monolith](docs/adr/ADR-0002-modular-monolith-foundational-architecture.md)
 - [ARBR-0001](docs/arbr/ARBR-0001.md)
 - [EAF v1.0 Revision 2](docs/eaf/EAF-v1.0-revision-2.md)
-- `.ai/context/*` (roadmap, decisions, changelog)
+- `.ai/state/*` (current task, session, handoff)
 
 The following describe the event-delivery product and are subject to
 CR-001 — do not treat them as current until product identity is settled:
@@ -235,11 +235,11 @@ Repository Standards
 Maintenance Rules
 
 - Archive rather than delete obsolete documents or artifacts.
-- Update `.ai/context/CHANGELOG.md` for major governance events.
+- Update `PROJECT_STATUS.md` for major governance events.
 
 Cross-references
 
-Where referenced documents exist, links point to them in `docs/` and `.ai/context/`.
+Where referenced documents exist, links point to them in `docs/`.
 
 If information is unavailable, this manifest uses the canonical phrase: "Not yet available."
 
@@ -252,6 +252,6 @@ Canonical reading order for AI assistants
 
 Contact
 
-See `.ai/employees/*` for role ownerships and contact metadata.
+See `.ai/workflows/AGENTS.md` for role definitions.
 
 — ProjectEcho Governance Team

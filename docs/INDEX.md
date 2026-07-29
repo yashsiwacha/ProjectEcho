@@ -93,7 +93,7 @@ These describe an **event delivery / webhook backbone**, not the Career Intellig
 
 ## AI workspace
 
-See [`.ai/README.md`](../.ai/README.md) for the workspace map. The [Review Protocol](../.ai/employees/REVIEW_PROTOCOL.md) is binding on all AI work.
+See [`.ai/BOOTSTRAP.md`](../.ai/BOOTSTRAP.md) for the workspace map. The [Review Protocol](../.ai/workflows/REVIEW_PROTOCOL.md) is binding on all AI work.
 
 ## Empty directories
 

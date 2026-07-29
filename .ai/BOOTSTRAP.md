@@ -1,152 +1,114 @@
-# ProjectEcho AI Bootstrap
+# AIOS v2 BOOTSTRAP
 
-## Purpose
+> **Purpose:** Universal entry point for all AI assistants working on ProjectEcho.
 
-This document is the primary entry point for AI assistants working on ProjectEcho.
-
-Its purpose is to help AI assistants quickly understand:
-
-- repository philosophy
-- governance
-- documentation structure
-- engineering workflow
-- implementation expectations
-
-It intentionally does NOT duplicate repository documentation.
-
-Instead, it directs AI assistants toward the authoritative sources.
+This document defines how an AI should approach work in the repository. It does **not** contain project knowledge—it routes AI assistants to the repository's authoritative sources.
 
 ---
 
-# Repository Philosophy
+# Core Principles
 
-ProjectEcho is a governance-first engineering project.
+## 1. Governance First
 
-Documentation drives implementation.
+Architecture, documentation, and approved decisions precede implementation.
 
-Architecture precedes code.
-
-Governance precedes architecture.
-
-Every engineering decision should be:
-
-- Explainable
-- Traceable
-- Versioned
-- Documented
-- Reusable
+Never implement features that contradict approved governance.
 
 ---
 
-# Primary Reading Order
+## 2. Single Source of Truth
 
-Before performing significant work:
+The repository is authoritative.
 
-1. PROJECT_MANIFEST.md
-2. README.md
-3. PROJECT_STATUS.md
-4. docs/INDEX.md
-5. Relevant ADRs
-6. Relevant Architecture Documents
-7. Relevant Engineering Documentation
-8. Source Code
+Never duplicate information contained in:
 
-Only retrieve documents relevant to the current task.
-
----
-
-# Documentation Authority
-
-The repository follows one authoritative source for every concept.
-
-Navigation documents:
-
-- README
-- PROJECT_MANIFEST
-- PROJECT_STATUS
-- INDEX
-
-Governance documents:
-
-- ADR
-- ARBR
-- Standards
-
-Architecture documents:
-
+- `PROJECT_MANIFEST.md`
+- `PROJECT_STATUS.md`
+- ADRs
+- ARBRs
+- FGM
+- CIF
 - EAF
 - EAD
+- Engineering documentation
 
-Implementation documents:
-
-- Engineering Guide
-- Backend documentation
-
-Never duplicate repository knowledge.
-
-Always reference authoritative documentation.
+Reference these documents instead.
 
 ---
 
-# AI Responsibilities
+## 3. AI Workspace Purpose
 
-Always:
+The `.ai/` directory exists solely for operational support.
 
-- Understand existing architecture.
-- Respect governance.
-- Preserve module boundaries.
-- Reuse existing abstractions.
-- Produce maintainable code.
-- Keep documentation synchronized.
+It may contain:
 
-Never:
+- current project state
+- session memory
+- AI handoffs
+- workflow rules
+- review procedures
 
-- Invent architecture.
-- Ignore approved ADRs.
-- Create duplicate documentation.
-- Resolve governance conflicts yourself.
-- Present assumptions as repository facts.
+It must never become a second documentation system.
 
 ---
 
-# Engineering Principles
+# Standard Reading Order
 
-Prefer:
+Unless instructed otherwise, load context in the following order:
 
-- Java 21
-- Spring Boot 3
-- Constructor Injection
-- Clean Architecture
-- Modular Design
-- Explicit Dependencies
-- High Cohesion
-- Low Coupling
+1. `AI_MANIFEST.md`
+2. `.ai/state/CURRENT_STATE.md`
+3. `PROJECT_MANIFEST.md`
+4. `PROJECT_STATUS.md`
+5. Task-specific documentation (ADRs, framework documents, engineering guides, source code)
+
+Do not load additional documentation unless it is required for the current task.
 
 ---
 
-# Development Workflow
+# Context Escalation Policy
 
-Understand
+Always begin with the minimum required context.
 
-↓
+Only load additional documentation when:
 
-Plan
+- architectural decisions are required
+- repository guidance is insufficient
+- implementation depends on an approved ADR or framework
 
-↓
+Avoid reading entire directories when a single document is sufficient.
 
-Implement
+---
 
-↓
+# AI Operating Rules
 
-Verify
+Every AI assistant must:
 
-↓
+- Preserve repository integrity.
+- Prefer references over duplication.
+- Archive before deleting.
+- Never invent architecture or governance.
+- Clearly distinguish facts from assumptions.
+- Keep modifications traceable and evidence-based.
 
-Document
+---
 
-↓
+# Related Operational Documents
 
-Review
+- `.ai/workflows/AGENTS.md`
+- `.ai/workflows/REVIEW_PROTOCOL.md`
+- `.ai/state/CURRENT_STATE.md`
 
-Never skip repository understanding.
+---
 
+# Token Efficiency
+
+Keep the active context as small as possible.
+
+Do not load:
+
+- `.ai/archive/`
+- unrelated documentation
+- historical reports
+
+unless they are explicitly required for the current task.

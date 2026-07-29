@@ -17,7 +17,7 @@ How to make a change to this repository.
 
 ## Authority
 
-**None.** This document introduces no policy. Every rule below is restated from [`PROJECT_MANIFEST.md`](PROJECT_MANIFEST.md), the [Review Protocol](.ai/employees/REVIEW_PROTOCOL.md), or the [Documentation Standard](docs/reference/standards/DOCUMENTATION_STANDARD.md), and links to its source. Where this document and a source disagree, the source is correct.
+**None.** This document introduces no policy. Every rule below is restated from [`PROJECT_MANIFEST.md`](PROJECT_MANIFEST.md), the [Review Protocol](.ai/workflows/REVIEW_PROTOCOL.md), or the [Documentation Standard](docs/reference/standards/DOCUMENTATION_STANDARD.md), and links to its source. Where this document and a source disagree, the source is correct.
 
 ---
 
@@ -42,7 +42,7 @@ Concretely: if your change contradicts an ADR, the change is wrong — or the AD
 
 **Code.** Feature branch, PR linked to the ADR or task that authorises it. Note that implementation is currently gated behind the EAD, which does not exist and is blocked ([PROJECT_STATUS.md](PROJECT_STATUS.md)).
 
-**A review of someone else's document.** The [Review Protocol](.ai/employees/REVIEW_PROTOCOL.md) is binding: review, do not rewrite; never modify approved decisions; never invent requirements; tag claims `[FACT]`, `[OBSERVATION]`, `[INFERENCE]` or `[SPECULATION]`; stop after the review.
+**A review of someone else's document.** The [Review Protocol](.ai/workflows/REVIEW_PROTOCOL.md) is binding: review, do not rewrite; never modify approved decisions; never invent requirements; tag claims `[FACT]`, `[OBSERVATION]`, `[INFERENCE]` or `[SPECULATION]`; stop after the review.
 
 ## If you find a contradiction
 
@@ -72,7 +72,7 @@ There is **no CI**. Nothing runs automatically on a PR. CI design is an EAD-leve
 
 ## Updating project memory
 
-When a decision is approved, update [`.ai/context/DECISIONS.md`](.ai/context/DECISIONS.md) and [`.ai/context/CHANGELOG.md`](.ai/context/CHANGELOG.md) — manifest Documentation Workflow. Record the approval on the artifact itself as well; a status stated only in a navigation document is a governance defect ([Documentation Standard §2](docs/reference/standards/DOCUMENTATION_STANDARD.md)).
+When a decision is approved, update the relevant `docs/adr/` document and `PROJECT_STATUS.md` — manifest Documentation Workflow. Record the approval on the artifact itself as well; a status stated only in a navigation document is a governance defect ([Documentation Standard §2](docs/reference/standards/DOCUMENTATION_STANDARD.md)).
 
 ## Not covered here
 

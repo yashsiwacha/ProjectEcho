@@ -40,7 +40,7 @@ Every Markdown document in the repository, plus the build files, container defin
 ## Dependencies
 
 - [Documentation Standard](../../reference/standards/DOCUMENTATION_STANDARD.md) — supplies the precedence chain and the classification scheme used here.
-- [Review Protocol](../../../.ai/employees/REVIEW_PROTOCOL.md) — supplies the evidence tags.
+- [Review Protocol](../../../.ai/workflows/REVIEW_PROTOCOL.md) — supplies the evidence tags.
 
 ## Related Documents
 
@@ -98,10 +98,10 @@ Version 1.0 of this report described remediation in the past tense that had not 
 | F-13: `docs/templates/*` (7) "→ **created**" | **Correct** — all 7 exist and are populated | Verified |
 | F-13: `CONTRIBUTING.md` "→ **created**" | 0 bytes | Pending |
 | F-13: `docs/README.md` "→ **created**" | 0 bytes | Pending |
-| F-13: `.ai/employees/*` (8) "→ **created**" | 0 bytes, except `REVIEW_PROTOCOL.md` | Pending |
-| F-13: `.ai/prompts/*` (9) "→ **created**" | 0 bytes | Pending |
-| F-13: `.ai/knowledge/*` (4) "→ **created**" | 0 bytes | Pending |
-| F-13: `.ai/templates/*` (4) "→ **created**" | 0 bytes | Pending |
+| F-13: `.ai/archive/employees/*` (8) "→ **created**" | 0 bytes, except `REVIEW_PROTOCOL.md` | Pending |
+| F-13: `.ai/archive/prompts/*` (9) "→ **created**" | 0 bytes | Pending |
+| F-13: `.ai/archive/knowledge/*` (4) "→ **created**" | 0 bytes | Pending |
+| F-13: `.ai/archive/templates/*` (4) "→ **created**" | 0 bytes | Pending |
 | F-13: `PROJECT_PLAN.md`, `PROJECT_STATUS.md` "→ **created**" | Absent | Pending |
 | F-08: "Corrected by this workstream" | `.ai` files were **not** corrected | `.ai` corrected 2026-07-28; manifest/README pending |
 | F-09: "Corrected… across the `.ai` workspace and the manifest" | Neither was corrected | `.ai` corrected 2026-07-28; manifest pending |
@@ -125,7 +125,7 @@ Version 1.0 of this report described remediation in the past tense that had not 
 
 The repository contains two mutually exclusive product definitions.
 
-*Product A — Career Intelligence Platform.* Stated by [`README.md`](../../../README.md), [`PROJECT_MANIFEST.md`](../../../PROJECT_MANIFEST.md), [`ADR-001`](../../adr/ADR-001-career-intelligence-framework-foundations.md), [`ADR-0002`](../../adr/ADR-0002-modular-monolith-foundational-architecture.md), [`ARBR-0001`](../../arbr/ARBR-0001.md), [`EAF v1.0 Rev 2`](../../eaf/EAF-v1.0-revision-2.md), and `.ai/core/PROJECT_CONTEXT.md`. Domain vocabulary: Career DNA, Skill Graph, Evidence, Readiness, Mission, Career Passport.
+*Product A — Career Intelligence Platform.* Stated by [`README.md`](../../../README.md), [`PROJECT_MANIFEST.md`](../../../PROJECT_MANIFEST.md), [`ADR-001`](../../adr/ADR-001-career-intelligence-framework-foundations.md), [`ADR-0002`](../../adr/ADR-0002-modular-monolith-foundational-architecture.md), [`ARBR-0001`](../../arbr/ARBR-0001.md), [`EAF v1.0 Rev 2`](../../eaf/EAF-v1.0-revision-2.md), and `.ai/archive/core/PROJECT_CONTEXT.md`. Domain vocabulary: Career DNA, Skill Graph, Evidence, Readiness, Mission, Career Passport.
 
 *Product B — Event delivery / outbound webhook backbone.* Stated by [`docs/PROJECT_VISION.md`](../../PROJECT_VISION.md), [`docs/ENGINEERING_GUIDE.md`](../../ENGINEERING_GUIDE.md), and all four populated files in [`docs/archive/architecture/`](../../archive/architecture/). Domain vocabulary: event envelope, routing rule, destination, webhook signing, dead-letter, replay, organization/environment.
 
@@ -288,7 +288,7 @@ That gap is now the live blocker. The migration assessment `ADR-0002` deferred h
 
 **Affected Documents**
 
-`backend/pom.xml` and seven module POMs, `PROJECT_MANIFEST.md` (Repository Structure section), `.ai/context/IMPLEMENTATION_STATUS.md`.
+`backend/pom.xml` and seven module POMs, `PROJECT_MANIFEST.md` (Repository Structure section), `.ai/archive/context/IMPLEMENTATION_STATUS.md`.
 
 **Recommendation**
 
@@ -339,7 +339,7 @@ Founders should state explicitly whether Kafka is in or out of the frozen stack.
 
 `ARBR-0001`'s own metadata reads **"Status: Proposed for Founder Approval"**. Its §10 lists four unresolved Founder Decisions (FD-001 to FD-004), and its Action Items list "P0 — Founder review of ARBR-0001" and "P0 — Approve/Reject Founder Decisions (FD-001 to FD-004)" as outstanding.
 
-Two navigation documents report it as approved: `PROJECT_MANIFEST.md:124` ("ARBR-0001 Approved") and `.ai/context/CHANGELOG.md` ("Approved ARBR-0001").
+Two navigation documents report it as approved: `PROJECT_MANIFEST.md:124` ("ARBR-0001 Approved") and `.ai/archive/context/CHANGELOG.md` ("Approved ARBR-0001").
 
 **Impact**
 
@@ -361,7 +361,7 @@ Founders record the decision on the artifact itself. Navigation documents then l
 
 **Observation** `[FACT]`
 
-`README.md`, `PROJECT_MANIFEST.md`, and `.ai/context/IMPLEMENTATION_STATUS.md` all state implementation has not started. `PROJECT_MANIFEST.md:136` specifically lists "Backend scaffold (Maven modules) — not implemented".
+`README.md`, `PROJECT_MANIFEST.md`, and `.ai/archive/context/IMPLEMENTATION_STATUS.md` all state implementation has not started. `PROJECT_MANIFEST.md:136` specifically lists "Backend scaffold (Maven modules) — not implemented".
 
 The repository contains seven Maven modules, fifteen Java source files (fourteen exception classes and `ErrorCodes`/`ErrorResponse` in `backend/common`), a 532-line JUnit 5 test class with fourteen `@Nested` suites, passing Surefire reports, and built `.jar` artifacts — all committed.
 
@@ -375,8 +375,8 @@ The navigation documents must describe the actual state. Note the *governance* q
 
 **Status:** Partly corrected.
 
-- `.ai/context/IMPLEMENTATION_STATUS.md` — corrected 2026-07-28 to "Scaffolded (7 Maven modules committed; no deployable produced)".
-- `.ai/context/CURRENT_STATE.md` — corrected 2026-07-28.
+- `.ai/archive/context/IMPLEMENTATION_STATUS.md` — corrected 2026-07-28 to "Scaffolded (7 Maven modules committed; no deployable produced)".
+- `.ai/archive/context/CURRENT_STATE.md` — corrected 2026-07-28.
 - `README.md`, `PROJECT_MANIFEST.md` — **pending.**
 
 **Measured state** `[FACT]`, 2026-07-28: 7 Maven modules; 15 Java files (14 in `backend/common/.../exception/` plus a 532-line `ExceptionTest.java`); no other module contains source.
@@ -391,7 +391,7 @@ The navigation documents must describe the actual state. Note the *governance* q
 
 **Observation** `[FACT]`
 
-`.ai/context/TECH_STACK.md` states "Build: Gradle". `.ai/context/TODO.md` lists "[ ] Gradle Scaffold". `.ai/core/COMMANDS.md` instructs `./gradlew test`. `PROJECT_MANIFEST.md:44` hedges: "Gradle / Maven modules (backend uses Maven)".
+`.ai/archive/context/TECH_STACK.md` states "Build: Gradle". `.ai/archive/context/TODO.md` lists "[ ] Gradle Scaffold". `.ai/archive/core/COMMANDS.md` instructs `./gradlew test`. `PROJECT_MANIFEST.md:44` hedges: "Gradle / Maven modules (backend uses Maven)".
 
 The repository is Maven-only. No Gradle build file and no `gradlew` wrapper exist. The documented validation command cannot execute.
 
@@ -399,9 +399,9 @@ The repository is Maven-only. No Gradle build file and no `gradlew` wrapper exis
 
 **Status:** Partly corrected.
 
-- `.ai/context/TECH_STACK.md` — "Build: Gradle" → Maven, 2026-07-28.
-- `.ai/context/TODO.md` — "Gradle Scaffold" → "Maven build consolidation", 2026-07-28.
-- `.ai/core/COMMANDS.md` — `./gradlew test` → `mvn -f backend/pom.xml test`, 2026-07-28.
+- `.ai/archive/context/TECH_STACK.md` — "Build: Gradle" → Maven, 2026-07-28.
+- `.ai/archive/context/TODO.md` — "Gradle Scaffold" → "Maven build consolidation", 2026-07-28.
+- `.ai/archive/core/COMMANDS.md` — `./gradlew test` → `mvn -f backend/pom.xml test`, 2026-07-28.
 - `PROJECT_MANIFEST.md:44` "Gradle / Maven modules" — **pending.**
 
 **Resolution Authority:** Documentation.
@@ -414,7 +414,7 @@ The repository is Maven-only. No Gradle build file and no `gradlew` wrapper exis
 
 **Observation** `[FACT]`
 
-Two identifier widths are in use: `ADR-001` (three digits) and `ADR-0002` (four digits). `git status` shows `D docs/adr/ADR-0001.md` — a file deleted from the working tree. `.ai/context/CURRENT_STATE.md` lists "✓ ADR-0001" as completed, and `EAF v1.0 Rev 2`'s Self-Review repeatedly refers to "ADR-0001".
+Two identifier widths are in use: `ADR-001` (three digits) and `ADR-0002` (four digits). `git status` shows `D docs/adr/ADR-0001.md` — a file deleted from the working tree. `.ai/archive/context/CURRENT_STATE.md` lists "✓ ADR-0001" as completed, and `EAF v1.0 Rev 2`'s Self-Review repeatedly refers to "ADR-0001".
 
 It is therefore unclear whether `ADR-0001` and `ADR-001` are the same document, or two documents one of which was deleted.
 
@@ -478,10 +478,10 @@ Documents that are **referenced by name** in existing documents but are empty or
 | `docs/templates/*` (7 files) | MANIFEST: "Use templates in `docs/templates/`" | 0 bytes → **created** |
 | `CONTRIBUTING.md` | README, MANIFEST | 0 bytes → **created** |
 | `docs/README.md` | directory convention | 0 bytes → **created** |
-| `.ai/employees/*` (8 files) | MANIFEST, README, `.ai/core/AGENTS.md` (mandatory reading) | 0 bytes → **created** |
-| `.ai/prompts/*` (9 files) | MANIFEST | 0 bytes → **created** |
-| `.ai/knowledge/*` (4 files) | — | 0 bytes → **created** |
-| `.ai/templates/*` (4 files) | — | 0 bytes → **created** |
+| `.ai/archive/employees/*` (8 files) | MANIFEST, README, `.ai/archive/core/AGENTS.md` (mandatory reading) | 0 bytes → **created** |
+| `.ai/archive/prompts/*` (9 files) | MANIFEST | 0 bytes → **created** |
+| `.ai/archive/knowledge/*` (4 files) | — | 0 bytes → **created** |
+| `.ai/archive/templates/*` (4 files) | — | 0 bytes → **created** |
 | `PROJECT_PLAN.md`, `PROJECT_STATUS.md` | repository role definition | absent → **created** |
 | FGM | ADR-0002 (Governed By) | absent → **[F-02](#f-02)** |
 | CIF | ADR-001 (entire purpose) | absent → **[F-03](#f-03)** |
@@ -574,7 +574,7 @@ Both Frozen ADRs, the manifest, and the EAF exist only in the working tree. They
 
 **Impact** Every contributor and CI runner must supply its own Maven, and nothing pins the Maven version, so builds are not reproducible across machines. The `.gitignore` entry means that adding a wrapper in the usual way (`mvn wrapper:wrapper`) would produce a `.mvn/wrapper/` directory that is silently ignored — the wrapper would appear to work locally and be missing for everyone else.
 
-This is the same class of defect as [F-09](#f-09): the documented validation command could not be executed as written. `.ai/core/COMMANDS.md` now specifies `mvn -f backend/pom.xml test` and notes the wrapper's absence.
+This is the same class of defect as [F-09](#f-09): the documented validation command could not be executed as written. `.ai/archive/core/COMMANDS.md` now specifies `mvn -f backend/pom.xml test` and notes the wrapper's absence.
 
 **Recommendation** Either add a wrapper and amend `.gitignore` to `!.mvn/wrapper/`, or record deliberately that contributors supply their own Maven and state the required version. `[INFERENCE]` — the wrapper is the conventional choice, but pinning a build toolchain is an engineering decision, not a documentation one.
 

@@ -56,7 +56,7 @@ Subject to [CR-001](docs/reports/engineering/CONFLICT_REGISTER.md#cr-001), and n
 1. Read [PROJECT_MANIFEST.md](PROJECT_MANIFEST.md) for repository orientation.
 2. Read [docs/INDEX.md](docs/INDEX.md) to find governance, architecture and design artifacts.
 3. Read the [Conflict Register](docs/reports/engineering/CONFLICT_REGISTER.md) before acting on anything in either of the above.
-4. Follow the [Review Protocol](.ai/employees/REVIEW_PROTOCOL.md) for any design or documentation change.
+4. Follow the [Review Protocol](.ai/workflows/REVIEW_PROTOCOL.md) for any design or documentation change.
 
 ## Current state
 
@@ -75,7 +75,7 @@ Maven only; there is no Gradle build and no Maven wrapper, so a local Maven inst
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) and the [Review Protocol](.ai/employees/REVIEW_PROTOCOL.md).
+See [CONTRIBUTING.md](CONTRIBUTING.md) and the [Review Protocol](.ai/workflows/REVIEW_PROTOCOL.md).
 
 ## Licence
 

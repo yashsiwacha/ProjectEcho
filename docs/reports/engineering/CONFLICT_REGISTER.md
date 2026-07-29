@@ -37,7 +37,7 @@ Conflicts between two or more documents in the repository, and conflicts between
 
 - [Documentation Standard §8](../../reference/standards/DOCUMENTATION_STANDARD.md) — the procedure that requires this register.
 - [DAR-0001](DAR-0001-documentation-audit.md) — the source of the seed entries.
-- [Review Protocol](../../../.ai/employees/REVIEW_PROTOCOL.md) — evidence tags.
+- [Review Protocol](../../../.ai/workflows/REVIEW_PROTOCOL.md) — evidence tags.
 
 ## Related Documents
 
@@ -89,7 +89,7 @@ No conflict in this register has been resolved by documentation work.
 
 ### CR-001 — Product identity {#cr-001}
 
-**Positions.** (A) ProjectEcho is a Career Intelligence Platform — `README.md`, `PROJECT_MANIFEST.md`, ADR-001, ADR-0002, ARBR-0001, EAF Rev 2, `.ai/core/PROJECT_CONTEXT.md`. (B) ProjectEcho is an event delivery / outbound webhook backbone — `docs/PROJECT_VISION.md`, `docs/ENGINEERING_GUIDE.md`, `docs/archive/architecture/*`, and the current `docker-compose.yml`.
+**Positions.** (A) ProjectEcho is a Career Intelligence Platform — `README.md`, `PROJECT_MANIFEST.md`, ADR-001, ADR-0002, ARBR-0001, EAF Rev 2, `.ai/archive/core/PROJECT_CONTEXT.md`. (B) ProjectEcho is an event delivery / outbound webhook backbone — `docs/PROJECT_VISION.md`, `docs/ENGINEERING_GUIDE.md`, `docs/archive/architecture/*`, and the current `docker-compose.yml`.
 
 **Why it cannot self-resolve.** Both sets are internally coherent and neither carries a supersession marker. The only document stating a product vision, target users, MVP scope and success metrics describes (B); the entire approved governance chain describes (A).
 
@@ -161,7 +161,7 @@ No conflict in this register has been resolved by documentation work.
 
 ### CR-007 — Spring AI absent from the build {#cr-007}
 
-**Positions.** Spring AI is named in the frozen stack and in `.ai/core/PROJECT_CONTEXT.md`. It appears in no POM.
+**Positions.** Spring AI is named in the frozen stack and in `.ai/archive/core/PROJECT_CONTEXT.md`. It appears in no POM.
 
 **Assessment** `[INFERENCE]` — this is a not-yet-done rather than a disagreement, since AI integration is a later phase. Recorded because a frozen-stack element that is absent from the build is indistinguishable from drift until someone checks.
 
@@ -173,7 +173,7 @@ No conflict in this register has been resolved by documentation work.
 
 ### CR-008 — ARBR-0001 status {#cr-008}
 
-**Positions.** `ARBR-0001` metadata reads "Proposed for Founder Approval" and lists FD-001..FD-004 unresolved. `PROJECT_MANIFEST.md` and `.ai/context/CHANGELOG.md` reported it Approved.
+**Positions.** `ARBR-0001` metadata reads "Proposed for Founder Approval" and lists FD-001..FD-004 unresolved. `PROJECT_MANIFEST.md` and `.ai/archive/context/CHANGELOG.md` reported it Approved.
 
 **Action taken.** The two navigation documents have been corrected to report the status the artifact carries and to link to it, per Documentation Standard §2. **The underlying question — whether the founders approved it — is untouched and remains open.** FD-002, FD-003 and FD-004 are governance rules whose binding force is currently undetermined.
 
@@ -197,7 +197,7 @@ No conflict in this register has been resolved by documentation work.
 
 ### CR-010 — Identifier width and the deleted ADR-0001 {#cr-010}
 
-**Positions.** Both `ADR-001` and `ADR-0002` widths are in use. A prior `docs/adr/ADR-0001.md` was committed empty and no longer exists on disk. `.ai/context/CURRENT_STATE.md` credited "ADR-0001" as complete, and the EAF Self-Review cites "ADR-0001" repeatedly.
+**Positions.** Both `ADR-001` and `ADR-0002` widths are in use. A prior `docs/adr/ADR-0001.md` was committed empty and no longer exists on disk. `.ai/archive/context/CURRENT_STATE.md` credited "ADR-0001" as complete, and the EAF Self-Review cites "ADR-0001" repeatedly.
 
 **Unresolvable here.** Whether `ADR-001` and `ADR-0001` are one artifact or two, one of which was lost, requires knowledge this audit does not have. Renaming is not an option: `ADR-001` is Frozen and cited.
 

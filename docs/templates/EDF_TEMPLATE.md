@@ -74,7 +74,7 @@ Versioning, compatibility, deprecation. Reference the governing decision on whet
 
 ## 7. Review Criteria
 
-The checklist a reviewer applies. Reviews follow [`.ai/employees/REVIEW_PROTOCOL.md`](../../.ai/employees/REVIEW_PROTOCOL.md).
+The checklist a reviewer applies. Reviews follow [`.ai/workflows/REVIEW_PROTOCOL.md`](../../.ai/workflows/REVIEW_PROTOCOL.md).
 
 ## 8. Definition of Done
 

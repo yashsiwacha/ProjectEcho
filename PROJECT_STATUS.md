@@ -93,11 +93,11 @@ New ADRs proposed by DAR-0001: product definition of record; identifier correcti
 | DAR-0001 audit | Done, v1.1 (v1.0 remediation reporting corrected) |
 | Conflict Register | Done |
 | `docs/templates/*` (7) | Done |
-| `.ai/context/*`, `.ai/core/*` corrections | Done |
+| `.ai/archive/context/*`, `.ai/archive/core/*` corrections | Done |
 | `PROJECT_MANIFEST.md`, `README.md` | Done |
 | `PROJECT_STATUS.md` | This document |
 | `docs/INDEX.md`, `docs/README.md` | In progress |
-| `.ai/employees/*`, `.ai/prompts/*`, `.ai/knowledge/*`, `.ai/templates/*` | In progress — 26 files currently 0 bytes |
+| `.ai/archive/employees/*`, `.ai/archive/prompts/*`, `.ai/archive/knowledge/*`, `.ai/archive/templates/*` | In progress — 26 files currently 0 bytes |
 | `CONTRIBUTING.md`, PR template | In progress |
 | CI workflows | **Not started, deliberately.** CI design is EAD-level; the EAD is blocked. |
 | `PROJECT_PLAN.md` | **Not created, deliberately.** A plan requires owners and dates. Neither exists to be recorded, and inventing them would manufacture commitments no founder made. The phase roadmap in `PROJECT_MANIFEST.md` is the nearest governed artifact. |
