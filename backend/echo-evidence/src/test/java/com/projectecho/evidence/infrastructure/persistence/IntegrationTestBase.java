@@ -20,6 +20,10 @@ import org.testcontainers.containers.PostgreSQLContainer;
 @DataJpaTest
 @ActiveProfiles("test")
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@org.springframework.context.annotation.Import({
+    com.projectecho.evidence.infrastructure.persistence.repository.JpaEvidenceLineageRepositoryAdapter.class,
+    IntegrationTestBase.TestConfig.class
+})
 public abstract class IntegrationTestBase {
 
   // The singleton container, starts only once per JVM.
@@ -58,5 +62,17 @@ public abstract class IntegrationTestBase {
    */
   protected com.projectecho.common.valueobject.Identifier generateIsolatedId() {
     return com.projectecho.common.valueobject.Identifier.generate();
+  }
+
+  @org.springframework.boot.test.context.TestConfiguration
+  public static class TestConfig {
+      @org.springframework.context.annotation.Bean
+      public com.fasterxml.jackson.databind.ObjectMapper objectMapper() {
+          com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
+          mapper.registerModule(new com.fasterxml.jackson.datatype.jsr310.JavaTimeModule());
+          mapper.disable(com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+          mapper.setVisibility(com.fasterxml.jackson.annotation.PropertyAccessor.ALL, com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.ANY);
+          return mapper;
+      }
   }
 }

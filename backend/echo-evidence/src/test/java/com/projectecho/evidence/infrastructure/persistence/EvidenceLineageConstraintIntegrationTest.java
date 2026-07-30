@@ -27,7 +27,7 @@ public class EvidenceLineageConstraintIntegrationTest extends IntegrationTestBas
         // We use JdbcTemplate throughout to explicitly bypass JPA mapping and domain rules.
         jdbcTemplate.update(
                 "INSERT INTO evidence_lineage (id, person_id, capability_id, version, created_at) VALUES (?, ?, ?, ?, ?)",
-                validLineageId, UUID.randomUUID(), UUID.randomUUID(), 1, Instant.now()
+                validLineageId, UUID.randomUUID(), UUID.randomUUID(), 1, java.sql.Timestamp.from(Instant.now())
         );
     }
 
@@ -42,7 +42,7 @@ public class EvidenceLineageConstraintIntegrationTest extends IntegrationTestBas
         assertThatThrownBy(() -> {
             jdbcTemplate.update(
                     "INSERT INTO evidence_version (id, lineage_id, sequence_number, provenance, confidence, artifact_url, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)",
-                    versionId, validLineageId, 1, "SYSTEM_INGESTION", 1.5, "url", Instant.now()
+                    versionId, validLineageId, 1, "SYSTEM_INGESTION", 1.5, "url", java.sql.Timestamp.from(Instant.now())
             );
         }).isInstanceOf(DataIntegrityViolationException.class)
           .hasMessageContaining("chk_confidence_bounds"); // Verifies the exact constraint
@@ -58,7 +58,7 @@ public class EvidenceLineageConstraintIntegrationTest extends IntegrationTestBas
         assertThatThrownBy(() -> {
             jdbcTemplate.update(
                     "INSERT INTO evidence_version (id, lineage_id, sequence_number, provenance, confidence, artifact_url, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)",
-                    versionId, validLineageId, 0, "SYSTEM_INGESTION", 0.9, "url", Instant.now()
+                    versionId, validLineageId, 0, "SYSTEM_INGESTION", 0.9, "url", java.sql.Timestamp.from(Instant.now())
             );
         }).isInstanceOf(DataIntegrityViolationException.class)
           .hasMessageContaining("chk_sequence_positive");
@@ -72,7 +72,7 @@ public class EvidenceLineageConstraintIntegrationTest extends IntegrationTestBas
 
         jdbcTemplate.update(
                 "INSERT INTO evidence_version (id, lineage_id, sequence_number, provenance, confidence, artifact_url, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)",
-                versionId1, validLineageId, 1, "SYSTEM_INGESTION", 0.9, "url", Instant.now()
+                versionId1, validLineageId, 1, "SYSTEM_INGESTION", 0.9, "url", java.sql.Timestamp.from(Instant.now())
         );
 
         // Act & Assert
@@ -80,7 +80,7 @@ public class EvidenceLineageConstraintIntegrationTest extends IntegrationTestBas
         assertThatThrownBy(() -> {
             jdbcTemplate.update(
                     "INSERT INTO evidence_version (id, lineage_id, sequence_number, provenance, confidence, artifact_url, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)",
-                    versionId2, validLineageId, 1, "SYSTEM_INGESTION", 0.9, "url", Instant.now()
+                    versionId2, validLineageId, 1, "SYSTEM_INGESTION", 0.9, "url", java.sql.Timestamp.from(Instant.now())
             );
         }).isInstanceOf(DuplicateKeyException.class)
           .hasMessageContaining("uq_lineage_sequence");
@@ -97,7 +97,7 @@ public class EvidenceLineageConstraintIntegrationTest extends IntegrationTestBas
         assertThatThrownBy(() -> {
             jdbcTemplate.update(
                     "INSERT INTO evidence_version (id, lineage_id, sequence_number, provenance, confidence, artifact_url, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)",
-                    versionId, nonExistentLineageId, 1, "SYSTEM_INGESTION", 0.9, "url", Instant.now()
+                    versionId, nonExistentLineageId, 1, "SYSTEM_INGESTION", 0.9, "url", java.sql.Timestamp.from(Instant.now())
             );
         }).isInstanceOf(DataIntegrityViolationException.class)
           .hasMessageContaining("fk_evidence_version_lineage");
@@ -113,7 +113,7 @@ public class EvidenceLineageConstraintIntegrationTest extends IntegrationTestBas
         assertThatThrownBy(() -> {
             jdbcTemplate.update(
                     "INSERT INTO evidence_version (id, lineage_id, sequence_number, provenance, confidence, artifact_url, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)",
-                    versionId, validLineageId, 1, null, 0.9, "url", Instant.now()
+                    versionId, validLineageId, 1, null, 0.9, "url", java.sql.Timestamp.from(Instant.now())
             );
         }).isInstanceOf(DataIntegrityViolationException.class);
     }
@@ -124,7 +124,7 @@ public class EvidenceLineageConstraintIntegrationTest extends IntegrationTestBas
         UUID versionId = UUID.randomUUID();
         jdbcTemplate.update(
                 "INSERT INTO evidence_version (id, lineage_id, sequence_number, provenance, confidence, artifact_url, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)",
-                versionId, validLineageId, 1, "SYSTEM_INGESTION", 0.9, "url", Instant.now()
+                versionId, validLineageId, 1, "SYSTEM_INGESTION", 0.9, "url", java.sql.Timestamp.from(Instant.now())
         );
         
         Integer countBefore = jdbcTemplate.queryForObject("SELECT count(*) FROM evidence_version WHERE lineage_id = ?", Integer.class, validLineageId);

@@ -6,6 +6,24 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Infrastructure representation of the EvidenceLineage aggregate.
+ * <p>
+ * <b>CRITICAL ARCHITECTURAL DECISION: DO NOT ADD @Version to this entity.</b>
+ * <br>
+ * This aggregate relies on a manual atomic update query for optimistic locking
+ * rather than JPA's @Version. Because this is an append-only aggregate, modifications 
+ * only insert new child EvidenceVersionEntity rows. By default, Hibernate queues 
+ * child INSERTs before parent UPDATEs (ActionQueue ordering).
+ * <br>
+ * If @Version is used, concurrent modifications will trigger a database 
+ * ConstraintViolationException (on uq_lineage_sequence) BEFORE the optimistic 
+ * lock check evaluates, resulting in an unhandled infrastructure exception 
+ * instead of the required ObjectOptimisticLockingFailureException.
+ * <br>
+ * Concurrency is instead managed via {@code incrementVersion} in the Repository Adapter.
+ * </p>
+ */
 @Entity
 @Table(name = "evidence_lineage")
 public class EvidenceLineageEntity {
@@ -18,7 +36,6 @@ public class EvidenceLineageEntity {
   @Column(name = "capability_id", nullable = false)
   private UUID capabilityId;
 
-  @Version
   @Column(nullable = false)
   private Integer version;
 
@@ -62,6 +79,10 @@ public class EvidenceLineageEntity {
 
   public Integer getVersion() {
     return version;
+  }
+
+  public void setVersion(Integer version) {
+    this.version = version;
   }
 
   public Instant getCreatedAt() {
