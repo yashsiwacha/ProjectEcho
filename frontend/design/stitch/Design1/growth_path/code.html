@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Growth Path | ProjectEcho</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .active-dot {
+            box-shadow: 0 0 0 4px rgba(124, 87, 26, 0.15);
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(229, 231, 235, 0.5);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-primary": "#c0c6db",
+                        "surface-tint": "#575e70",
+                        "on-primary-container": "#7d8497",
+                        "error": "#ba1a1a",
+                        "on-primary-fixed": "#141b2b",
+                        "surface-bright": "#f9f9ff",
+                        "on-background": "#151c27",
+                        "secondary": "#7c571a",
+                        "background": "#f9f9ff",
+                        "surface-container-low": "#f0f3ff",
+                        "surface-dim": "#d3daea",
+                        "on-tertiary": "#ffffff",
+                        "surface": "#f9f9ff",
+                        "on-tertiary-fixed-variant": "#55442d",
+                        "on-secondary": "#ffffff",
+                        "surface-container-high": "#e2e8f8",
+                        "on-surface": "#151c27",
+                        "secondary-fixed": "#ffddb1",
+                        "surface-container": "#e7eefe",
+                        "inverse-on-surface": "#ebf1ff",
+                        "on-primary": "#ffffff",
+                        "outline": "#76777d",
+                        "secondary-container": "#ffcc83",
+                        "on-secondary-container": "#795417",
+                        "on-surface-variant": "#45464c",
+                        "on-primary-fixed-variant": "#404758",
+                        "on-secondary-fixed": "#291800",
+                        "secondary-fixed-dim": "#f0be77",
+                        "surface-container-highest": "#dce2f3",
+                        "primary-fixed-dim": "#c0c6db",
+                        "on-error-container": "#93000a",
+                        "outline-variant": "#c6c6cd",
+                        "on-tertiary-fixed": "#261906",
+                        "tertiary-fixed": "#f9debf",
+                        "primary-fixed": "#dce2f7",
+                        "primary": "#000000",
+                        "primary-container": "#141b2b",
+                        "surface-container-lowest": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "inverse-surface": "#2a313d",
+                        "tertiary-container": "#261906",
+                        "tertiary-fixed-dim": "#dcc2a4",
+                        "on-secondary-fixed-variant": "#614002",
+                        "on-tertiary-container": "#968065",
+                        "tertiary": "#000000",
+                        "surface-variant": "#dce2f3",
+                        "on-error": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-md": "16px",
+                        "margin-desktop": "48px",
+                        "unit": "8px",
+                        "gutter": "24px",
+                        "stack-sm": "8px",
+                        "margin-mobile": "20px",
+                        "stack-lg": "32px",
+                        "container-max": "1280px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "display": ["Inter"],
+                        "body-md": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "headline-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-md": ["14px", {"lineHeight": "140%", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                        "body-lg": ["18px", {"lineHeight": "160%", "fontWeight": "400"}],
+                        "display": ["48px", {"lineHeight": "110%", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "160%", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "120%", "letterSpacing": "0.03em", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "120%", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "130%", "letterSpacing": "-0.01em", "fontWeight": "500"}]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-body-md overflow-x-hidden">
+<!-- SideNavBar Shell -->
+<aside class="fixed left-0 top-0 h-screen w-[280px] flex flex-col p-stack-md z-50 bg-surface shadow-sm transition-transform duration-300">
+<div class="mb-stack-lg px-4">
+<h1 class="font-headline-lg text-headline-lg font-black text-on-surface">ProjectEcho</h1>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest mt-1">Career OS</p>
+</div>
+<nav class="flex-1 space-y-2">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform" data-icon="dashboard">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform" data-icon="badge">badge</span>
+<span class="font-label-md text-label-md">Career Passport</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform" data-icon="analytics">analytics</span>
+<span class="font-label-md text-label-md">Evidence Analysis</span>
+</a>
+<!-- Active Navigation -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-secondary font-bold bg-surface-container-high transition-transform duration-200 active:scale-[0.98] group" href="#">
+<span class="material-symbols-outlined" data-icon="map" style="font-variation-settings: 'FILL' 1;">map</span>
+<span class="font-label-md text-label-md">Growth Path</span>
+</a>
+</nav>
+<div class="mt-auto p-4 border-t border-outline-variant bg-surface-container-lowest rounded-xl">
+<div class="flex items-center gap-3 mb-4">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container font-bold">JD</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface">John Doe</p>
+<p class="text-[10px] text-on-surface-variant">Senior Engineer L5</p>
+</div>
+</div>
+<button class="w-full bg-primary text-on-primary py-2 px-4 rounded-lg font-label-sm text-label-sm hover:opacity-90 transition-opacity">
+                Update Evidence
+            </button>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-[280px] min-h-screen">
+<!-- TopAppBar Shell -->
+<header class="flex justify-between items-center w-full h-16 px-margin-desktop sticky top-0 z-40 bg-surface-bright border-b border-outline-variant">
+<div class="flex items-center gap-2">
+<span class="font-headline-md text-headline-md font-bold text-primary">Next Milestone: Staff Engineer</span>
+<span class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full font-label-sm text-label-sm">82% Prepared</span>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative w-64">
+<input class="w-full h-11 bg-surface-container-low border-none rounded-xl px-4 text-on-surface focus:ring-2 focus:ring-secondary transition-all" placeholder="Search roadmap..." type="text"/>
+</div>
+<div class="flex gap-4">
+<button class="p-2 hover:bg-surface-container-high rounded-full transition-all">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 hover:bg-surface-container-high rounded-full transition-all">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="settings">settings</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Page Canvas -->
+<div class="p-margin-desktop max-w-5xl mx-auto space-y-stack-lg">
+<!-- Roadmap Hero -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<div class="md:col-span-2 bg-surface p-stack-lg rounded-[20px] shadow-sm border border-outline-variant flex flex-col justify-center">
+<p class="font-label-sm text-label-sm text-secondary uppercase tracking-widest mb-2">Current Trajectory</p>
+<h2 class="font-headline-lg text-headline-lg mb-4">Engineering Leadership Track</h2>
+<div class="w-full bg-surface-container h-2 rounded-full overflow-hidden">
+<div class="bg-secondary h-full w-[82%]" style="transition: width 1s ease-out"></div>
+</div>
+<p class="font-body-md text-on-surface-variant mt-4">You are currently surpassing expectations in technical execution. The remaining gap lies in **cross-functional architectural influence** and **strategic documentation**.</p>
+</div>
+<div class="bg-surface p-stack-lg rounded-[20px] shadow-sm border border-outline-variant flex flex-col items-center justify-center text-center space-y-2">
+<div class="w-16 h-16 rounded-full bg-secondary-fixed flex items-center justify-center text-secondary mb-2">
+<span class="material-symbols-outlined text-3xl" data-icon="emoji_events">emoji_events</span>
+</div>
+<h3 class="font-label-md text-label-md">Staff Readiness</h3>
+<p class="font-display text-primary">Q3 2024</p>
+<p class="font-label-sm text-on-surface-variant">Predicted Assessment Date</p>
+</div>
+</section>
+<!-- Vertical Roadmap -->
+<section class="relative py-10">
+<!-- Vertical Line -->
+<div class="absolute left-8 top-0 bottom-0 w-[2px] bg-outline-variant"></div>
+<div class="space-y-12">
+<!-- Completed Milestone -->
+<div class="relative flex items-start gap-12 group">
+<div class="absolute left-8 -translate-x-1/2 w-4 h-4 rounded-full bg-secondary ring-4 ring-secondary-fixed-dim"></div>
+<div class="ml-16 w-full">
+<div class="flex items-center gap-2 mb-2">
+<span class="bg-green-100 text-green-700 px-2 py-0.5 rounded font-label-sm text-[10px] uppercase">Verified</span>
+<span class="font-label-sm text-on-surface-variant">Dec 2023</span>
+</div>
+<div class="bg-surface p-stack-md rounded-[20px] shadow-sm border border-outline-variant hover:shadow-md transition-shadow cursor-default">
+<h3 class="font-headline-md text-on-surface">Senior Engineering Mastery</h3>
+<p class="font-body-md text-on-surface-variant mt-1">Demonstrated consistent delivery of complex features and mentorship of 4 junior developers.</p>
+<div class="mt-4 flex gap-4 overflow-x-auto pb-2">
+<div class="flex items-center gap-2 bg-surface-container-low px-3 py-1.5 rounded-full border border-outline-variant">
+<span class="material-symbols-outlined text-sm" data-icon="article">article</span>
+<span class="text-xs font-label-md">RFC: Auth Service</span>
+</div>
+<div class="flex items-center gap-2 bg-surface-container-low px-3 py-1.5 rounded-full border border-outline-variant">
+<span class="material-symbols-outlined text-sm" data-icon="forum">forum</span>
+<span class="text-xs font-label-md">360 Feedback (4.8/5)</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Current Milestone (In Progress) -->
+<div class="relative flex items-start gap-12">
+<div class="absolute left-8 -translate-x-1/2 w-6 h-6 rounded-full bg-white border-4 border-secondary active-dot z-10"></div>
+<div class="ml-16 w-full">
+<div class="flex items-center gap-2 mb-2">
+<span class="bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded font-label-sm text-[10px] uppercase">Target Goal</span>
+<span class="font-label-sm text-on-surface-variant">In Progress</span>
+</div>
+<!-- Evidence-Based AI Reasoning Card -->
+<div class="bg-white p-stack-lg rounded-[20px] shadow-lg border-l-4 border-secondary transition-all">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-md text-on-surface">System Design at Scale</h3>
+<p class="font-body-md text-on-surface-variant mt-1">Leading architectural shift from monolithic to event-driven microservices.</p>
+</div>
+<span class="material-symbols-outlined text-secondary" data-icon="psychology" style="font-variation-settings: 'FILL' 1;">psychology</span>
+</div>
+<!-- Evidence Gap -->
+<div class="mt-6 bg-surface-container-low p-4 rounded-xl">
+<div class="flex items-center gap-2 mb-3">
+<span class="material-symbols-outlined text-error" data-icon="warning">warning</span>
+<p class="font-label-md text-on-surface">Evidence Gap Detected</p>
+</div>
+<ul class="space-y-3">
+<li class="flex items-center gap-3">
+<span class="w-1.5 h-1.5 rounded-full bg-error"></span>
+<span class="font-body-md text-on-surface-variant">No documented proof of **cost-optimization** analysis for the new architecture.</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="w-1.5 h-1.5 rounded-full bg-error"></span>
+<span class="font-body-md text-on-surface-variant">Missing **cross-team alignment** evidence (meeting minutes or design sign-offs).</span>
+</li>
+</ul>
+</div>
+<div class="mt-6 flex justify-between items-center">
+<p class="text-xs font-label-sm text-on-surface-variant italic">AI Insight: Closing these gaps will increase Staff Readiness to 91%.</p>
+<button class="text-secondary font-label-md flex items-center gap-1 hover:underline">
+                                        Resolve Gap <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Future Milestone -->
+<div class="relative flex items-start gap-12 opacity-60">
+<div class="absolute left-8 -translate-x-1/2 w-4 h-4 rounded-full bg-outline-variant"></div>
+<div class="ml-16 w-full">
+<div class="flex items-center gap-2 mb-2">
+<span class="bg-surface-variant text-on-surface-variant px-2 py-0.5 rounded font-label-sm text-[10px] uppercase">Future</span>
+</div>
+<div class="bg-surface-container-lowest p-stack-md rounded-[20px] border border-dashed border-outline">
+<h3 class="font-label-md text-headline-md text-on-surface-variant">Strategic Technology Planning</h3>
+<p class="font-body-md text-on-surface-variant mt-1">Driving 1-2 year technical roadmaps aligned with business KPIs.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Recommendations Section -->
+<section class="space-y-stack-md">
+<div class="flex items-center justify-between">
+<h2 class="font-headline-md text-headline-md">Suggested Next Steps</h2>
+<button class="text-on-surface-variant font-label-md hover:text-primary transition-colors">View All Suggestions</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+<!-- Project Recommendation -->
+<div class="bg-surface p-6 rounded-[20px] border border-outline-variant hover:border-secondary transition-all group flex gap-4">
+<div class="w-14 h-14 bg-secondary-fixed rounded-xl flex-shrink-0 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined" data-icon="account_tree">account_tree</span>
+</div>
+<div>
+<h4 class="font-label-md text-on-surface mb-1">Project: Infrastructure FinOps Audit</h4>
+<p class="text-xs text-on-surface-variant mb-4">Analyze cloud spend for the Payment Cluster and propose a 15% reduction strategy. This directly fills your 'Cost Optimization' evidence gap.</p>
+<button class="px-4 py-2 border border-outline rounded-lg font-label-sm text-label-sm group-hover:bg-secondary group-hover:text-white group-hover:border-secondary transition-all">Start Project</button>
+</div>
+</div>
+<!-- Certification Recommendation -->
+<div class="bg-surface p-6 rounded-[20px] border border-outline-variant hover:border-secondary transition-all group flex gap-4">
+<div class="w-14 h-14 bg-surface-container-high rounded-xl flex-shrink-0 flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="school">school</span>
+</div>
+<div>
+<h4 class="font-label-md text-on-surface mb-1">AWS Certified Solutions Architect</h4>
+<p class="text-xs text-on-surface-variant mb-4">Professional Level. Validates your expertise in large-scale system design and multi-account strategies.</p>
+<button class="px-4 py-2 border border-outline rounded-lg font-label-sm text-label-sm group-hover:bg-secondary group-hover:text-white group-hover:border-secondary transition-all">Enroll Now</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Contextual Insight Footer Card -->
+<section class="bg-secondary-container rounded-[20px] p-stack-lg flex flex-col md:flex-row items-center gap-stack-md">
+<div class="flex-1">
+<h3 class="font-headline-md text-on-secondary-container">Your growth is outpacing the industry average by 24%.</h3>
+<p class="font-body-md text-on-secondary-container opacity-80">Based on data from similar roles at Tier 1 companies. Keep logging evidence to maintain this lead.</p>
+</div>
+<div class="flex-shrink-0">
+<div class="w-48 h-24 bg-cover bg-center rounded-lg opacity-80 mix-blend-multiply" data-alt="A sophisticated data visualization showing a glowing rising trend line against a minimalist grid background. The colors are champagne gold and deep charcoal, representing professional excellence and analytical precision. The lighting is soft and ambient, creating a high-end dashboard aesthetic." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBrWBlFzbxZJHHQg_xcV43Ns3QJl_MD7KnhGKGJfZDMj-885fFrUNTXOwx2whKq5vMw8iUA2hOQjExeGgymcGpYfIwqn_56hAfD1urVaEgGxQIaou9LfMXm3nzCyNItbkhKH6zfxsjxFZ0lox-cpvYLg25WHImm1qt1JzFmoDIUtx2U0v30crYVBKl-Uop-l2wVhGnv0UbH_OZm5GEnwLq4kDv-7VSupxfdxeJfD23vqIjaERODimdj')"></div>
+</div>
+</section>
+</div>
+</main>
+<script>
+        // Simple scroll reveal for roadmap items
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('opacity-100');
+                    entry.target.classList.remove('translate-y-4');
+                    entry.target.classList.remove('opacity-0');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.relative.flex.items-start').forEach(el => {
+            el.classList.add('transition-all', 'duration-700', 'opacity-0', 'translate-y-4');
+            observer.observe(el);
+        });
+
+        // Interactive hover for cards
+        document.querySelectorAll('.bg-surface').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-2px)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+</body></html>

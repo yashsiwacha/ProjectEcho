@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Evidence Analysis | ProjectEcho</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .evidence-card-accent {
+            border-left: 4px solid #7c571a; /* Secondary/Champagne accent */
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        @keyframes pulse-subtle {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        .animate-pulse-subtle {
+            animation: pulse-subtle 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+    </style>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-primary": "#c0c6db",
+                        "surface-tint": "#575e70",
+                        "on-primary-container": "#7d8497",
+                        "error": "#ba1a1a",
+                        "on-primary-fixed": "#141b2b",
+                        "surface-bright": "#f9f9ff",
+                        "on-background": "#151c27",
+                        "secondary": "#7c571a",
+                        "background": "#f9f9ff",
+                        "surface-container-low": "#f0f3ff",
+                        "surface-dim": "#d3daea",
+                        "on-tertiary": "#ffffff",
+                        "surface": "#f9f9ff",
+                        "on-tertiary-fixed-variant": "#55442d",
+                        "on-secondary": "#ffffff",
+                        "surface-container-high": "#e2e8f8",
+                        "on-surface": "#151c27",
+                        "secondary-fixed": "#ffddb1",
+                        "surface-container": "#e7eefe",
+                        "inverse-on-surface": "#ebf1ff",
+                        "on-primary": "#ffffff",
+                        "outline": "#76777d",
+                        "secondary-container": "#ffcc83",
+                        "on-secondary-container": "#795417",
+                        "on-surface-variant": "#45464c",
+                        "on-primary-fixed-variant": "#404758",
+                        "on-secondary-fixed": "#291800",
+                        "secondary-fixed-dim": "#f0be77",
+                        "surface-container-highest": "#dce2f3",
+                        "primary-fixed-dim": "#c0c6db",
+                        "on-error-container": "#93000a",
+                        "outline-variant": "#c6c6cd",
+                        "on-tertiary-fixed": "#261906",
+                        "tertiary-fixed": "#f9debf",
+                        "primary-fixed": "#dce2f7",
+                        "primary": "#000000",
+                        "primary-container": "#141b2b",
+                        "surface-container-lowest": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "inverse-surface": "#2a313d",
+                        "tertiary-container": "#261906",
+                        "tertiary-fixed-dim": "#dcc2a4",
+                        "on-secondary-fixed-variant": "#614002",
+                        "on-tertiary-container": "#968065",
+                        "tertiary": "#000000",
+                        "surface-variant": "#dce2f3",
+                        "on-error": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-md": "16px",
+                        "margin-desktop": "48px",
+                        "unit": "8px",
+                        "gutter": "24px",
+                        "stack-sm": "8px",
+                        "margin-mobile": "20px",
+                        "stack-lg": "32px",
+                        "container-max": "1280px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Inter"],
+                        "label-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "display": ["Inter"],
+                        "body-md": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "headline-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["24px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "label-md": ["14px", {"lineHeight": "1.4", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "display": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "1.2", "letterSpacing": "0.03em", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "500"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-body-md overflow-x-hidden">
+<!-- Side Navigation Shell -->
+<aside class="fixed left-0 top-0 h-screen w-[280px] flex flex-col p-stack-md z-50 bg-surface shadow-sm transition-all duration-300">
+<div class="mb-stack-lg flex items-center px-2">
+<span class="font-headline-lg text-headline-lg font-black text-on-surface">ProjectEcho</span>
+</div>
+<nav class="flex-1 space-y-1">
+<!-- Nav Item -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<!-- Nav Item -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary">badge</span>
+<span class="font-label-md text-label-md">Career Passport</span>
+</a>
+<!-- Active Nav Item -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg bg-surface-container-high text-secondary font-bold transition-colors" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">analytics</span>
+<span class="font-label-md text-label-md">Evidence Analysis</span>
+</a>
+<!-- Nav Item -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary">map</span>
+<span class="font-label-md text-label-md">Growth Path</span>
+</a>
+</nav>
+<div class="mt-auto pt-stack-md border-t border-outline-variant">
+<div class="flex items-center gap-3 mb-4 px-2">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional studio portrait of a high-level executive with warm, soft lighting. The person has a calm, confident expression, set against a clean, minimalist off-white background that matches the professional light-mode aesthetic of a modern career operating system. The visual style is crisp and high-resolution with a focus on human-centric professional intelligence." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBuh9RXIuqahb-IYSJsMICEQfSCCTWabPYDsImdfU6spb9jZJUBPftNUWuOEHafP2jTAbwN2oJ0_BRBPY_Q-AAMqrUL-cwwiGFaSYOH6P4VQ3XiQr4VHSo72RDedRxAfQYQqAAuEAZpvNbxamwRLrix-scdYzal2e4CCBdVdoy5vpxhRr88krsQQY2OtybceBzyCcPxU7kQsiZrydSPqC7vUfsAq0Ocu2OTT3LKLBSKLmfjOLn_gmz7"/>
+</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Alex Rivera</p>
+<p class="text-[11px] text-on-surface-variant uppercase tracking-wider">Sr. Backend Architect</p>
+</div>
+</div>
+<button class="w-full py-3 bg-primary text-white rounded-lg font-label-md text-label-md hover:opacity-90 transition-opacity active:scale-[0.98]">
+                Update Evidence
+            </button>
+</div>
+</aside>
+<!-- Top App Bar -->
+<header class="flex justify-between items-center w-full h-16 px-margin-desktop sticky top-0 z-40 ml-[280px] max-w-[calc(100%-280px)] bg-surface-bright border-b border-outline-variant">
+<div class="flex items-center gap-4">
+<h1 class="font-headline-md text-headline-md font-bold text-primary">Evidence Analysis</h1>
+</div>
+<div class="flex items-center gap-stack-md">
+<div class="relative w-64 group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface-container-low border-none rounded-full text-label-sm focus:ring-2 focus:ring-secondary transition-all" placeholder="Search insights..." type="text"/>
+</div>
+<button class="p-2 hover:bg-surface-container-high rounded-full transition-all text-on-surface-variant">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 hover:bg-surface-container-high rounded-full transition-all text-on-surface-variant">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+</header>
+<!-- Main Content -->
+<main class="ml-[280px] p-margin-desktop max-w-[1400px]">
+<!-- Breadcrumb / Header Area -->
+<div class="mb-stack-lg">
+<div class="flex items-center gap-2 text-on-surface-variant font-label-sm mb-2">
+<span>Evidence</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="text-secondary font-bold">echo-core-engine</span>
+</div>
+<div class="flex justify-between items-end">
+<div>
+<h2 class="font-headline-lg text-headline-lg mb-2">Repository Analysis</h2>
+<p class="text-on-surface-variant max-w-2xl">A deep-dive technical audit of code contributions within the internal core engine, identifying high-order architectural patterns and implementation rigor.</p>
+</div>
+<div class="flex gap-stack-sm">
+<button class="flex items-center gap-2 px-4 py-2 border border-outline-variant rounded-full font-label-md hover:bg-surface-container-low transition-all">
+<span class="material-symbols-outlined text-[18px]">share</span>
+                        Share Audit
+                    </button>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-12 gap-gutter">
+<!-- LEFT: Raw Evidence Data (Bento style) -->
+<div class="col-span-12 lg:col-span-5 space-y-gutter">
+<div class="bg-surface-container-lowest rounded-xl p-stack-lg shadow-sm border border-outline-variant/30">
+<div class="flex items-center gap-3 mb-stack-md">
+<div class="p-2 bg-secondary/10 rounded-lg text-secondary">
+<span class="material-symbols-outlined">source</span>
+</div>
+<h3 class="font-headline-md text-headline-md">Raw Evidence Data</h3>
+</div>
+<div class="space-y-stack-md">
+<div class="flex justify-between p-4 bg-surface-container-low rounded-lg">
+<div>
+<p class="text-[11px] text-on-surface-variant uppercase font-bold tracking-widest mb-1">Target</p>
+<p class="font-label-md text-label-md">echo-core-engine</p>
+</div>
+<div class="text-right">
+<p class="text-[11px] text-on-surface-variant uppercase font-bold tracking-widest mb-1">Status</p>
+<span class="px-2 py-0.5 bg-green-100 text-green-800 rounded text-[10px] font-bold">ACTIVE</span>
+</div>
+</div>
+<!-- Metric Cards -->
+<div class="grid grid-cols-2 gap-stack-sm">
+<div class="p-4 border border-outline-variant rounded-lg hover:border-secondary transition-colors">
+<p class="text-on-surface-variant text-label-sm mb-1">Commit Frequency</p>
+<p class="text-headline-md font-bold text-primary">High</p>
+<p class="text-[11px] text-on-surface-variant mt-1">42 commits / month</p>
+</div>
+<div class="p-4 border border-outline-variant rounded-lg hover:border-secondary transition-colors">
+<p class="text-on-surface-variant text-label-sm mb-1">Code Complexity</p>
+<p class="text-headline-md font-bold text-primary">Advanced</p>
+<p class="text-[11px] text-on-surface-variant mt-1">Cyclomatic: 18.2</p>
+</div>
+</div>
+<div class="p-4 border border-outline-variant rounded-lg">
+<p class="text-on-surface-variant text-label-sm mb-3">Project Contribution Profile</p>
+<div class="space-y-3">
+<div class="flex justify-between items-center">
+<span class="text-label-md">Architecture Design</span>
+<div class="w-32 h-1.5 bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-[85%]"></div>
+</div>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-label-md">Feature Implementation</span>
+<div class="w-32 h-1.5 bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-[60%]"></div>
+</div>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-label-md">Performance Tuning</span>
+<div class="w-32 h-1.5 bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-[92%]"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Subtle Decorative Background Animation Element -->
+<div class="relative h-48 rounded-xl overflow-hidden shadow-sm bg-primary-container">
+
+<div class="absolute inset-0 flex flex-col justify-center items-center text-white p-stack-md text-center z-10">
+<p class="font-headline-md text-headline-md font-bold mb-1">Continuous Tracking</p>
+<p class="text-label-sm opacity-80">AI is monitoring updates to this evidence in real-time.</p>
+</div>
+</div>
+</div>
+<!-- RIGHT: AI Reasoning Engine (Detailed Steps) -->
+<div class="col-span-12 lg:col-span-7">
+<div class="bg-white rounded-xl p-stack-lg shadow-xl border border-outline-variant/30 relative overflow-hidden">
+<div class="flex items-center justify-between mb-stack-lg">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white">
+<span class="material-symbols-outlined">auto_awesome</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md">AI Reasoning Engine</h3>
+<p class="text-label-sm text-on-surface-variant">Inference Model: Echo-v4-Pro</p>
+</div>
+</div>
+<div class="flex items-center gap-2 px-3 py-1 bg-surface-container rounded-full">
+<span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+<span class="text-[11px] font-bold uppercase text-on-surface-variant">Live Analysis</span>
+</div>
+</div>
+<!-- Step-by-Step Breakdown -->
+<div class="space-y-6 relative">
+<!-- Connector Line -->
+<div class="absolute left-[19px] top-4 bottom-4 w-0.5 bg-surface-container-highest z-0"></div>
+<!-- Observation Card -->
+<div class="evidence-card-accent bg-surface-container-low p-5 rounded-r-xl relative z-10 ml-5 group hover:bg-surface-container transition-all">
+<div class="absolute -left-[27px] top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-secondary border-4 border-white"></div>
+<div class="flex justify-between items-start mb-2">
+<p class="text-[11px] font-black text-secondary tracking-widest uppercase">01. Observation</p>
+<span class="material-symbols-outlined text-[18px] text-secondary">visibility</span>
+</div>
+<p class="font-headline-md text-headline-md mb-2">Consistent use of Go concurrency patterns.</p>
+<p class="text-label-md text-on-surface-variant">Initial scan detected recurring usage of goroutines and channel management across the internal core architecture.</p>
+</div>
+<!-- Reasoning Card -->
+<div class="evidence-card-accent bg-surface-container-low p-5 rounded-r-xl relative z-10 ml-5 group hover:bg-surface-container transition-all">
+<div class="absolute -left-[27px] top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-secondary border-4 border-white"></div>
+<div class="flex justify-between items-start mb-2">
+<p class="text-[11px] font-black text-secondary tracking-widest uppercase">02. Reasoning</p>
+<span class="material-symbols-outlined text-[18px] text-secondary">psychology</span>
+</div>
+<p class="font-label-md text-label-md mb-2">Analysis of 12 files shows correct implementation of mutexes and channels.</p>
+<div class="text-[13px] bg-white/50 p-3 rounded border border-outline-variant text-on-surface-variant font-mono">
+<span class="text-secondary font-bold">DETECTION:</span> sync.RWMutex utilized in data-store layer to prevent race conditions during heavy write-ops. No deadlocks identified in 10k simulations.
+                            </div>
+</div>
+<!-- Confidence Card -->
+<div class="evidence-card-accent bg-surface-container-low p-5 rounded-r-xl relative z-10 ml-5 group hover:bg-surface-container transition-all">
+<div class="absolute -left-[27px] top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-secondary border-4 border-white"></div>
+<div class="flex justify-between items-start mb-2">
+<p class="text-[11px] font-black text-secondary tracking-widest uppercase">03. Confidence</p>
+<span class="material-symbols-outlined text-[18px] text-secondary">verified_user</span>
+</div>
+<div class="flex items-end gap-2">
+<p class="text-display font-black text-primary leading-none">94%</p>
+<p class="text-label-sm text-on-surface-variant pb-1">Certainty Rating</p>
+</div>
+<p class="mt-2 text-label-sm text-on-surface-variant">Confidence derived from cross-referencing industry-standard Go idiomatic patterns with the observed AST (Abstract Syntax Tree).</p>
+</div>
+<!-- Result Card -->
+<div class="bg-primary text-white p-6 rounded-xl relative z-10 shadow-lg transform hover:-translate-y-1 transition-transform cursor-pointer">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">task_alt</span>
+</div>
+<div>
+<p class="text-[11px] font-bold uppercase tracking-widest text-white/60">Final Deduction</p>
+<p class="text-headline-md font-bold">Verified: High Concurrency Proficiency.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- CTA Actions -->
+<div class="mt-stack-lg flex gap-stack-md pt-stack-md border-t border-outline-variant">
+<button class="flex-1 py-4 bg-secondary text-white rounded-xl font-bold hover:opacity-90 transition-opacity flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">add_task</span>
+                            Accept as Skill
+                        </button>
+<button class="flex-1 py-4 border border-outline text-on-surface rounded-xl font-bold hover:bg-surface-container transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">edit_note</span>
+                            Request Refinement
+                        </button>
+</div>
+</div>
+<!-- AI reasoning progressive disclosure hint -->
+<div class="mt-stack-md flex justify-center">
+<p class="text-on-surface-variant text-label-sm flex items-center gap-2 italic">
+<span class="material-symbols-outlined text-[14px]">info</span>
+                        AI inferences are grounded in actual code artifacts. Click any card for source links.
+                    </p>
+</div>
+</div>
+</div>
+<!-- Secondary Insights (Bottom Grid) -->
+<div class="mt-gutter grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<div class="bg-surface-container-low p-stack-md rounded-xl border border-outline-variant/30">
+<p class="text-label-sm font-bold text-on-surface-variant uppercase tracking-widest mb-2">Impact Score</p>
+<p class="text-headline-md font-bold">Critical</p>
+<p class="text-label-sm text-on-surface-variant mt-1">This evidence contributes 12% to your overall Senior Architect score.</p>
+</div>
+<div class="bg-surface-container-low p-stack-md rounded-xl border border-outline-variant/30">
+<p class="text-label-sm font-bold text-on-surface-variant uppercase tracking-widest mb-2">Associated Skills</p>
+<div class="flex flex-wrap gap-1 mt-2">
+<span class="px-2 py-1 bg-white text-[11px] font-bold rounded border border-outline-variant">Go Lang</span>
+<span class="px-2 py-1 bg-white text-[11px] font-bold rounded border border-outline-variant">Distributed Systems</span>
+<span class="px-2 py-1 bg-white text-[11px] font-bold rounded border border-outline-variant">Perf Optimization</span>
+</div>
+</div>
+<div class="bg-surface-container-low p-stack-md rounded-xl border border-outline-variant/30 flex items-center justify-between">
+<div>
+<p class="text-label-sm font-bold text-on-surface-variant uppercase tracking-widest mb-1">Last Updated</p>
+<p class="text-label-md font-bold">Oct 24, 2023</p>
+</div>
+<button class="p-2 hover:bg-white rounded-full transition-all">
+<span class="material-symbols-outlined text-secondary">refresh</span>
+</button>
+</div>
+</div>
+</main>
+<!-- Interactive script for subtle UI effects -->
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Simulate AI analysis loading effect on the reasoning cards
+            const cards = document.querySelectorAll('.evidence-card-accent');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(10px)';
+                setTimeout(() => {
+                    card.style.transition = 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 200 * index);
+            });
+        });
+    </script>
+</body></html>

@@ -95,19 +95,7 @@
                 <version>${flyway.version}</version>
             </dependency>
 
-            <!-- Messaging -->
-            <dependency>
-                <groupId>org.apache.kafka</groupId>
-                <artifactId>kafka-clients</artifactId>
-                <version>${kafka.version}</version>
-            </dependency>
 
-            <!-- Cache -->
-            <dependency>
-                <groupId>io.lettuce</groupId>
-                <artifactId>lettuce-core</artifactId>
-                <version>${lettuce.version}</version>
-            </dependency>
 
             <!-- JWT -->
             <dependency>
