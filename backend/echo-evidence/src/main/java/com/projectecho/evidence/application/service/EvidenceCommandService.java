@@ -5,7 +5,7 @@ import com.projectecho.common.valueobject.Identifier;
 import com.projectecho.evidence.application.command.AppendEvidenceCommand;
 import com.projectecho.evidence.application.command.CreateEvidenceLineageCommand;
 import com.projectecho.evidence.application.port.in.EvidenceCommandUseCase;
-import com.projectecho.evidence.application.port.out.DomainEventPublisher;
+import com.projectecho.shared.events.DomainEventPublisher;
 import com.projectecho.evidence.domain.model.Confidence;
 import com.projectecho.evidence.domain.model.EvidenceLineage;
 import com.projectecho.evidence.domain.model.Provenance;

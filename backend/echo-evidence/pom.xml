@@ -10,11 +10,11 @@
     </parent>
     <artifactId>echo-evidence</artifactId>
     <dependencies>
-        <dependency>
-            <groupId>com.projectecho</groupId>
-            <artifactId>echo-common</artifactId>
-            <version>${project.version}</version>
-        </dependency>
+            <dependency>
+                <groupId>com.projectecho</groupId>
+                <artifactId>echo-shared</artifactId>
+                <version>${project.version}</version>
+            </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
