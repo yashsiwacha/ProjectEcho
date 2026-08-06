@@ -22,5 +22,4 @@ jobs:
         cache: maven
 
     - name: Run Maven Verify (Compiles, Tests, ArchUnit)
-      working-directory: ./backend
-      run: mvn -B clean verify
+    run: mvn -B clean verify
