@@ -25,13 +25,9 @@ Engineering Architecture Document (EAD)
 
 Blocked
 
-Yes — 4 S1/S2 blockers await founder decisions. Do not begin EAD work
+Yes — S1/S2 blockers await founder decisions. Do not begin EAD work
 until these are closed.
 
-- CR-001  Product identity unresolved (Career Intelligence Platform vs
-          event delivery backbone). Blocks PRD, EAD, EDF, implementation.
-- CR-002  FGM does not exist, yet ADR-0002 is governed by it.
-- CR-003  CIF does not exist, yet ADR-001 exists to bound it.
 - CR-009  Four EAF/CIF conflicts open — the EAF cannot be ratified,
           so the EAD has no ratified parent.
 

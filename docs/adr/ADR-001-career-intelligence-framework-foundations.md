@@ -1,6 +1,26 @@
+---
+Document ID: ADR-001
+Title: Adr 001 Career Intelligence Framework Foundations
+Version: 1.0
+Status: Frozen
+Classification: Architecture
+Owner: Principal Architect
+Authority Level: 4
+Primary Audience: Engineers
+Governed By: CIF-0001
+Review Cadence: N/A
+Last Updated: 2026-08-04
+Next Review: N/A
+---
 # ADR-001
 
 ## Career Intelligence Framework Foundations
+
+> [!WARNING]
+> **DEPRECATED: SUPERSEDED BY CIF-0001**
+> All business definitions, vocabulary, and domain rules defined in this historical ADR are explicitly superseded by the ratified `CIF-0001` Career Intelligence Framework. This document is retained for historical provenance only. It holds no authority over the domain model.
+
+
 
 **Status:** Approved — Frozen
 **Date:** 2026-07-24

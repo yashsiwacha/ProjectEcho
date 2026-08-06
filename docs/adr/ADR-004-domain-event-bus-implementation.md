@@ -1,15 +1,35 @@
+---
+Document ID: ADR-004
+Title: Domain Event Bus Implementation
+Version: 2.0
+Status: Frozen
+Classification: Architecture
+Owner: Principal Architect
+Authority Level: 4
+Primary Audience: Engineers
+Governed By: CIF-0001, FGM-0001
+Review Cadence: N/A
+Last Updated: 2026-08-04
+Next Review: N/A
+---
+
 # ADR-004: Domain Event Bus Implementation
 
-**Status:** Proposed
-**Date:** 2026-07-29
-**Category:** Integration
+## Status
+Accepted (Founder Decision FD-004)
 
 ## Context
-Modules must communicate state changes (e.g., "Evidence Processed") without direct method-call coupling to preserve the DAG dependency structure defined in the EAD.
+ProjectEcho utilizes an event-driven architecture internally to maintain module decoupling (per ADR-0002). We must choose an event bus technology to implement the Domain Event passing. The initial scaffolding used Kafka, which contradicts the local execution and simplicity constraints of a Modular Monolith MVP.
+
+## Options Considered
+1. **Spring Application Events (In-memory)** - Best fit for Modular Monolith MVP. Synchronous by default, easily made asynchronous. Zero external dependencies.
+2. **Kafka** - Highly scalable, distributed. Contradicts MVP constraints.
+3. **Outbox Pattern with PostgreSQL** - Durable, medium complexity. Good for eventual consistency, but high overhead for MVP.
 
 ## Decision
-We will use **Spring ApplicationEvents (In-Memory Event Bus)** for synchronous and asynchronous intra-process communication. We will employ the Transactional Outbox pattern backed by PostgreSQL for events that require guaranteed at-least-once delivery.
+We will use **Option 1: Spring Application Events**. Kafka must be removed from the local infrastructure stack. 
 
 ## Consequences
-- **Positive:** No external broker (Kafka/RabbitMQ) required at this stage, keeping the deployment topology simple.
-- **Negative:** If we split the monolith into microservices in the future, we will need to replace the in-memory bus with a distributed broker.
+- The system remains a true Modular Monolith with no distributed deployment requirements.
+- Transactions can span event emission locally if required, simplifying data consistency.
+- Any future migration to microservices will require swapping this out for a distributed event bus (like Kafka or RabbitMQ) and implementing the Outbox Pattern.

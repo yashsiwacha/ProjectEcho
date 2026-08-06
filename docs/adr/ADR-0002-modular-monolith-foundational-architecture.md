@@ -1,3 +1,17 @@
+---
+Document ID: ADR-0002
+Title: Adr 0002 Modular Monolith Foundational Architecture
+Version: 1.0
+Status: Frozen
+Classification: Architecture
+Owner: Principal Architect
+Authority Level: 4
+Primary Audience: Engineers
+Governed By: CIF-0001
+Review Cadence: N/A
+Last Updated: 2026-08-04
+Next Review: N/A
+---
 # ADR-0002
 
 ## Foundational System Architecture: Modular Monolith

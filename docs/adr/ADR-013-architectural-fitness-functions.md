@@ -1,3 +1,17 @@
+---
+Document ID: ADR-013
+Title: Adr 013 Architectural Fitness Functions
+Version: 1.0
+Status: Frozen
+Classification: Architecture
+Owner: Principal Architect
+Authority Level: 4
+Primary Audience: Engineers
+Governed By: CIF-0001
+Review Cadence: N/A
+Last Updated: 2026-08-04
+Next Review: N/A
+---
 # ADR-013: Architectural Fitness Functions
 
 **Status:** Proposed

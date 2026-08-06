@@ -68,7 +68,6 @@ A conflict moves to `Resolved` only with a link to the artifact recording the re
 |---|---|---|---|---|---|---|
 | [CR-001](#cr-001) | Product identity: Career Intelligence Platform vs event delivery backbone | Doc↔Doc | S1 | Founder + ADR | Resolved | None |
 | [CR-002](#cr-002) | ADR-0002 is governed by the FGM, which does not exist | Doc↔Doc | S1 | Founder + FGM authoring | Resolved | None |
-| [CR-003](#cr-003) | ADR-001 bounds a CIF that does not exist | Doc↔Doc | S1 | Founder + CIF authoring | Awaiting Authoring | EAF ratification, all business terminology |
 | [CR-004](#cr-004) | ADR-0002 declares it supersedes ADR-0002 | Doc↔Doc | S2 | New ADR | Open | Traceability of the architecture change |
 | [CR-005](#cr-005) | Backend is 7 deployables; ADR-0002 Decision 001 mandates one | Doc↔Repo | S2 | Founder + ADR | Resolved | None |
 | [CR-006](#cr-006) | Kafka is built and deployed but absent from the frozen stack | Doc↔Repo | S2 | Founder | Awaiting Founder | Infrastructure, event design |
@@ -109,19 +108,7 @@ No conflict in this register has been resolved by documentation work.
 
 **Status.** Awaiting Authoring.
 
----
 
-### CR-003 — Missing CIF {#cr-003}
-
-**Positions.** ADR-001's stated purpose is to bound the CIF; 19 frozen decisions constrain it. `docs/cif/` holds only an empty `diagrams/`.
-
-**Consequence.** The CIF owns all business terminology per the precedence chain, so every business term in the repository is currently ungoverned in practice. Five ADR-001 open items (F, G, H, M, N) are addressed to it.
-
-**Authority.** Founder decision on ownership and commissioning.
-
-**Status.** Awaiting Authoring.
-
----
 
 ### CR-004 — Self-supersession {#cr-004}
 
@@ -272,6 +259,7 @@ Under (A) the manifest overrides ADR-001 and ADR-0002. Under (B) the manifest ma
 
 | CR-001 | Product Identity | FDR-001 | 2026-07-29 |
 | CR-002 | Missing FGM | FGM-001 | 2026-07-29 |
+| CR-003 | Missing CIF | CIF-001 | 2026-08-06 |
 | CR-005 | Backend vs Decision 001 | EAD-001 / Backend Purge | 2026-07-29 |
 
 ---

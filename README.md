@@ -44,7 +44,14 @@ Historical/Archived event-delivery visions: [docs/archive/PROJECT_VISION.md](doc
 2. Read [docs/INDEX.md](docs/INDEX.md) to find governance, architecture and design artifacts.
 3. Read the [Conflict Register](docs/reports/engineering/CONFLICT_REGISTER.md) before acting on anything in either of the above.
 4. Follow the [Review Protocol](.ai/employees/REVIEW_PROTOCOL.md) for any design or documentation change.
-5. Verify the backend build: `mvn -f backend/pom.xml test`
+5. Verify the backend build: `mvn clean verify`
+
+## Modules Overview
+- `echo-identity`: CareerPassport aggregate and identity lifecycle.
+- `echo-taxonomy`: Standardized skill ontology and mapping.
+- `echo-evidence`: Verification and trust-tiering of claimed skills.
+- `echo-intelligence`: AI Reasoning and Readiness scoring (Milestone 1).
+- `echo-application`: Spring Boot entrypoint, JPA/Liquibase persistence, and security configuration.
 
 ## Current state
 

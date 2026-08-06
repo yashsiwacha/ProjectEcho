@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: project-echo
+  datasource:
+    url: jdbc:postgresql://localhost:5432/project_echo
+    username: echo
+    password: echo_password

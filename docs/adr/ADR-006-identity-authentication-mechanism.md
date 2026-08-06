@@ -1,3 +1,17 @@
+---
+Document ID: ADR-006
+Title: Adr 006 Identity Authentication Mechanism
+Version: 1.0
+Status: Frozen
+Classification: Architecture
+Owner: Principal Architect
+Authority Level: 4
+Primary Audience: Engineers
+Governed By: CIF-0001
+Review Cadence: N/A
+Last Updated: 2026-08-04
+Next Review: N/A
+---
 # ADR-006: Identity Authentication Mechanism
 
 **Status:** Proposed
