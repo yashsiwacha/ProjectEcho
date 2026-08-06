@@ -1,10 +1,13 @@
 package com.projectecho.mission.domain;
 
-import java.util.Optional;
 import java.util.UUID;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface MissionRepository {
-    void save(Mission mission);
+@Repository
+public interface MissionRepository extends JpaRepository<Mission, UUID> {
 
-    Optional<Mission> findById(UUID id);
+    Page<Mission> findByStatus(MissionStatus status, Pageable pageable);
 }

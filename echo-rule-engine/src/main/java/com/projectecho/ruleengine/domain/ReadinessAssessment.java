@@ -27,7 +27,7 @@ public class ReadinessAssessment extends AggregateRoot {
     private UUID graphId;
 
     protected ReadinessAssessment() {
-        super(null);
+        super();
     }
 
     private ReadinessAssessment(

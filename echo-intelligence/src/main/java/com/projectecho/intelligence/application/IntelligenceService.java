@@ -6,8 +6,13 @@ import com.projectecho.intelligence.domain.ReasoningCardRepository;
 import com.projectecho.intelligence.domain.ReasoningSummary;
 import com.projectecho.shared.domain.MissionId;
 import com.projectecho.shared.domain.PassportId;
+import com.projectecho.shared.exception.ResourceNotFoundException;
 import java.util.Objects;
 import java.util.UUID;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class IntelligenceService {
 
+    private static final Logger LOG = LoggerFactory.getLogger(IntelligenceService.class);
     private final ReasoningCardRepository repository;
 
     public IntelligenceService(final ReasoningCardRepository repository) {
@@ -43,6 +49,37 @@ public class IntelligenceService {
                 new ReasoningCard(
                         UUID.randomUUID(), passportId, missionId, confidenceScore, summary);
 
+        if (LOG.isInfoEnabled()) {
+            LOG.info(
+                    "Reasoning card generated for passport {} mission {}",
+                    passportId.value(),
+                    missionId.value());
+        }
+
         return repository.save(card);
+    }
+
+    @Transactional(readOnly = true)
+    public ReasoningCard findById(final UUID cardId) {
+        return repository
+                .findById(cardId)
+                .orElseThrow(
+                        () -> new ResourceNotFoundException("Reasoning card not found: " + cardId));
+    }
+
+    @Transactional(readOnly = true)
+    public Page<ReasoningCard> findAll(final Pageable pageable) {
+        return repository.findAll(pageable);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<ReasoningCard> findByPassportId(
+            final PassportId passportId, final Pageable pageable) {
+        return repository.findByPassportId(passportId, pageable);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<ReasoningCard> findByMissionId(final MissionId missionId, final Pageable pageable) {
+        return repository.findByMissionId(missionId, pageable);
     }
 }

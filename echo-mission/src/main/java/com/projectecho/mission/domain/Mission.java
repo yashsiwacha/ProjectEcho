@@ -23,7 +23,7 @@ public class Mission extends AggregateRoot {
     private MissionStatus status;
 
     protected Mission() {
-        super(null);
+        super();
     }
 
     private Mission(final UUID id, final MissionTitle title, final MissionStatus status) {

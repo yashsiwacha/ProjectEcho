@@ -22,7 +22,7 @@ public class Skill extends AggregateRoot {
     @Column private SkillId parentSkillId;
 
     protected Skill() {
-        super(null);
+        super();
     }
 
     public Skill(

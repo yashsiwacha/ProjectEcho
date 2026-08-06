@@ -7,6 +7,10 @@ import com.projectecho.ruleengine.domain.ReadinessAssessment;
 import com.projectecho.ruleengine.domain.ReadinessAssessmentRepository;
 import com.projectecho.shared.events.DomainEventPublisher;
 import com.projectecho.shared.events.IntegrationEvent;
+import java.util.Optional;
+import java.util.UUID;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,5 +47,33 @@ public class RuleEngineService {
         assessment.clearDomainEvents();
 
         return assessment;
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<ReadinessAssessment> findById(final UUID id) {
+        return repository.findById(id);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<ReadinessAssessment> findAll(final Pageable pageable) {
+        return repository.findAll(pageable);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<ReadinessAssessment> findByPassportId(
+            final UUID passportId, final Pageable pageable) {
+        return repository.findByPassportId(passportId, pageable);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<ReadinessAssessment> findByMissionId(
+            final UUID missionId, final Pageable pageable) {
+        return repository.findByMissionId(missionId, pageable);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<ReadinessAssessment> findByPassportIdAndMissionId(
+            final UUID passportId, final UUID missionId, final Pageable pageable) {
+        return repository.findByPassportIdAndMissionId(passportId, missionId, pageable);
     }
 }
