@@ -1,0 +1,89 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --background: #FAFAF8;
+    --foreground: #151C27;
+    
+    --card: #FFFFFF;
+    --card-foreground: #151C27;
+    
+    --popover: #FFFFFF;
+    --popover-foreground: #151C27;
+    
+    --primary: #141B2B;
+    --primary-foreground: #FFFFFF;
+    
+    --secondary: #FFCC83;
+    --secondary-foreground: #795417;
+    
+    --accent: #B88C4A;
+    --accent-foreground: #FFFFFF;
+    
+    --muted: #F0F3FF;
+    --muted-foreground: #76777D;
+    
+    --destructive: #BA1A1A;
+    --destructive-foreground: #FFFFFF;
+
+    --border: #E5E7EB;
+    --input: #F3F4F6;
+    --ring: #B88C4A;
+    
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    --background: #0B1018;
+    --foreground: #EBF1FF;
+    
+    --card: #111827;
+    --card-foreground: #EBF1FF;
+    
+    --popover: #111827;
+    --popover-foreground: #EBF1FF;
+    
+    --primary: #DCE2F7;
+    --primary-foreground: #141B2B;
+    
+    --secondary: #614002;
+    --secondary-foreground: #FFDDB1;
+    
+    --accent: #F0BE77;
+    --accent-foreground: #291800;
+    
+    --muted: #1F2937;
+    --muted-foreground: #9CA3AF;
+    
+    --destructive: #FFDAD6;
+    --destructive-foreground: #93000A;
+
+    --border: #1F2937;
+    --input: #111827;
+    --ring: #F0BE77;
+  }
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  min-height: 100vh;
+}
+
+/* Glassmorphism & Custom Card styles */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(229, 231, 235, 0.8);
+}
+
+.dark .glass-panel {
+  background: rgba(17, 24, 39, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(31, 41, 55, 0.8);
+}
+
+.champagne-border-left {
+  border-left: 4px solid var(--accent);
+}
