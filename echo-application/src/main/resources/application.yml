@@ -7,6 +7,10 @@ spring:
     url: jdbc:postgresql://localhost:5432/project_echo
     username: echo
     password: echo_password
+  security:
+    user:
+      name: admin
+      password: "${APP_PASSWORD:adminpwd}"
 management:
   endpoints:
     web:
@@ -18,7 +22,4 @@ management:
         enabled: true
     audit:
       enabled: false
-    security:
-      user:
-        name: admin
-        password: "${APP_PASSWORD:adminpwd}"
+

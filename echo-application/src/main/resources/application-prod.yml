@@ -2,7 +2,10 @@ server:
   port: 8080
 
 spring:
-  profiles: prod
+  config:
+    activate:
+      on-profile: prod
+
 
 management:
   endpoint:
