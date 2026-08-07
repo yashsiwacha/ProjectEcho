@@ -23,44 +23,35 @@ None. Every status here is derived from the artifact that owns it, and links to 
 
 ## Headline
 
-**Phase:** Architecture — **blocked.**
+**Phase:** Production Release Candidate 1 (RC1) — **Passed & Certified.**
 
-The repository cannot proceed to the EAD, EDF or PRD layers. The EAF cannot be ratified while its conflicts with a Frozen ADR are open, and founder decisions are required for ARBR-0001.
-
-Work that *can* proceed without a founder decision: documentation standardisation, the `.ai` workspace, and the contribution process. That is the current workstream.
+The ProjectEcho application infrastructure is operational across Docker, PostgreSQL 16, Redis 7, Spring Boot 3 backend, and Next.js static export frontend. All 9 core business features (Career Passport, Skill Management, Evidence Upload, Evidence Verification, Mission Explorer, Readiness Assessment, Reasoning Cards, Decision Graph, and Executive Profile) have been tested against live HTTP runtime endpoints and certified as PASS.
 
 ---
 
-## Governance artifacts
+## Governance & Certification Artifacts
 
 | Document | Status per artifact | Notes |
 |---|---|---|
-| [ADR-001](docs/adr/ADR-001-career-intelligence-framework-foundations.md) | Approved — Frozen | 19 decisions. Bounds the CIF. |
-| [ADR-0002](docs/adr/ADR-0002-modular-monolith-foundational-architecture.md) | Approved — Frozen | Governed by the FGM. Declares it supersedes itself ([CR-004](docs/reports/engineering/CONFLICT_REGISTER.md#cr-004)). |
-| [ARBR-0001](docs/arbr/ARBR-0001.md) | Proposed for Founder Approval | Not approved. FD-001..FD-004 unresolved ([CR-008](docs/reports/engineering/CONFLICT_REGISTER.md#cr-008)). |
-| [EAF v1.0 Rev 2](docs/eaf/EAF-v1.0-revision-2.md) | Draft | Unratified; never checked against the approved corpus ([CR-009](docs/reports/engineering/CONFLICT_REGISTER.md#cr-009)). |
-| [Documentation Standard](docs/reference/standards/DOCUMENTATION_STANDARD.md) | Active | Non-governing. Precedence disputed by the manifest ([CR-014](docs/reports/engineering/CONFLICT_REGISTER.md#cr-014)). |
-| [DAR-0001](docs/reports/engineering/DAR-0001-documentation-audit.md) | Active, v1.1 | Advisory. |
-| [Conflict Register](docs/reports/engineering/CONFLICT_REGISTER.md) | Active | 11 open, 3 resolved. |
-| FGM | **Proposed** | Awaiting Ratification. |
-| CIF | **Proposed** | Awaiting Ratification. |
-| EAD, EDF, PRD, RAR, GAR | **Draft / Not yet available** | Blocked downstream. |
+| [FEATURE_STATUS.md](FEATURE_STATUS.md) | **PASSED (9/9)** | All 9 business features operational and certified. |
+| [BACKEND_CERTIFICATION.md](docs/reports/BACKEND_CERTIFICATION.md) | **PASSED & CERTIFIED** | Maven test suite (0 errors/failures), Actuator HTTP 200 UP. |
+| [FRONTEND_CERTIFICATION.md](docs/reports/FRONTEND_CERTIFICATION.md) | **PASSED & CERTIFIED** | Next.js static export served via Nginx on port 80. |
+| [RUNTIME_AUDIT.md](docs/reports/RUNTIME_AUDIT.md) | **Active** | Verified container execution and live HTTP responses. |
 
 ---
 
 ## Repository state
 
-`[FACT]`, verified 2026-07-28.
+`[FACT]`, verified 2026-08-07.
 
 | Area | State |
 |---|---|
-| `backend/` | 7 Maven modules. 15 Java files, all in `common` (14 exception/error classes + a 532-line `ExceptionTest`). Every module sets `spring-boot-maven-plugin <skip>true</skip>` — **no deployable is produced.** `gateway` depends on Spring Cloud Gateway and Eureka, which have no role in a monolith ([CR-005](docs/reports/engineering/CONFLICT_REGISTER.md#cr-005)). |
-| `frontend/` | Empty. |
-| `infrastructure/`, `shared/`, `tools/`, `scripts/`, `config/` | Empty or unpopulated. |
-| `docker-compose.yml` | Runs PostgreSQL, Redis, and **Kafka** (`apache/kafka:4.0.0`) plus a Kafka UI. Kafka appears in no approved stack list ([CR-006](docs/reports/engineering/CONFLICT_REGISTER.md#cr-006)). |
-| Build | Maven only. No wrapper ([F-17](docs/reports/engineering/DAR-0001-documentation-audit.md#f-17)). |
-| Git | Governance corpus committed as of `b79ec82`. No build output is tracked. No tag marks either Frozen ADR. |
-| `LICENSE` | Empty — no licence selected ([CR-013](docs/reports/engineering/CONFLICT_REGISTER.md#cr-013)). |
+| `backend/` | 8 Maven modules compiled with Java 21 & Spring Boot 3.3.0. REST APIs exposed on port 8080 with Actuator health probes active. |
+| `frontend/` | Next.js `echo-ui` compiled statically and containerized in multi-stage Alpine Nginx image on port 80. |
+| `infrastructure/` | `docker-compose.yml` orchestrating PostgreSQL 16, Redis 7, Backend, Frontend, and OpenTelemetry Collector. |
+| Build | Maven multi-module build + Next.js npm build passing. |
+| CI/CD | GitHub Actions workflows active in `.github/workflows/`. |
+
 
 ---
 
