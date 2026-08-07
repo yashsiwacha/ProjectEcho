@@ -10,7 +10,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Entity
-@Table(name = "intelligence_reasoning_cards")
+@Table(name = "reasoning_cards")
 public class ReasoningCard extends AggregateRoot {
 
     @Column(nullable = false)

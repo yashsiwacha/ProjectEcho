@@ -17,7 +17,7 @@ public class ReadinessAssessment extends AggregateRoot {
     @Column(nullable = false, updatable = false)
     private UUID missionId;
 
-    @Column(nullable = false)
+    @Column(name = "is_eligible", nullable = false)
     private boolean eligible;
 
     @Column(nullable = false)
