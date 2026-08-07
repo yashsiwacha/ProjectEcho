@@ -1,0 +1,123 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1.1.0
+      author: projectecho
+      changes:
+        - createTable:
+            tableName: missions
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: version
+                  type: bigint
+              - column:
+                  name: created_at
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: title
+                  type: varchar(200)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+        - createTable:
+            tableName: readiness_assessments
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: version
+                  type: bigint
+              - column:
+                  name: created_at
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: passport_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+              - column:
+                  name: mission_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+              - column:
+                  name: is_eligible
+                  type: boolean
+                  constraints:
+                    nullable: false
+              - column:
+                  name: score
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: graph_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+        - createTable:
+            tableName: reasoning_cards
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: version
+                  type: bigint
+              - column:
+                  name: created_at
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: passport_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+              - column:
+                  name: mission_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+              - column:
+                  name: confidence_score
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: summary
+                  type: text
+                  constraints:
+                    nullable: false
