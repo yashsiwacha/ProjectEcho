@@ -1,4 +1,0 @@
-echo:
-  security:
-    jwt:
-      secret: "testSecretKeyThatIsAtLeast32BytesLong12345!"
