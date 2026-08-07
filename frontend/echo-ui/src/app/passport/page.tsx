@@ -8,7 +8,9 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/com
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Badge } from '@/components/ui/Badge';
+import { Skeleton } from '@/components/ui/Skeleton';
 import { UserCheck, Plus, CheckCircle2, AlertCircle } from 'lucide-react';
+import { toast } from 'sonner';
 
 export default function PassportPage() {
   const queryClient = useQueryClient();
@@ -24,15 +26,17 @@ export default function PassportPage() {
 
   const createMutation = useMutation({
     mutationFn: api.createPassport,
-    onSuccess: () => {
+    onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['passports'] });
       setName('');
       setEmail('');
       setJobTitle('');
       setErrorMsg('');
+      toast.success(`Career Passport initialized for ${data.name}`);
     },
     onError: (err: Error) => {
       setErrorMsg(err.message);
+      toast.error(`Failed to initialize passport: ${err.message}`);
     },
   });
 
@@ -40,6 +44,7 @@ export default function PassportPage() {
     e.preventDefault();
     if (!name || !email || !jobTitle) {
       setErrorMsg('All fields are required');
+      toast.error('Please fill out all required fields');
       return;
     }
     createMutation.mutate({ name, email, jobTitle });
@@ -113,7 +118,10 @@ export default function PassportPage() {
             </CardHeader>
             <CardContent>
               {isLoading ? (
-                <div className="py-8 text-center text-sm text-muted-foreground">Loading passports...</div>
+                <div className="space-y-3">
+                  <Skeleton className="h-20 w-full" />
+                  <Skeleton className="h-20 w-full" />
+                </div>
               ) : passports?.content.length === 0 ? (
                 <div className="py-8 text-center text-sm text-muted-foreground">No passports created yet. Use the form to initialize one.</div>
               ) : (
