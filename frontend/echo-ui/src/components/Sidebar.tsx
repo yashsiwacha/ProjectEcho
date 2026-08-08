@@ -2,77 +2,90 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { 
-  LayoutDashboard, 
-  UserCheck, 
-  FileCheck, 
-  Compass, 
-  Award, 
-  BrainCircuit, 
-  GitGraph, 
-  User 
+import {
+  LayoutDashboard,
+  UserCheck,
+  FileCheck,
+  Compass,
+  Award,
+  GitGraph,
+  ShieldCheck,
+  Zap,
+  Layers,
+  Sparkles,
+  ChevronRight
 } from 'lucide-react';
-import { cn } from '@/lib/utils';
 
-const navItems = [
-  { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
-  { name: 'Career Passport', href: '/passport', icon: UserCheck },
-  { name: 'Evidence Upload', href: '/evidence', icon: FileCheck },
-  { name: 'Mission Explorer', href: '/missions', icon: Compass },
-  { name: 'Readiness Assessment', href: '/assessment', icon: Award },
-  { name: 'Reasoning Card', href: '/reasoning', icon: BrainCircuit },
-  { name: 'Decision Graph', href: '/graph', icon: GitGraph },
-  { name: 'Profile', href: '/profile', icon: User },
+const NAV_ITEMS = [
+  { label: 'Dashboard', href: '/dashboard', icon: LayoutDashboard, badge: 'Active' },
+  { label: 'Career Passport', href: '/passport', icon: UserCheck, badge: 'Tier 4' },
+  { label: 'Evidence Sandbox', href: '/evidence', icon: FileCheck, badge: 'Proof' },
+  { label: 'Skills Galaxy', href: '/skills', icon: Zap, badge: '3D' },
+  { label: 'Mission Explorer', href: '/missions', icon: Compass, badge: 'Roles' },
+  { label: 'Readiness Engine', href: '/assessment', icon: ShieldCheck, badge: 'Score' },
+  { label: 'Reasoning Cards', href: '/reasoning', icon: Award, badge: 'Explain' },
+  { label: 'Decision Graph', href: '/graph', icon: GitGraph, badge: '3D DAG' },
+  { label: 'Executive Profile', href: '/profile', icon: Layers, badge: 'Public' },
 ];
 
-export function Sidebar() {
+export default function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="w-70 border-r border-border bg-card/60 backdrop-blur-md h-screen sticky top-0 flex flex-col justify-between p-6">
-      <div>
-        <div className="flex items-center gap-3 mb-10 px-2">
-          <div className="w-9 h-9 rounded-lg bg-primary flex items-center justify-center text-primary-foreground font-bold text-lg">
-            E
-          </div>
-          <div>
-            <h1 className="font-bold text-foreground tracking-tight text-lg">ProjectEcho</h1>
-            <p className="text-xs text-muted-foreground">Career Operating System</p>
-          </div>
+    <aside className="w-64 border-r border-border/80 bg-background/90 backdrop-blur-xl flex flex-col justify-between p-4 sticky top-16 h-[calc(100vh-4rem)]">
+      <div className="space-y-6">
+        {/* Section Header */}
+        <div className="px-3 pt-2">
+          <span className="text-[10px] font-mono font-bold tracking-widest text-muted-foreground uppercase">
+            Platform Modules
+          </span>
         </div>
 
-        <nav className="space-y-1">
-          {navItems.map((item) => {
-            const isActive = pathname === item.href;
+        {/* Navigation List */}
+        <nav className="space-y-1.5">
+          {NAV_ITEMS.map((item) => {
             const Icon = item.icon;
+            const isActive = pathname === item.href;
 
             return (
               <Link
                 key={item.href}
                 href={item.href}
-                className={cn(
-                  'flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200',
+                className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all group ${
                   isActive
-                    ? 'bg-secondary/20 text-secondary-foreground font-semibold border-l-4 border-accent pl-3'
-                    : 'text-muted-foreground hover:bg-muted hover:text-foreground'
-                )}
+                    ? 'bg-amber-500/15 text-amber-300 border border-amber-500/40 shadow-lg shadow-amber-500/10'
+                    : 'text-muted-foreground hover:text-foreground hover:bg-muted/50 border border-transparent'
+                }`}
               >
-                <Icon className={cn('w-5 h-5', isActive ? 'text-accent' : 'text-muted-foreground')} />
-                {item.name}
+                <div className="flex items-center gap-3">
+                  <Icon className={`w-4 h-4 transition-colors ${isActive ? 'text-amber-400' : 'text-muted-foreground group-hover:text-amber-400'}`} />
+                  <span>{item.label}</span>
+                </div>
+
+                {item.badge && (
+                  <span className={`text-[10px] font-mono px-2 py-0.5 rounded-full border ${
+                    isActive
+                      ? 'bg-amber-500/25 border-amber-500/40 text-amber-300 font-bold'
+                      : 'bg-muted/60 border-border text-muted-foreground group-hover:border-amber-500/30'
+                  }`}>
+                    {item.badge}
+                  </span>
+                )}
               </Link>
             );
           })}
         </nav>
       </div>
 
-      <div className="p-4 rounded-xl bg-muted/50 border border-border">
-        <div className="flex items-center justify-between text-xs text-muted-foreground">
-          <span>Backend Status</span>
-          <span className="flex items-center gap-1.5 font-medium text-emerald-600 dark:text-emerald-400">
-            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-            RC1 Connected
-          </span>
+      {/* Footer Security Badge */}
+      <div className="p-3.5 rounded-xl bg-muted/40 border border-border/60 space-y-2">
+        <div className="flex items-center gap-2 text-xs font-semibold text-foreground">
+          <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+          <span>Deterministic AI Core</span>
         </div>
+        <p className="text-[11px] text-muted-foreground leading-relaxed">
+          Zero hallucinations. All reasoning backed by auditable domain events.
+        </p>
       </div>
     </aside>
   );

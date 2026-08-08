@@ -8,12 +8,12 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/com
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Badge } from '@/components/ui/Badge';
-import { Compass, Plus, Play, Archive, AlertCircle } from 'lucide-react';
+import { Compass, Plus, Play, CheckCircle2, Award, Zap, Layers } from 'lucide-react';
+import { toast } from 'sonner';
 
 export default function MissionsPage() {
   const queryClient = useQueryClient();
-  const [title, setTitle] = useState('');
-  const [errorMsg, setErrorMsg] = useState('');
+  const [missionTitle, setMissionTitle] = useState('');
 
   const { data: missions, isLoading } = useQuery({
     queryKey: ['missions'],
@@ -22,113 +22,146 @@ export default function MissionsPage() {
 
   const createMutation = useMutation({
     mutationFn: api.createMission,
-    onSuccess: () => {
+    onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['missions'] });
-      setTitle('');
-      setErrorMsg('');
+      setMissionTitle('');
+      toast.success(`Mission "${data.title}" established!`);
     },
-    onError: (err: Error) => setErrorMsg(err.message),
+    onError: (err: Error) => {
+      toast.error(`Failed to create mission: ${err.message}`);
+    },
   });
 
   const activateMutation = useMutation({
     mutationFn: api.activateMission,
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['missions'] }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['missions'] });
+      toast.success('Mission activated for readiness qualification!');
+    },
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleCreateMission = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!title) {
-      setErrorMsg('Mission title is required');
+    if (!missionTitle) {
+      toast.error('Mission title is required');
       return;
     }
-    createMutation.mutate({ title });
+    createMutation.mutate({ title: missionTitle });
   };
 
   return (
     <AppLayout>
       <div className="space-y-8 max-w-5xl">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">Mission Explorer</h1>
-          <p className="text-muted-foreground mt-1">Configure and activate target career roles and readiness missions.</p>
+        {/* Header */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <div className="flex items-center gap-2">
+              <h1 className="text-3xl font-extrabold tracking-tight text-white">Mission Explorer</h1>
+              <Badge variant="champagne" className="text-[10px]">Strategic Quests</Badge>
+            </div>
+            <p className="text-muted-foreground text-sm mt-1">
+              Target executive roles, required competency checklists, and multi-state activation pathways.
+            </p>
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {/* Two Column Grid: Creation & Quest Board */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
           {/* Create Mission Form */}
-          <Card className="md:col-span-1">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Plus className="w-5 h-5 text-accent" /> Create Mission
+          <Card champagneBorder className="md:col-span-5 p-6">
+            <CardHeader className="p-0 pb-4">
+              <CardTitle className="flex items-center gap-2 text-base font-bold text-white">
+                <Plus className="w-4 h-4 text-amber-400" /> Create Executive Mission
               </CardTitle>
-              <CardDescription>Define a new strategic role objective</CardDescription>
+              <CardDescription className="text-xs">
+                Define a target career objective or strategic engineering role
+              </CardDescription>
             </CardHeader>
-            <CardContent>
-              <form onSubmit={handleSubmit} className="space-y-4">
+            <CardContent className="p-0">
+              <form onSubmit={handleCreateMission} className="space-y-4">
                 <Input
-                  label="Mission Title"
-                  placeholder="e.g. Lead Systems Architect"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
+                  label="Mission Role Title"
+                  placeholder="e.g. Chief Systems Architect"
+                  value={missionTitle}
+                  onChange={(e) => setMissionTitle(e.target.value)}
                 />
 
-                {errorMsg && (
-                  <div className="p-3 rounded-lg bg-destructive/10 border border-destructive/20 text-destructive text-xs flex items-center gap-2">
-                    <AlertCircle className="w-4 h-4 flex-shrink-0" />
-                    {errorMsg}
-                  </div>
-                )}
+                <div className="p-3 rounded-xl bg-slate-900/80 border border-border text-xs text-muted-foreground space-y-1.5">
+                  <div className="font-semibold text-white">Standard Requirements Evaluated:</div>
+                  <ul className="list-disc pl-4 space-y-0.5 font-mono text-[11px]">
+                    <li>Java 21 / Spring Boot 3 DDD (Tier 4)</li>
+                    <li>Distributed Event Streaming & Kafka</li>
+                    <li>Zero-Trust OWASP Security Compliance</li>
+                  </ul>
+                </div>
 
-                <Button type="submit" variant="champagne" className="w-full" disabled={createMutation.isPending}>
-                  {createMutation.isPending ? 'Creating...' : 'Create Mission'}
+                <Button
+                  type="submit"
+                  variant="champagne"
+                  className="w-full font-bold shadow-lg shadow-amber-500/20"
+                  disabled={createMutation.isPending}
+                >
+                  {createMutation.isPending ? 'Establishing...' : 'Publish Mission'}
                 </Button>
               </form>
             </CardContent>
           </Card>
 
-          {/* Missions List */}
-          <Card className="md:col-span-2">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Compass className="w-5 h-5 text-accent" /> Active & Draft Missions
+          {/* Missions Quest Board */}
+          <Card champagneBorder className="md:col-span-7 p-6">
+            <CardHeader className="p-0 pb-4">
+              <CardTitle className="flex items-center gap-2 text-base font-bold text-white">
+                <Compass className="w-4 h-4 text-emerald-400" /> Active Career Quests
               </CardTitle>
-              <CardDescription>System target missions available for evaluation</CardDescription>
+              <CardDescription className="text-xs">
+                Evaluate your verified passport against active mission criteria
+              </CardDescription>
             </CardHeader>
-            <CardContent>
-              {isLoading ? (
-                <div className="py-8 text-center text-sm text-muted-foreground">Loading missions...</div>
-              ) : missions?.content.length === 0 ? (
-                <div className="py-8 text-center text-sm text-muted-foreground">No missions available. Create one to begin.</div>
-              ) : (
-                <div className="space-y-4">
-                  {missions?.content.map((mission) => (
+            <CardContent className="p-0">
+              <div className="space-y-4">
+                {missions?.content.map((m) => {
+                  const isActive = m.status === 'ACTIVE';
+                  return (
                     <div
-                      key={mission.id}
-                      className="p-5 rounded-xl bg-card border border-border flex items-center justify-between gap-4"
+                      key={m.id}
+                      className="p-5 rounded-2xl bg-slate-900/60 border border-border hover:border-amber-500/40 transition-all space-y-3"
                     >
-                      <div className="space-y-1">
-                        <div className="flex items-center gap-2">
-                          <h3 className="font-semibold text-base">{mission.title}</h3>
-                          <Badge variant={mission.status === 'ACTIVE' ? 'success' : 'default'}>
-                            {mission.status}
-                          </Badge>
+                      <div className="flex items-start justify-between gap-4">
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <h4 className="font-bold text-base text-white">{m.title}</h4>
+                            <Badge variant={isActive ? 'success' : 'default'} className="text-[10px]">
+                              {m.status}
+                            </Badge>
+                          </div>
+                          <span className="text-[10px] font-mono text-muted-foreground block mt-0.5">
+                            ID: {m.id}
+                          </span>
                         </div>
-                        <p className="text-xs text-muted-foreground font-mono">ID: {mission.id}</p>
+
+                        {!isActive && (
+                          <Button
+                            size="sm"
+                            variant="champagne"
+                            onClick={() => activateMutation.mutate(m.id)}
+                            disabled={activateMutation.isPending}
+                            className="text-xs font-bold gap-1"
+                          >
+                            <Play className="w-3.5 h-3.5" /> Activate
+                          </Button>
+                        )}
                       </div>
 
-                      {mission.status === 'DRAFT' && (
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          className="gap-1.5"
-                          onClick={() => activateMutation.mutate(mission.id)}
-                          disabled={activateMutation.isPending}
-                        >
-                          <Play className="w-3.5 h-3.5" /> Activate
-                        </Button>
-                      )}
+                      <div className="flex items-center justify-between pt-2 border-t border-border/60 text-xs font-mono">
+                        <div className="flex items-center gap-1.5 text-emerald-400">
+                          <CheckCircle2 className="w-3.5 h-3.5" /> Ready for Rule Engine
+                        </div>
+                        <span className="text-muted-foreground">{m.createdAt}</span>
+                      </div>
                     </div>
-                  ))}
-                </div>
-              )}
+                  );
+                })}
+              </div>
             </CardContent>
           </Card>
         </div>
