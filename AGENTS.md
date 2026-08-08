@@ -42,6 +42,13 @@ Project Echo follows a strict documentation-first engineering process.
 - Use for Issues, Milestones, PRs, Branches, and Execution Tracking.
 - Never create duplicate Issues or duplicate Pull Requests.
 - Ensure PR descriptions comprehensively detail implemented Epics, Features, and affected modules.
+- **MANDATORY GITHUB WORKFLOW**: To maintain a balanced contribution graph and follow industry standards, all development must follow this strict sequence:
+  1. **Issue**: Create a GitHub Issue for the task before writing any code.
+  2. **Branch**: Create and checkout a new feature/bugfix branch from `main`.
+  3. **Commit**: Make logical commits to the isolated branch.
+  4. **Pull Request**: Open a Pull Request against `main` and explicitly link the issue (e.g., "Closes #123").
+  5. **Review & Merge**: Trigger the `coderabbit-reviewer` skill and merge the PR only when all quality gates pass.
+  *Direct commits to the `main` or `master` branch are strictly prohibited.*
 
 ### Stitch MCP
 - Treat Stitch as the authoritative source for UI, UX, Components, Design Tokens, Flows, and Accessibility.
