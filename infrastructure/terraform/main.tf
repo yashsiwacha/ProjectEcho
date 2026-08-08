@@ -64,3 +64,10 @@ module "ecs" {
   postgres_endpoint = module.database.postgres_endpoint
   redis_endpoint    = module.database.redis_endpoint
 }
+
+module "security" {
+  source = "./security"
+
+  name_prefix = local.name_prefix
+  alb_arn     = module.alb.alb_arn
+}
