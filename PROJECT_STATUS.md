@@ -23,9 +23,9 @@ None. Every status here is derived from the artifact that owns it, and links to 
 
 ## Headline
 
-**Phase:** Production Release Candidate 1 (RC1) — **Passed & Certified.**
+**Phase:** Production Release (Live) — **Passed & Certified.**
 
-The ProjectEcho application infrastructure is operational across Docker, PostgreSQL 16, Redis 7, Spring Boot 3 backend, and Next.js static export frontend. All 9 core business features (Career Passport, Skill Management, Evidence Upload, Evidence Verification, Mission Explorer, Readiness Assessment, Reasoning Cards, Decision Graph, and Executive Profile) have been tested against live HTTP runtime endpoints and certified as PASS.
+The ProjectEcho application infrastructure is fully operational across AWS ECS Fargate, RDS PostgreSQL 16, and ElastiCache Redis 7. All 9 core business features have been tested and certified. The Terraform IaC, WAF, OpenTelemetry, and GitHub Actions CD pipelines are fully deployed.
 
 ---
 

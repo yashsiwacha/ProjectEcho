@@ -1,0 +1,32 @@
+name: CD Pipeline - ECS Deploy
+
+on:
+  workflow_run:
+    workflows: ["CI Pipeline - Build and Push"]
+    types:
+      - completed
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Force ECS Backend Deployment
+        run: |
+          aws ecs update-service --cluster echo-staging-cluster --service echo-staging-backend-service --force-new-deployment
+
+      - name: Force ECS Frontend Deployment
+        run: |
+          aws ecs update-service --cluster echo-staging-cluster --service echo-staging-frontend-service --force-new-deployment
