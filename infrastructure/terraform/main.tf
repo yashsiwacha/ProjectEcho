@@ -71,3 +71,9 @@ module "security" {
   name_prefix = local.name_prefix
   alb_arn     = module.alb.alb_arn
 }
+
+module "observability" {
+  source = "./observability"
+
+  name_prefix = local.name_prefix
+}
