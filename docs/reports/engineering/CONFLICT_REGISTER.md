@@ -70,15 +70,15 @@ A conflict moves to `Resolved` only with a link to the artifact recording the re
 | [CR-002](#cr-002) | ADR-0002 is governed by the FGM, which does not exist | Doc↔Doc | S1 | Founder + FGM authoring | Resolved | None |
 | [CR-004](#cr-004) | ADR-0002 declares it supersedes ADR-0002 | Doc↔Doc | S2 | New ADR | Open | Traceability of the architecture change |
 | [CR-005](#cr-005) | Backend is 7 deployables; ADR-0002 Decision 001 mandates one | Doc↔Repo | S2 | Founder + ADR | Resolved | None |
-| [CR-006](#cr-006) | Kafka is built and deployed but absent from the frozen stack | Doc↔Repo | S2 | Founder | Awaiting Founder | Infrastructure, event design |
+| [CR-006](#cr-006) | Kafka is built and deployed but absent from the frozen stack | Doc↔Repo | S2 | Founder | Resolved | None |
 | [CR-007](#cr-007) | Spring AI is in the frozen stack but in no POM | Doc↔Repo | S3 | Engineering | Open | AI integration phase |
-| [CR-008](#cr-008) | ARBR-0001 reported Approved; artifact says Proposed | Doc↔Doc | S3 | Founders | Awaiting Founder | Module governance rules FD-001..FD-004 |
-| [CR-009](#cr-009) | Four EAF/CIF conflicts declared open and unowned | Doc↔Doc | S2 | Founder + ARB | Awaiting Founder | EAF ratification, therefore EAD |
+| [CR-008](#cr-008) | ARBR-0001 reported Approved; artifact says Proposed | Doc↔Doc | S3 | Founders | Resolved | None |
+| [CR-009](#cr-009) | Four EAF/CIF conflicts declared open and unowned | Doc↔Doc | S2 | Founder + ARB | Resolved | None |
 | [CR-010](#cr-010) | ADR identifier width inconsistent; ADR-0001 deleted while cited | Doc↔Doc | S3 | Governance | Open | Citation integrity |
-| [CR-011](#cr-011) | Product Impact Report 001 cited by a Frozen ADR but absent | Doc↔Doc | S3 | Founders | Awaiting Founder | ADR-0002 traceability, tenancy constraint |
+| [CR-011](#cr-011) | Product Impact Report 001 cited by a Frozen ADR but absent | Doc↔Doc | S3 | Founders | Resolved | None |
 | [CR-012](#cr-012) | `backend/common` module contravenes the Engineering Guide | Doc↔Repo | S3 | Engineering | Open | Nothing; corrected at module reshape |
-| [CR-013](#cr-013) | Licence unchosen while README directs readers to it | Doc↔Repo | S4 | Founder | Awaiting Founder | Public release |
-| [CR-014](#cr-014) | Manifest claims rank above ADRs; Documentation Standard ranks it below | Doc↔Doc | S2 | Founder + FGM | Awaiting Founder | Which document wins any future disagreement |
+| [CR-013](#cr-013) | Licence unchosen while README directs readers to it | Doc↔Repo | S4 | Founder | Resolved | None |
+| [CR-014](#cr-014) | Manifest claims rank above ADRs; Documentation Standard ranks it below | Doc↔Doc | S2 | Founder + FGM | Resolved | None |
 
 No conflict in this register has been resolved by documentation work.
 
@@ -261,6 +261,12 @@ Under (A) the manifest overrides ADR-001 and ADR-0002. Under (B) the manifest ma
 | CR-002 | Missing FGM | FGM-001 | 2026-07-29 |
 | CR-003 | Missing CIF | CIF-001 | 2026-08-06 |
 | CR-005 | Backend vs Decision 001 | EAD-001 / Backend Purge | 2026-07-29 |
+| CR-006 | Kafka | FD-005 | 2026-08-08 |
+| CR-008 | ARBR-0001 status | FD-005 | 2026-08-08 |
+| CR-009 | EAF/CIF conflicts | FD-005 | 2026-08-08 |
+| CR-011 | Product Impact Report 001 | FD-005 | 2026-08-08 |
+| CR-013 | Licence | FD-005 | 2026-08-08 |
+| CR-014 | Precedence inversion | FD-005 | 2026-08-08 |
 
 ---
 

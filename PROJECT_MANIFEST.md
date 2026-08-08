@@ -140,8 +140,7 @@ in that document's own metadata block (Documentation Standard §2).
 
 - ADR-001 — Approved, Frozen
 - ADR-0002 — Approved, Frozen
-- ARBR-0001 — **Proposed for Founder Approval** (not approved; FD-001 to
-  FD-004 unresolved — CR-008)
+- ARBR-0001 — **Approved** (FD-001 to FD-004 resolved via FD-005)
 - EAF Rev 2 — Draft, unratified
 
 Completed Work
@@ -151,6 +150,8 @@ Completed Work
 - ADR-0002 (Modular Monolith)
 - ARBR-0001 issued (review complete; approval not recorded)
 - Documentation Standard, DAR-0001 audit, Conflict Register
+- Founder Decision FD-005 resolving Sprint 5 governance blocks
+- ADR-0003 Ratification of Kafka Event Backbone
 
 Pending Work
 
