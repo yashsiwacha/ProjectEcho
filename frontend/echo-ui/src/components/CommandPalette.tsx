@@ -21,7 +21,7 @@ interface CommandItem {
   title: string;
   category: string;
   href: string;
-  icon: any;
+  icon: React.ElementType;
   badge?: string;
 }
 
@@ -96,7 +96,7 @@ export default function CommandPalette() {
         <div className="max-h-80 overflow-y-auto p-2 space-y-1">
           {filtered.length === 0 ? (
             <div className="py-8 text-center text-xs text-muted-foreground font-mono">
-              No matching modules found for "{query}".
+              No matching modules found for &quot;{query}&quot;.
             </div>
           ) : (
             filtered.map((cmd) => {

@@ -20,7 +20,7 @@ import { toast } from 'sonner';
 import ThreeDecisionGraph from '@/components/3d/ThreeDecisionGraph';
 
 export default function GraphPage() {
-  const [selectedNode, setSelectedNode] = useState<any>(null);
+  const [selectedNode, setSelectedNode] = useState<unknown>(null);
 
   const handleExportJson = () => {
     toast.success('Decision DAG AST exported as JSON!');

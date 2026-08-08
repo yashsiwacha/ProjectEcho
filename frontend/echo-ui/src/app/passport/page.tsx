@@ -36,7 +36,7 @@ export default function PassportPage() {
     queryFn: () => api.getPassports(),
   });
 
-  const [selectedPassport, setSelectedPassport] = useState<any>(null);
+  const [selectedPassport, setSelectedPassport] = useState<unknown>(null);
 
   const activePassport = selectedPassport || (passports?.content && passports.content[0]);
 

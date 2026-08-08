@@ -91,7 +91,7 @@ export default function ReasoningPage() {
               Deterministic Evaluation Summary
             </span>
             <p className="text-sm text-foreground leading-relaxed font-medium">
-              "{card.summary}"
+              &quot;{card.summary}&quot;
             </p>
           </div>
 

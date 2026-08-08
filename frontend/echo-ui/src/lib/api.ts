@@ -127,7 +127,7 @@ let MOCK_MISSIONS: Mission[] = [
   { id: 'aa7def7d-74ef-4fa9-a541-4a27fd25c234', title: 'Head of Distributed Event-Driven Infrastructure', status: 'DRAFT', createdAt: '2026-08-08', updatedAt: '2026-08-08' },
 ];
 
-let MOCK_REASONING: ReasoningCard[] = [
+const MOCK_REASONING: ReasoningCard[] = [
   {
     id: 'rc-001',
     passportId: 'f2706538-f134-4c58-8825-4ee944a10052',

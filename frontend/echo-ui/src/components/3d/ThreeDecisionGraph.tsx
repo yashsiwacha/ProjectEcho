@@ -157,7 +157,7 @@ export default function ThreeDecisionGraph({
 
     // 5. Animation Loop
     let frameId: number;
-    let clock = new THREE.Clock();
+    const clock = new THREE.Clock();
 
     const animate = () => {
       frameId = requestAnimationFrame(animate);

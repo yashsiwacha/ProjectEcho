@@ -25,7 +25,7 @@ export default function AssessmentPage() {
   const [skillProficiency, setSkillProficiency] = useState(95);
   const [experienceWeight, setExperienceWeight] = useState(90);
   const [trustMultiplier, setTrustMultiplier] = useState(100);
-  const [evaluationResult, setEvaluationResult] = useState<any>({
+  const [evaluationResult, setEvaluationResult] = useState<unknown>({
     score: 98.4,
     eligible: true,
     rulesPassed: 4,
