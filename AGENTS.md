@@ -70,3 +70,52 @@ Project Echo follows a strict documentation-first engineering process.
 - PRD satisfied, Founder Decisions satisfied, ADRs respected.
 - Architecture compliant and Stitch compliant.
 - Tests passing, Security passed, Documentation updated, and GitHub synchronized.
+
+## 6. Centers of Excellence (CoE) — Founder Directive FD-0013
+
+The following external CoEs are permanently adopted as part of the Engineering Constitution.
+All evaluation gates are **mandatory** and must be completed before any implementation begins.
+
+### 6.1 Frontend Feature Evaluation Gate
+Every **frontend feature** must evaluate all five dimensions before implementation:
+
+| CoE | Reference | Responsibility |
+|-----|-----------|----------------|
+| **Motion Engineering** | Motion.dev, Motion AI Kit | Animations, page transitions, shared-layout, gestures, scroll-linked animation, spring physics, exit animations, micro-interactions, `prefers-reduced-motion` compliance |
+| **Design System** | KokonutUI | Premium component design, design tokens, Tailwind architecture, loading/empty/error states, dark mode, WCAG compliance |
+| **Accessibility** | WCAG 2.1 AA | ARIA roles, keyboard navigation, focus management, screen-reader compatibility |
+| **Data Visualization** | Bklit UI | Dashboard design, charts, KPIs, analytics, real-time data, executive reporting |
+| **Performance** | Lighthouse, Web Vitals | LCP ≤ 2.5 s, CLS < 0.1, INP < 200 ms, code-splitting, critical CSS |
+
+**Mandatory Rules:**
+- Every frontend feature must evaluate whether meaningful motion improves usability.
+- Animations must never reduce accessibility or performance.
+- Do not build custom components if an existing design-system pattern satisfies the requirement.
+- New components must be reusable.
+- Every dashboard must expose meaningful business KPIs.
+- Charts must remain accessible and responsive.
+
+### 6.2 Platform Feature Evaluation Gate
+Every **platform / backend feature** must evaluate all five dimensions before implementation:
+
+| CoE | Reference | Responsibility |
+|-----|-----------|----------------|
+| **Autonomous AI** | Manus | Autonomous planning, multi-step execution, research workflows, long-running orchestration, agent collaboration, self-verification |
+| **Workflow Optimisation** | — | Reduce manual steps; automate repeatable processes |
+| **Reusability** | — | Extract shared modules; never duplicate domain logic |
+| **Developer Experience** | — | Fast local setup, clear APIs, self-documenting code |
+| **Maintainability** | — | Clean Architecture, SOLID, DRY, test coverage ≥ 90 % |
+
+**Mandatory Rules:**
+- Every large Founder request must first be decomposed into executable work packages before implementation begins.
+- Use AI automation only where it improves understanding, speed, or quality — never for decoration.
+
+### 6.3 Continuous Learning Protocol
+When a new pattern, component, animation technique, interaction model, dashboard design, or AI workflow is discovered from these ecosystems:
+1. Evaluate it against existing company standards.
+2. Extract reusable knowledge.
+3. Store it in the Knowledge Platform.
+4. Update templates where appropriate.
+5. Never duplicate functionality; never copy blindly — adapt patterns to the YES architecture.
+
+*Reference: `decisions/ADR-003-CoE.md`*
