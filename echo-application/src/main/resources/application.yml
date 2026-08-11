@@ -23,3 +23,12 @@ management:
     audit:
       enabled: false
 
+# JWT signing configuration (SEC-01 / ADR-006).
+# The secret MUST be supplied via the JWT_SECRET environment variable.
+# Never commit a real secret here. See .env.example.
+echo:
+  security:
+    jwt:
+      secret: "${JWT_SECRET}"
+      expiration-ms: "${JWT_EXPIRATION_MS:86400000}"
+      issuer: "${JWT_ISSUER:project-echo}"

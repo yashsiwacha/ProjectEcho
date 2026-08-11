@@ -6,38 +6,57 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+/**
+ * Spring Security configuration for Project Echo.
+ *
+ * <p>Uses a stateless JWT-based security model (ADR-006). The signing secret is loaded from
+ * environment variables at startup — never from source code (ADR-011, SEC-01).
+ */
 @Configuration
 @EnableWebSecurity
 @SuppressWarnings("PMD.UnnecessaryConstructor")
 public class SecurityConfig {
 
-    public SecurityConfig() {
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+
+    public SecurityConfig(final JwtAuthenticationFilter jwtAuthenticationFilter) {
         super();
+        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
     }
 
     @Bean
     public SecurityFilterChain securityFilterChain(final HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .sessionManagement(
+                        session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(
                         auth ->
                                 auth.requestMatchers(
+                                                // Health & observability — public
                                                 "/actuator/health/**",
                                                 "/actuator/health/readiness",
                                                 "/actuator/health/liveness",
                                                 "/actuator/**",
+                                                // OpenAPI docs — public
                                                 "/v3/api-docs/**",
                                                 "/swagger-ui/**",
                                                 "/swagger-ui.html",
-                                                "/api/v1/**")
+                                                // Auth endpoints — public (login, register)
+                                                "/api/v1/auth/**")
                                         .permitAll()
                                         .anyRequest()
-                                        .authenticated());
+                                        .authenticated())
+                // Validate JWT on every protected request
+                .addFilterBefore(
+                        jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
