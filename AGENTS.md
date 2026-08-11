@@ -118,4 +118,21 @@ When a new pattern, component, animation technique, interaction model, dashboard
 4. Update templates where appropriate.
 5. Never duplicate functionality; never copy blindly — adapt patterns to the YES architecture.
 
-*Reference: `decisions/ADR-003-CoE.md`*
+*Reference: `decisions/ADR-003-CoE.md`
+
+## 7. Engineering Intelligence Platform — Founder Directive FD-0014
+
+Project Echo enforces a continuous learning constraint. The organization must compound its capabilities after every Founder request.
+
+### 7.1 The Continuous Learning Constraint
+- **Mandatory Reusable Output:** No engineering task, bug fix, or workspace modification may be marked complete or merged without producing or updating at least one reusable knowledge artifact in `EOS/Intelligence/`.
+- **Allowed Artifact Types:**
+  - **New Pattern:** A documented design or logic pattern in `PatternLibrary/` (e.g. `PatternLibrary/authentication/JWT_PATTERN.md`).
+  - **New Component:** An extracted or custom UI component in `DesignSystem/COMPONENT_CATALOGUE.md`.
+  - **New Motion Primitive:** An animation config or primitive in `Motion/PRIMITIVES.md`.
+  - **New Playbook:** An AI or UX operational guide in `AIPlaybooks/` or `UXPlaybooks/`.
+  - **New Benchmark:** A completed scorecard in `Benchmarking/` following `BENCHMARK_ENGINE.md` rules.
+  - **New Template:** A standard boilerplate in `EOS/Templates/`.
+- **Pre-Implementation Verification:** Every agent/engineer must search `EOS/Intelligence/PatternLibrary/` for existing solutions before writing code. Reuse existing patterns; do not duplicate functionality.
+- **Workflow Hook:** The Review Office and Delivery Office will audit task deliverables against this constraint. Non-compliant tasks will be rejected.
+
