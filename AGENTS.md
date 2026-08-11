@@ -37,17 +37,18 @@ Project Echo follows a strict documentation-first engineering process.
 - Implementation **must always** align with all of these sources. If conflicts exist, prioritize Founder Decisions and request clarification.
 
 ## 4. MCP Integration
-### GitHub MCP
+### GitHub MCP & GOP (FD-0016)
 - Use for Issues, Milestones, PRs, Branches, and Execution Tracking.
 - Never create duplicate Issues or duplicate Pull Requests.
 - Ensure PR descriptions comprehensively detail implemented Epics, Features, and affected modules.
-- **MANDATORY GITHUB WORKFLOW**: To maintain a balanced contribution graph and follow industry standards, all development must follow this strict sequence:
-  1. **Issue**: Create a GitHub Issue for the task before writing any code.
-  2. **Branch**: Create and checkout a new feature/bugfix branch from `main`.
-  3. **Commit**: Make logical commits to the isolated branch.
-  4. **Pull Request**: Open a Pull Request against `main` and explicitly link the issue (e.g., "Closes #123").
-  5. **Review & Merge**: Trigger the `coderabbit-reviewer` skill and merge the PR only when all quality gates pass.
-  *Direct commits to the `main` or `master` branch are strictly prohibited.*
+- **MANDATORY GITHUB WORKFLOW (GOP Compliance)**: To maintain a balanced contribution graph and follow industry standards, all development must follow this strict sequence:
+  1. **Issue**: Create a GitHub Issue using EEE templates (`yes github issue`) before writing any code.
+  2. **Branch**: Create and checkout a new branch from `main` matching conventional naming: `type/TICKET-short-description`.
+  3. **Commit**: Make logical Conventional Commits referencing the target issue ID.
+  4. **Pull Request**: Open a Pull Request against `main` (`yes github pr`) and explicitly link the issue.
+  5. **Review & Merge**: Only merge squash commits to `main` after all EEE quality verification checks succeed.
+  *Direct commits to the `main` or `master` branch are strictly prohibited. Every change must be tracked operational memory in GOP.*
+
 
 ### Stitch MCP
 - Treat Stitch as the authoritative source for UI, UX, Components, Design Tokens, Flows, and Accessibility.
