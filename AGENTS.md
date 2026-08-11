@@ -14,12 +14,11 @@ The **Delivery Office** is the central orchestrator. No feature is implemented w
 5. GitHub Review & Stitch Review
 6. **[APPROVAL GATE] Founder Approval**
 7. Backend / Frontend Implementation
-8. Testing (`qa-office`) & Security Review (`security-office`)
-9. Documentation (`documentation-office`)
-10. Code Review (`review-office`)
-11. Final Validation & **Founder Acceptance**
+8. **Engineering Excellence Engine (EEE) Audit** (Executed automatically via `yes excellence review` across all 8 rubrics: Architecture, Design, Code Quality, Security, Performance, Testing, Documentation, and Refactoring)
+9. Final EEE Metrics update and report generation
+10. Final Validation & **Founder Acceptance**
 
-*No office may skip another office.*
+*No office may skip another office. Every implementation must satisfy EEE baseline constraints.*
 
 ## 2. Global Engineering Rules
 Always enforce:
