@@ -53,14 +53,24 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             @NonNull final FilterChain filterChain)
             throws ServletException, IOException {
 
+        String token = null;
         final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
 
-        if (!StringUtils.hasText(authHeader) || !authHeader.startsWith(BEARER_PREFIX)) {
+        if (StringUtils.hasText(authHeader) && authHeader.startsWith(BEARER_PREFIX)) {
+            token = authHeader.substring(BEARER_PREFIX.length());
+        } else if (request.getCookies() != null) {
+            for (jakarta.servlet.http.Cookie cookie : request.getCookies()) {
+                if ("accessToken".equals(cookie.getName())) {
+                    token = cookie.getValue();
+                    break;
+                }
+            }
+        }
+
+        if (!StringUtils.hasText(token)) {
             filterChain.doFilter(request, response);
             return;
         }
-
-        final String token = authHeader.substring(BEARER_PREFIX.length());
 
         if (!jwtService.isTokenValid(token)) {
             if (LOG.isDebugEnabled()) {
@@ -71,17 +81,19 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         final String subject = jwtService.extractSubject(token);
+        final String role = jwtService.extractRole(token);
+        final String mappedAuthority = role != null ? role : "ROLE_USER";
 
         // Only set the authentication if not already set (respect existing auth context)
         if (SecurityContextHolder.getContext().getAuthentication() == null) {
             final UsernamePasswordAuthenticationToken authentication =
                     new UsernamePasswordAuthenticationToken(
-                            subject, null, List.of(new SimpleGrantedAuthority("ROLE_USER")));
+                            subject, null, List.of(new SimpleGrantedAuthority(mappedAuthority)));
             authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
             if (LOG.isDebugEnabled()) {
-                LOG.debug("Authenticated passport: {}", subject);
+                LOG.debug("Authenticated user: {} with role: {}", subject, mappedAuthority);
             }
         }
 

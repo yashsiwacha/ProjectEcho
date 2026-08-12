@@ -98,4 +98,21 @@ public class IdentityApplicationService implements InitializeCareerPassportUseCa
     public Page<CareerPassport> searchByName(final String name, final Pageable pageable) {
         return repository.searchByName(name, pageable);
     }
+
+    public void update(final UUID passportId, final Name name, final JobTitle jobTitle) {
+        final CareerPassport passport = findById(passportId);
+        passport.update(name, jobTitle);
+        repository.save(passport);
+        if (LOG.isInfoEnabled()) {
+            LOG.info("Career Passport updated: {}", passportId);
+        }
+    }
+
+    public void delete(final UUID passportId) {
+        final CareerPassport passport = findById(passportId);
+        repository.delete(passport);
+        if (LOG.isInfoEnabled()) {
+            LOG.info("Career Passport deleted: {}", passportId);
+        }
+    }
 }

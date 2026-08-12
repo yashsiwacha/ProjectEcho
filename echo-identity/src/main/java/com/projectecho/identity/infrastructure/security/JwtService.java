@@ -1,5 +1,6 @@
 package com.projectecho.identity.infrastructure.security;
 
+import com.projectecho.identity.application.TokenProvider;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
@@ -28,9 +29,10 @@ import org.springframework.stereotype.Component;
  * </ul>
  */
 @Component
-public class JwtService {
+public class JwtService implements TokenProvider {
 
     private static final String CLAIM_EMAIL = "email";
+    private static final String CLAIM_ROLE = "role";
 
     private final SecretKey signingKey;
     private final JwtProperties properties;
@@ -60,10 +62,23 @@ public class JwtService {
      * @return a compact, URL-safe JWT string
      */
     public String issueToken(final UUID passportId, final String email) {
+        return issueToken(passportId, email, "ROLE_USER");
+    }
+
+    /**
+     * Issues a signed JWT for the given user, email, and role.
+     *
+     * @param userId the user UUID used as the {@code sub} claim
+     * @param email the user's email address embedded as a custom claim
+     * @param role the security role mapped to the user
+     * @return a compact, URL-safe JWT string
+     */
+    public String issueToken(final UUID userId, final String email, final String role) {
         final long now = System.currentTimeMillis();
         return Jwts.builder()
-                .subject(passportId.toString())
+                .subject(userId.toString())
                 .claim(CLAIM_EMAIL, email)
+                .claim(CLAIM_ROLE, role)
                 .issuer(properties.getIssuer())
                 .issuedAt(new Date(now))
                 .expiration(new Date(now + properties.getExpirationMs()))
@@ -100,6 +115,16 @@ public class JwtService {
      */
     public String extractEmail(final String token) {
         return validateAndExtractClaims(token).get(CLAIM_EMAIL, String.class);
+    }
+
+    /**
+     * Extracts the role claim from a validated token.
+     *
+     * @param token the compact JWT string
+     * @return the user role
+     */
+    public String extractRole(final String token) {
+        return validateAndExtractClaims(token).get(CLAIM_ROLE, String.class);
     }
 
     /**
