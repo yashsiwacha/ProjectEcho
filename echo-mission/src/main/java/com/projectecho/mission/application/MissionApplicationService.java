@@ -23,13 +23,18 @@ public class MissionApplicationService {
         this.missionRepository = missionRepository;
     }
 
-    public UUID createMission(final String title) {
+    public UUID createMission(final String title, final UUID organizationId, final UUID teamId) {
         final UUID id = UUID.randomUUID();
-        final Mission mission = Mission.draft(id, title);
+        final Mission mission = Mission.draft(id, title, organizationId, teamId);
         missionRepository.save(mission);
 
         if (LOG.isInfoEnabled()) {
-            LOG.info("Mission created: {} ({})", title, id);
+            LOG.info(
+                    "Mission created: {} ({}) for org {} team {}",
+                    title,
+                    id,
+                    organizationId,
+                    teamId);
         }
 
         return id;

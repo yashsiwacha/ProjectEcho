@@ -31,7 +31,8 @@ public class MissionController {
     @PostMapping
     public ResponseEntity<MissionResponse> create(
             @Valid @RequestBody final CreateMissionRequest request) {
-        final UUID id = service.createMission(request.title());
+        final UUID id =
+                service.createMission(request.title(), request.organizationId(), request.teamId());
         final MissionResponse response = MissionResponse.from(service.findById(id));
         return ResponseEntity.created(URI.create("/api/v1/missions/" + id)).body(response);
     }
