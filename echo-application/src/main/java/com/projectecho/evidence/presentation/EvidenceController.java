@@ -1,13 +1,16 @@
 package com.projectecho.evidence.presentation;
 
 import com.projectecho.evidence.application.EvidenceApplicationService;
+import com.projectecho.evidence.application.ObjectStorageProvider;
 import com.projectecho.evidence.domain.SourceURI;
 import com.projectecho.evidence.domain.TrustTier;
 import com.projectecho.evidence.domain.ValidationStatus;
 import com.projectecho.shared.domain.PassportId;
 import com.projectecho.shared.domain.SkillId;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import java.net.URI;
+import java.util.Map;
 import java.util.UUID;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,9 +30,20 @@ import org.springframework.web.bind.annotation.RestController;
 public class EvidenceController {
 
     private final EvidenceApplicationService service;
+    private final ObjectStorageProvider storageProvider;
 
-    public EvidenceController(final EvidenceApplicationService service) {
+    public EvidenceController(
+            final EvidenceApplicationService service, final ObjectStorageProvider storageProvider) {
         this.service = service;
+        this.storageProvider = storageProvider;
+    }
+
+    @PostMapping("/upload-url")
+    public ResponseEntity<UploadUrlResponse> getUploadUrl(
+            @Valid @RequestBody final UploadUrlRequest request) {
+        final String fileKey = UUID.randomUUID() + "-" + request.filename();
+        final String uploadUrl = storageProvider.generatePresignedUploadUrl(fileKey, Map.of());
+        return ResponseEntity.ok(new UploadUrlResponse(uploadUrl, fileKey));
     }
 
     @PostMapping
@@ -88,4 +102,8 @@ public class EvidenceController {
         }
         return ResponseEntity.ok(page);
     }
+
+    public record UploadUrlRequest(@NotBlank(message = "Filename is required") String filename) {}
+
+    public record UploadUrlResponse(String uploadUrl, String fileKey) {}
 }
