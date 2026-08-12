@@ -12,9 +12,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -58,5 +60,18 @@ public class PassportController {
             page = service.findAll(pageable).map(PassportResponse::from);
         }
         return ResponseEntity.ok(page);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<PassportResponse> update(
+            @PathVariable final UUID id, @Valid @RequestBody final UpdatePassportRequest request) {
+        service.update(id, new Name(request.name()), new JobTitle(request.jobTitle()));
+        return ResponseEntity.ok(PassportResponse.from(service.findById(id)));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable final UUID id) {
+        service.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }

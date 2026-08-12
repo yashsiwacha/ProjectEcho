@@ -33,6 +33,11 @@ public class CareerPassport extends AggregateRoot {
         this.jobTitle = Objects.requireNonNull(jobTitle, "Job title cannot be null");
     }
 
+    public void update(final Name name, final JobTitle jobTitle) {
+        this.name = Objects.requireNonNull(name, "Name cannot be null");
+        this.jobTitle = Objects.requireNonNull(jobTitle, "Job title cannot be null");
+    }
+
     public Name getName() {
         return name;
     }
