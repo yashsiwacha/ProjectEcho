@@ -6,6 +6,7 @@ import AppLayout from '@/components/AppLayout';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
+import { Skeleton } from '@/components/ui/Skeleton';
 import {
   UserCheck,
   FileCheck,
@@ -25,15 +26,29 @@ import Link from 'next/link';
 import HologramOrb from '@/components/3d/HologramOrb';
 
 export default function DashboardPage() {
-  const { data: passports } = useQuery({ queryKey: ['passports'], queryFn: () => api.getPassports() });
-  const { data: skills } = useQuery({ queryKey: ['skills'], queryFn: () => api.getSkills() });
-  const { data: missions } = useQuery({ queryKey: ['missions'], queryFn: () => api.getMissions() });
+  const { data: passports, isLoading: passportsLoading, isError: passportsError } = useQuery({ queryKey: ['passports'], queryFn: () => api.getPassports() });
+  const { data: skills, isLoading: skillsLoading, isError: skillsError } = useQuery({ queryKey: ['skills'], queryFn: () => api.getSkills() });
+  const { data: missions, isLoading: missionsLoading, isError: missionsError } = useQuery({ queryKey: ['missions'], queryFn: () => api.getMissions() });
 
   const activePassport = passports?.content[0];
 
   return (
     <AppLayout>
       <div className="space-y-8">
+        {/* Loading and error states */}
+        {(passportsError || skillsError || missionsError) && (
+          <div role="alert" className="p-4 bg-destructive text-destructive-foreground rounded mb-4">
+            Failed to load data. Please try again later.
+          </div>
+        )}
+        {(passportsLoading || skillsLoading || missionsLoading) && (
+          <div aria-live="polite" role="status" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-6">
+            {[...Array(4)].map((_, i) => (
+              <Skeleton key={i} className="h-24 w-full" />
+            ))}
+            <span className="sr-only">Loading dashboard data...</span>
+          </div>
+        )}
         {/* Header & Quick Action */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
@@ -67,7 +82,7 @@ export default function DashboardPage() {
               <span className="text-xs font-mono text-muted-foreground uppercase font-semibold">Career Passports</span>
               <UserCheck className="w-5 h-5 text-amber-400" />
             </div>
-            <div className="text-3xl font-black text-white">{passports?.totalElements ?? 2}</div>
+            <div className="text-3xl font-black text-white">{passportsLoading ? <Skeleton className="h-6 w-12" /> : passports?.totalElements ?? 0}</div>
             <div className="text-[11px] text-emerald-400 font-mono flex items-center gap-1">
               <CheckCircle2 className="w-3 h-3" /> 100% Immutable Roots
             </div>
@@ -78,7 +93,7 @@ export default function DashboardPage() {
               <span className="text-xs font-mono text-muted-foreground uppercase font-semibold">Taxonomy Skills</span>
               <Zap className="w-5 h-5 text-cyan-400" />
             </div>
-            <div className="text-3xl font-black text-white">{skills?.totalElements ?? 7}</div>
+            <div className="text-3xl font-black text-white">{skillsLoading ? <Skeleton className="h-6 w-12" /> : skills?.totalElements ?? 0}</div>
             <div className="text-[11px] text-cyan-400 font-mono flex items-center gap-1">
               <Sparkles className="w-3 h-3" /> 3D WebGL Ontology
             </div>
@@ -89,7 +104,7 @@ export default function DashboardPage() {
               <span className="text-xs font-mono text-muted-foreground uppercase font-semibold">Active Missions</span>
               <Compass className="w-5 h-5 text-emerald-400" />
             </div>
-            <div className="text-3xl font-black text-white">{missions?.totalElements ?? 3}</div>
+            <div className="text-3xl font-black text-white">{missionsLoading ? <Skeleton className="h-6 w-12" /> : missions?.totalElements ?? 0}</div>
             <div className="text-[11px] text-amber-400 font-mono flex items-center gap-1">
               <Activity className="w-3 h-3" /> Real-Time Quests
             </div>
@@ -160,20 +175,29 @@ export default function DashboardPage() {
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
-                {missions?.content.map((m) => (
-                  <div
-                    key={m.id}
-                    className="p-3.5 rounded-xl bg-slate-900/60 border border-border flex items-center justify-between hover:border-amber-500/40 transition-all"
-                  >
-                    <div>
-                      <h4 className="font-semibold text-sm text-white">{m.title}</h4>
-                      <span className="text-[10px] text-muted-foreground font-mono">ID: {m.id.substring(0, 12)}...</span>
+                {missions?.content && missions.content.length > 0 ? (
+                  missions.content.map((m) => (
+                    <div
+                      key={m.id}
+                      className="p-3.5 rounded-xl bg-slate-900/60 border border-border flex items-center justify-between hover:border-amber-500/40 transition-all hover:scale-105"
+                    >
+                      <div>
+                        <h4 className="font-semibold text-sm text-white">{m.title}</h4>
+                        <span className="text-[10px] text-muted-foreground font-mono">ID: {m.id.substring(0, 12)}...</span>
+                      </div>
+                      <Badge variant={m.status === 'ACTIVE' ? 'success' : 'default'} className="text-[10px]">
+                        {m.status}
+                      </Badge>
                     </div>
-                    <Badge variant={m.status === 'ACTIVE' ? 'success' : 'default'} className="text-[10px]">
-                      {m.status}
-                    </Badge>
+                  ))
+                ) : (
+                  <div className="p-8 text-center border border-dashed border-border rounded-xl bg-slate-900/30">
+                    <Compass className="w-8 h-8 text-muted-foreground mx-auto mb-3" />
+                    <h3 className="text-sm font-semibold text-white mb-1">No Active Missions</h3>
+                    <p className="text-xs text-muted-foreground mb-4">Start your first strategic mission to track your progress.</p>
+                    <Button variant="outline" size="sm">Explore Missions</Button>
                   </div>
-                ))}
+                )}
               </div>
             </CardContent>
           </Card>
@@ -195,20 +219,31 @@ export default function DashboardPage() {
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
-                {skills?.content.slice(0, 4).map((s) => (
-                  <div
-                    key={s.id}
-                    className="p-3.5 rounded-xl bg-slate-900/60 border border-border flex items-center justify-between hover:border-cyan-500/40 transition-all"
-                  >
-                    <div>
-                      <h4 className="font-semibold text-sm text-white">{s.name}</h4>
-                      <span className="text-[10px] text-muted-foreground font-mono">{s.category}</span>
+                {skills?.content && skills.content.length > 0 ? (
+                  skills.content.slice(0, 4).map((s) => (
+                    <div
+                      key={s.id}
+                      className="p-3.5 rounded-xl bg-slate-900/60 border border-border flex items-center justify-between hover:border-cyan-500/40 transition-all hover:scale-105"
+                    >
+                      <div>
+                        <h4 className="font-semibold text-sm text-white">{s.name}</h4>
+                        <span className="text-[10px] text-muted-foreground font-mono">{s.category}</span>
+                      </div>
+                      <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+                        Tier 4 Proof
+                      </span>
                     </div>
-                    <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
-                      Tier 4 Proof
-                    </span>
+                  ))
+                ) : (
+                  <div className="p-8 text-center border border-dashed border-border rounded-xl bg-slate-900/30">
+                    <Zap className="w-8 h-8 text-muted-foreground mx-auto mb-3" />
+                    <h3 className="text-sm font-semibold text-white mb-1">No Verified Skills</h3>
+                    <p className="text-xs text-muted-foreground mb-4">You have not submitted evidence for any skills yet.</p>
+                    <Link href="/evidence">
+                      <Button variant="outline" size="sm">Submit Evidence</Button>
+                    </Link>
                   </div>
-                ))}
+                )}
               </div>
             </CardContent>
           </Card>

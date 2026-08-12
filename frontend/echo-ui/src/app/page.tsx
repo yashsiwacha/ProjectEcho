@@ -2,8 +2,9 @@
 
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
-import { Card } from '@/components/ui/Card';
+import { Skeleton } from '@/components/ui/Skeleton';
 import { Badge } from '@/components/ui/Badge';
+import { Card } from '@/components/ui/Card';
 import {
   ShieldCheck,
   BrainCircuit,
@@ -22,7 +23,7 @@ import HologramOrb from '@/components/3d/HologramOrb';
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-background text-foreground bg-cyber-grid flex flex-col justify-between p-6 md:p-12 max-w-7xl mx-auto space-y-16">
+    <div className="min-h-screen bg-background text-foreground bg-cyber-grid flex flex-col justify-between p-6 md:p-12 max-w-7xl mx-auto space-y-16" role="main">
       {/* Header */}
       <header className="flex items-center justify-between border-b border-border/60 pb-6">
         <div className="flex items-center gap-3.5">
@@ -41,21 +42,21 @@ export default function LandingPage() {
         </div>
 
         <div className="flex items-center gap-3">
-          <Link href="/dashboard">
-            <Button variant="outline" size="sm" className="hidden sm:inline-flex border-border">
+          <Link href="/login">
+            <Button variant="outline" size="sm" className="hidden sm:inline-flex border-border focus-visible:ring-2 focus-visible:ring-champagne" aria-label="Sign in to your account">
               Sign In
             </Button>
           </Link>
-          <Link href="/dashboard">
-            <Button variant="champagne" size="sm" className="gap-2 shadow-lg shadow-amber-500/20">
-              <Zap className="w-4 h-4" /> Launch Platform
+          <Link href="/register">
+            <Button variant="champagne" size="sm" className="gap-2 shadow-lg shadow-amber-500/20 focus-visible:ring-2 focus-visible:ring-champagne" aria-label="Register sovereign profile">
+              <Zap className="w-4 h-4" /> Register Profile
             </Button>
           </Link>
         </div>
       </header>
 
       {/* Hero Section */}
-      <main className="space-y-16">
+      <main role="main" className="space-y-16">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Left Column: Vision & CTA */}
           <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
@@ -75,12 +76,12 @@ export default function LandingPage() {
 
             <div className="flex flex-col sm:flex-row items-center gap-4 pt-2">
               <Link href="/dashboard" className="w-full sm:w-auto">
-                <Button size="lg" variant="champagne" className="gap-2.5 w-full sm:w-auto font-bold shadow-xl shadow-amber-500/20">
+                <Button size="lg" variant="champagne" className="gap-2.5 w-full sm:w-auto font-bold shadow-xl shadow-amber-500/20 focus-visible:ring-2 focus-visible:ring-champagne">
                   Enter Executive Dashboard <ArrowRight className="w-4 h-4" />
                 </Button>
               </Link>
               <Link href="/passport" className="w-full sm:w-auto">
-                <Button size="lg" variant="outline" className="w-full sm:w-auto font-medium border-border hover:border-amber-500/40">
+                <Button size="lg" variant="outline" className="w-full sm:w-auto font-medium border-border hover:border-amber-500/40 focus-visible:ring-2 focus-visible:ring-champagne">
                   <UserCheck className="w-4 h-4 text-amber-400 mr-2" /> Initialize Passport
                 </Button>
               </Link>
@@ -105,24 +106,22 @@ export default function LandingPage() {
 
           {/* Right Column: 3D Holographic Visualizer */}
           <div className="lg:col-span-5 relative flex items-center justify-center">
-            <div className="relative w-full max-w-md aspect-square rounded-3xl p-6 glass-panel-glow flex flex-col items-center justify-between text-center overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-b from-amber-500/10 via-transparent to-cyan-500/10 pointer-events-none" />
-              
-              <div className="flex items-center justify-between w-full z-10">
-                <Badge variant="champagne" className="text-[10px]">Tier 4 Verified</Badge>
-                <span className="text-[10px] font-mono text-muted-foreground">3D WebGL Core</span>
+            <div className="relative w-full max-w-md aspect-square rounded-3xl p-6 glass-panel-glow flex flex-col items-center justify-between text-center overflow-hidden" aria-busy="true">
+                <div className="absolute inset-0 bg-gradient-to-b from-amber-500/10 via-transparent to-cyan-500/10 pointer-events-none" />
+                
+                <div className="flex items-center justify-between w-full z-10">
+                  <Badge variant="champagne" className="text-[10px]">Tier 4 Verified</Badge>
+                  <span className="text-[10px] font-mono text-muted-foreground">3D WebGL Core</span>
+                </div>
+                
+                {/* Skeleton placeholder while 3D content loads */}
+                <Skeleton className="h-48 w-full" />
+                
+                <div className="z-10 space-y-1">
+                  <div className="text-xs font-mono text-amber-300 font-bold">Cryptographic Anchor Active</div>
+                  <div className="text-[11px] text-muted-foreground">Immutable Aggregate Roots &amp; Spring Boot 3 Engine</div>
+                </div>
               </div>
-
-              {/* 3D Hologram Orb */}
-              <div className="my-auto z-10">
-                <HologramOrb size={200} verified={true} />
-              </div>
-
-              <div className="z-10 space-y-1">
-                <div className="text-xs font-mono text-amber-300 font-bold">Cryptographic Anchor Active</div>
-                <div className="text-[11px] text-muted-foreground">Immutable Aggregate Roots & Spring Boot 3 Engine</div>
-              </div>
-            </div>
           </div>
         </div>
 

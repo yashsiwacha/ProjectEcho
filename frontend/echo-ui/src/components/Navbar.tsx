@@ -1,12 +1,26 @@
 'use client';
 
 import Link from 'next/link';
-import { ShieldCheck, Search, Activity, Cpu, Sparkles, UserCheck } from 'lucide-react';
+import { ShieldCheck, Search, Activity, Cpu, Sparkles, UserCheck, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
+import { useRouter } from 'next/navigation';
 
 export default function Navbar() {
+  const router = useRouter();
+
   const triggerCommandPalette = () => {
     window.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', metaKey: true }));
+  };
+
+  const handleLogout = async () => {
+    try {
+      await fetch('http://localhost:8080/api/v1/auth/logout', {
+        method: 'POST',
+      });
+      router.push('/login');
+    } catch (e) {
+      console.error('Logout failed', e);
+    }
   };
 
   return (
@@ -66,6 +80,9 @@ export default function Navbar() {
               <Activity className="w-3.5 h-3.5" /> Dashboard
             </Button>
           </Link>
+          <Button variant="ghost" size="sm" className="gap-1.5 text-xs text-muted-foreground hover:text-red-400" onClick={handleLogout}>
+            <LogOut className="w-3.5 h-3.5" />
+          </Button>
         </div>
       </div>
     </header>

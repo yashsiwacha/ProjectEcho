@@ -145,10 +145,22 @@ async function fetchApi<T>(endpoint: string, options?: RequestInit): Promise<T> 
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 2500);
 
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+    };
+
+    if (typeof window !== 'undefined') {
+      const token = localStorage.getItem('accessToken');
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+    }
+
     const res = await fetch(`${API_BASE_URL}${endpoint}`, {
       signal: controller.signal,
+      credentials: 'include',
       headers: {
-        'Content-Type': 'application/json',
+        ...headers,
         ...options?.headers,
       },
       ...options,
@@ -329,4 +341,16 @@ export const api = {
     if (missionId) params.append('missionId', missionId);
     return fetchApi<PageResponse<ReasoningCard>>(`/reasoning-cards?${params.toString()}`);
   },
+
+  // Authentication API (FD-0018)
+  register: (data: { email: string; password: string; role: string }) =>
+    fetchApi<{ id: string; email: string; role: string }>('/auth/register', { method: 'POST', body: JSON.stringify(data) }),
+  login: (data: { email: string; password: string }) =>
+    fetchApi<{ accessToken?: string; refreshToken?: string; mfaRequired: boolean; email: string }>('/auth/login', { method: 'POST', body: JSON.stringify(data) }),
+  setupMfa: (data: { email: string }) =>
+    fetchApi<{ secret: string }>('/auth/mfa/setup', { method: 'POST', body: JSON.stringify(data) }),
+  verifyMfa: (data: { email: string; code: number }) =>
+    fetchApi<{ accessToken?: string; refreshToken?: string; mfaRequired: boolean; email: string }>('/auth/mfa/verify', { method: 'POST', body: JSON.stringify(data) }),
+  refresh: (data: { refreshToken: string }) =>
+    fetchApi<{ accessToken?: string; refreshToken?: string; mfaRequired: boolean; email: string }>('/auth/refresh', { method: 'POST', body: JSON.stringify(data) }),
 };
