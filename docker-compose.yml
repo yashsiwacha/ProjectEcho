@@ -26,6 +26,7 @@ services:
       SPRING_DATASOURCE_USERNAME: echo
       SPRING_DATASOURCE_PASSWORD: echo_password
       APP_PASSWORD: ${APP_PASSWORD:-adminpwd}
+      JWT_SECRET: ${JWT_SECRET:-thisisasecuresecretkeythatisatleast32byteslong}
       OTEL_EXPORTER_OTLP_ENDPOINT: http://otel-collector:4317
     depends_on:
       - postgres
@@ -50,3 +51,29 @@ services:
       - "80:80"
     depends_on:
       - backend
+
+  prometheus:
+    image: prom/prometheus:v2.52.0
+    volumes:
+      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./config/alert_rules.yml:/etc/prometheus/alert_rules.yml
+    ports:
+      - "9090:9090"
+    depends_on:
+      - backend
+
+  grafana:
+    image: grafana/grafana:11.0.0
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    depends_on:
+      - prometheus
+
+  alertmanager:
+    image: prom/alertmanager:v0.27.0
+    ports:
+      - "9093:9093"
+    volumes:
+      - ./config/alertmanager.yml:/etc/alertmanager/alertmanager.yml
