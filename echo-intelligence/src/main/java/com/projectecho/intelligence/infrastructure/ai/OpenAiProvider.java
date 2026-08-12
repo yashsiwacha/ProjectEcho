@@ -1,5 +1,8 @@
 package com.projectecho.intelligence.infrastructure.ai;
 
+import com.projectecho.intelligence.application.ai.AiProvider;
+import com.projectecho.intelligence.application.ai.AiRequest;
+import com.projectecho.intelligence.application.ai.AiResponse;
 import java.util.List;
 import java.util.Map;
 import org.slf4j.Logger;

@@ -1,12 +1,12 @@
 package com.projectecho.intelligence.application;
 
+import com.projectecho.intelligence.application.ai.AiGateway;
+import com.projectecho.intelligence.application.ai.AiRequest;
+import com.projectecho.intelligence.application.ai.AiResponse;
 import com.projectecho.intelligence.domain.ConfidenceScore;
 import com.projectecho.intelligence.domain.ReasoningCard;
 import com.projectecho.intelligence.domain.ReasoningCardRepository;
 import com.projectecho.intelligence.domain.ReasoningSummary;
-import com.projectecho.intelligence.application.ai.AiGateway;
-import com.projectecho.intelligence.application.ai.AiRequest;
-import com.projectecho.intelligence.application.ai.AiResponse;
 import com.projectecho.shared.domain.MissionId;
 import com.projectecho.shared.domain.PassportId;
 import com.projectecho.shared.exception.ResourceNotFoundException;
