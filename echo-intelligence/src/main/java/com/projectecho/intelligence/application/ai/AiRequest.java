@@ -1,4 +1,4 @@
-package com.projectecho.intelligence.infrastructure.ai;
+package com.projectecho.intelligence.application.ai;
 
 /** Record holding parameters for executing requests against AI providers (FD-0020). */
 public record AiRequest(

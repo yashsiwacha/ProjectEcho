@@ -1,4 +1,4 @@
-package com.projectecho.intelligence.infrastructure.ai;
+package com.projectecho.intelligence.application.ai;
 
 import java.util.List;
 import java.util.Objects;

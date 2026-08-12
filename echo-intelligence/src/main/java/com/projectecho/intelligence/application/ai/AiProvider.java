@@ -1,4 +1,4 @@
-package com.projectecho.intelligence.infrastructure.ai;
+package com.projectecho.intelligence.application.ai;
 
 /** Strategy interface defining operational contracts for concrete AI models (FD-0020). */
 public interface AiProvider {

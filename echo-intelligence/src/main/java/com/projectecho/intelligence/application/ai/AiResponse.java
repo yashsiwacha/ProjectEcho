@@ -1,4 +1,4 @@
-package com.projectecho.intelligence.infrastructure.ai;
+package com.projectecho.intelligence.application.ai;
 
 /** Record representing response metadata from an AI provider execution (FD-0020). */
 public record AiResponse(
