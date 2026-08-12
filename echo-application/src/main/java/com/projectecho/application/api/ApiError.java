@@ -11,10 +11,16 @@ public record ApiError(
         String message,
         String path,
         Instant timestamp,
+        String requestId,
         List<String> details) {
 
-    public ApiError(final int status, final String error, final String message, final String path) {
-        this(status, error, message, path, Instant.now(), null);
+    public ApiError(
+            final int status,
+            final String error,
+            final String message,
+            final String path,
+            final String requestId) {
+        this(status, error, message, path, Instant.now(), requestId, null);
     }
 
     public ApiError(
@@ -22,7 +28,8 @@ public record ApiError(
             final String error,
             final String message,
             final String path,
+            final String requestId,
             final List<String> details) {
-        this(status, error, message, path, Instant.now(), details);
+        this(status, error, message, path, Instant.now(), requestId, details);
     }
 }

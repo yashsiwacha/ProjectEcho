@@ -7,6 +7,9 @@ spring:
     url: jdbc:postgresql://localhost:5432/project_echo
     username: echo
     password: echo_password
+  jpa:
+    hibernate:
+      ddl-auto: update
   security:
     user:
       name: admin

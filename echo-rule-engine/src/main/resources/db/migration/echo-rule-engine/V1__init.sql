@@ -1,9 +1,10 @@
-CREATE TABLE reasoning_cards (
+CREATE TABLE readiness_assessments (
     id UUID NOT NULL,
     passport_id UUID NOT NULL,
     mission_id UUID NOT NULL,
-    confidence_score INTEGER NOT NULL,
-    summary TEXT NOT NULL,
+    is_eligible BOOLEAN NOT NULL,
+    score INTEGER NOT NULL,
+    graph_id UUID NOT NULL,
     version BIGINT NOT NULL,
     created_at TIMESTAMP NOT NULL,
     updated_at TIMESTAMP NOT NULL,

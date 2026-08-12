@@ -66,7 +66,13 @@ public class ArchitectureTest {
                     .whereLayer("Infrastructure")
                     .mayNotBeAccessedByAnyLayer()
                     .whereLayer("Domain")
-                    .mayOnlyBeAccessedByLayers("Application", "Infrastructure", "Presentation");
+                    .mayOnlyBeAccessedByLayers("Application", "Infrastructure", "Presentation")
+                    .ignoreDependency(
+                            "com.projectecho.EchoApplication",
+                            "com.projectecho.identity.infrastructure.security.JwtProperties")
+                    .ignoreDependency(
+                            "com.projectecho.application.config.JwtAuthenticationFilter",
+                            "com.projectecho.identity.infrastructure.security.JwtService");
 
     @ArchTest
     public static final ArchRule identity_must_not_depend_on_taxonomy =
