@@ -1,0 +1,31 @@
+name: Security Vulnerability
+description: Report a security vulnerability
+title: "[SECURITY] "
+labels: ["security", "urgent"]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please provide details about the security vulnerability. Do NOT disclose this publicly until it has been patched.
+  - type: textarea
+    id: description
+    attributes:
+      label: Vulnerability Description
+      description: What is the vulnerability?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to Reproduce
+      description: How can we reproduce the vulnerability?
+    validations:
+      required: true
+  - type: textarea
+    id: impact
+    attributes:
+      label: Security Impact
+      description: What can an attacker achieve?
+    validations:
+      required: true

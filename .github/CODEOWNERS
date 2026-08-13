@@ -1,0 +1,37 @@
+# CODEOWNERS for Project Echo
+# This file maps project files and directories to the responsible engineering offices.
+
+# Default owner for everything not explicitly defined
+* @YashEngineering/architecture-office
+
+# Backend Domains
+/echo-mission/** @YashEngineering/backend-office
+/echo-identity/** @YashEngineering/backend-office @YashEngineering/security-office
+/echo-evidence/** @YashEngineering/backend-office
+/echo-intelligence/** @YashEngineering/ai-office @YashEngineering/backend-office
+/echo-taxonomy/** @YashEngineering/backend-office
+/echo-rule-engine/** @YashEngineering/backend-office
+
+# Shared and Application Layer
+/echo-application/** @YashEngineering/backend-office
+/echo-shared/** @YashEngineering/architecture-office @YashEngineering/backend-office
+
+# Frontend Application
+/frontend/** @YashEngineering/frontend-office
+
+# Database Migrations
+**/src/main/resources/db/migration/** @YashEngineering/data-office @YashEngineering/backend-office
+
+# Infrastructure, Docker, and DevOps
+/scripts/** @YashEngineering/platform-office @YashEngineering/devops-office
+/config/** @YashEngineering/platform-office
+/backend/Dockerfile @YashEngineering/devops-office
+/docker-compose.yml @YashEngineering/devops-office
+/otel-collector-config.yaml @YashEngineering/platform-office
+
+# GitHub Workflows and Templates
+/.github/** @YashEngineering/platform-office
+
+# Documentation
+/docs/** @YashEngineering/documentation-office
+/README.md @YashEngineering/documentation-office

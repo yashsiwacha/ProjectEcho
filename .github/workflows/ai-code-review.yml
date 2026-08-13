@@ -1,0 +1,36 @@
+name: AI Code Reviewer
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  pull-requests: write
+  contents: read
+
+jobs:
+  ai-review:
+    name: CodeRabbit AI Review
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        
+      - name: Run CodeRabbit
+        uses: coderabbitai/coderabbit-action@v1
+        with:
+          # Automatically comments on PRs with suggestions
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          
+          # Focus configuration for the AI Reviewer
+          prompt: |
+            Perform a senior-level architectural and security review.
+            Analyze for:
+            - Architecture Review (Hexagonal/DDD compliance)
+            - Security Review (OWASP vulnerabilities, hardcoded secrets)
+            - Performance Review (N+1 queries, memory leaks)
+            - Maintainability Review (SOLID principles)
+            - Accessibility Review (WCAG on frontend components)
+            - Complexity Analysis
+            - Documentation Review
+            - Release Risk evaluation

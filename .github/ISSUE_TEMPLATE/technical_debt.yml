@@ -1,0 +1,31 @@
+name: Technical Debt
+description: Track and resolve technical debt
+title: "[TECH DEBT] "
+labels: ["technical-debt", "architecture"]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please outline the technical debt and its impact on the system.
+  - type: textarea
+    id: description
+    attributes:
+      label: Description of Debt
+      description: What is the sub-optimal implementation?
+    validations:
+      required: true
+  - type: textarea
+    id: impact
+    attributes:
+      label: Impact
+      description: Why does this need to be fixed? (e.g. slows down development, hard to test)
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed Solution
+      description: How should we refactor or fix this?
+    validations:
+      required: true
