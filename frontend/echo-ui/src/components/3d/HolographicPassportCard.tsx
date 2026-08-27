@@ -74,7 +74,7 @@ export default function HolographicPassportCard({
           transform: `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`,
           transition: 'transform 0.15s ease-out',
         }}
-        className="relative w-full max-w-lg rounded-2xl bg-gradient-to-br from-slate-900 via-slate-950 to-neutral-950 p-7 text-foreground shadow-2xl border border-amber-500/40 overflow-hidden cursor-pointer group"
+        className="relative w-full max-w-[500px] aspect-[1.586/1] rounded-2xl bg-gradient-to-br from-slate-900 via-slate-950 to-neutral-950 p-6 text-foreground shadow-2xl border border-border overflow-hidden cursor-pointer group flex flex-col justify-between"
       >
         {/* Holographic Specular Glare Overlay */}
         <div
@@ -95,56 +95,90 @@ export default function HolographicPassportCard({
         {/* Card Header */}
         <div className="relative z-10 flex items-start justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-black font-black text-2xl shadow-lg shadow-amber-500/20">
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-amber-950 font-black text-2xl shadow-lg shadow-sm">
               E
             </div>
             <div>
-              <div className="flex items-center gap-1.5 text-xs font-mono font-bold tracking-widest text-amber-400 uppercase">
+              <div className="flex items-center gap-1.5 text-xs font-mono font-bold tracking-widest text-slate-300 uppercase">
                 <Sparkles className="w-3.5 h-3.5" /> Project Echo Sovereign Passport
               </div>
               <h3 className="text-xl font-bold text-white tracking-tight mt-0.5">{data.name}</h3>
             </div>
           </div>
 
-          <Badge variant="success" className="gap-1.5 py-1 px-3 bg-emerald-500/20 text-emerald-300 border-emerald-500/40">
+          <Badge variant="success" className="gap-1.5 py-1 px-3 bg-slate-800 text-white border-slate-700">
             <CheckCircle2 className="w-3.5 h-3.5" /> Verified
           </Badge>
         </div>
 
         {/* Passport Body */}
-        <div className="relative z-10 my-6 space-y-4">
-          <div className="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 backdrop-blur-md">
-            <span className="text-[10px] font-mono text-muted-foreground uppercase tracking-wider block">Official Position</span>
-            <p className="text-sm font-semibold text-white mt-0.5">{data.jobTitle}</p>
+        <div className="relative z-10 space-y-2">
+          <div className="flex gap-2 w-full">
+            <div className="flex-1 p-2.5 rounded-xl bg-white/5 border border-white/10 backdrop-blur-md min-w-0">
+              <span className="text-[9px] font-mono text-slate-400 uppercase tracking-wider block truncate">Official Position</span>
+              <p className="text-sm font-semibold text-white mt-0.5 truncate">{data.jobTitle}</p>
+            </div>
+            
+            <div className="flex-1 p-2.5 rounded-xl bg-white/5 border border-white/10 backdrop-blur-md min-w-0">
+              <span className="text-[9px] font-mono text-slate-400 uppercase tracking-wider block truncate">Verified Email Signature</span>
+              <p className="text-xs font-semibold text-white mt-1 flex items-center gap-1.5 truncate">
+                <Globe className="w-3.5 h-3.5 text-slate-400 shrink-0" /> <span className="truncate">{data.email}</span>
+              </p>
+            </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-3 text-xs font-mono">
-            <div className="p-3 rounded-xl bg-slate-900/60 border border-slate-800">
-              <span className="text-[10px] text-muted-foreground block">TRUST TIER</span>
-              <span className="text-amber-400 font-bold mt-0.5 block">{data.tier}</span>
+          <div className="grid grid-cols-4 gap-2 text-[10px] font-mono">
+            <div className="p-2.5 rounded-xl bg-white/5 border border-white/10 min-w-0 shadow-inner">
+              <span className="text-[8px] text-slate-400 block truncate">TRUST TIER</span>
+              <span className="text-white font-bold mt-1 block truncate">{data.tier?.split(' ')[0] || data.tier}</span>
             </div>
-            <div className="p-3 rounded-xl bg-slate-900/60 border border-slate-800">
-              <span className="text-[10px] text-muted-foreground block">VERIFIED DATE</span>
-              <span className="text-emerald-400 font-bold mt-0.5 block">{data.verifiedDate}</span>
+            <div className="p-2.5 rounded-xl bg-white/5 border border-white/10 min-w-0 shadow-inner">
+              <span className="text-[8px] text-slate-400 block truncate">ISSUED</span>
+              <span className="text-white font-bold mt-1 block truncate">{data.verifiedDate}</span>
+            </div>
+            <div className="p-2.5 rounded-xl bg-white/5 border border-white/10 min-w-0 shadow-inner">
+              <span className="text-[8px] text-slate-400 block truncate">NETWORK STATUS</span>
+              <span className="text-emerald-400 font-bold mt-1 flex items-center gap-1 truncate">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shrink-0" /> ACTIVE
+              </span>
+            </div>
+            <div className="p-2.5 rounded-xl bg-white/5 border border-white/10 min-w-0 shadow-inner">
+              <span className="text-[8px] text-slate-400 block truncate">CLEARANCE</span>
+              <span className="text-white font-bold mt-1 flex items-center gap-1 truncate">
+                <Lock className="w-3 h-3 text-slate-400 shrink-0" /> LVL 5
+              </span>
             </div>
           </div>
         </div>
 
         {/* Card Footer & QR Code Action */}
-        <div className="relative z-10 flex items-center justify-between pt-4 border-t border-slate-800/80">
-          <div className="flex items-center gap-2 text-xs font-mono text-slate-400">
-            <Cpu className="w-4 h-4 text-cyan-400" />
-            <span>ID: {data.id.substring(0, 13)}...</span>
+        <div className="relative z-10 flex flex-col gap-2">
+          {/* Aesthetic Barcode */}
+          <div className="w-full h-3 flex items-center justify-between opacity-30 px-1">
+            {[...Array(60)].map((_, i) => (
+              <div 
+                key={i} 
+                className="bg-slate-300 h-full" 
+                style={{ width: `${Math.random() * 2 + 1}px`, opacity: Math.random() * 0.5 + 0.5 }} 
+              />
+            ))}
           </div>
 
-          <Button
-            size="sm"
-            variant="outline"
-            onClick={onOpenQR}
-            className="gap-1.5 text-xs font-mono border-amber-500/40 text-amber-300 hover:bg-amber-500/20"
-          >
-            <QrCode className="w-4 h-4" /> Cryptographic QR
-          </Button>
+          <div className="flex items-center justify-between pt-2 border-t border-white/10">
+            <div className="flex items-center gap-1.5 text-[10px] font-mono text-slate-400">
+              <Cpu className="w-3.5 h-3.5 text-slate-300" />
+              <span>ID: {data.id.substring(0, 18)}...</span>
+            </div>
+
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={onOpenQR}
+              className="h-7 px-2.5 gap-1.5 text-[10px] font-mono border-white/20 text-white bg-white/5 hover:bg-white/10"
+            >
+              <QrCode className="w-3.5 h-3.5" /> QR
+            </Button>
+          </div>
         </div>
       </div>
     </div>

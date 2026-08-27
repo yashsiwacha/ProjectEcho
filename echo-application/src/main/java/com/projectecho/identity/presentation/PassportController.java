@@ -1,6 +1,7 @@
 package com.projectecho.identity.presentation;
 
 import com.projectecho.identity.application.IdentityApplicationService;
+import com.projectecho.identity.domain.CareerPassport;
 import com.projectecho.identity.domain.EmailAddress;
 import com.projectecho.identity.domain.JobTitle;
 import com.projectecho.identity.domain.Name;
@@ -32,7 +33,12 @@ public class PassportController {
 
     @PostMapping
     public ResponseEntity<PassportResponse> create(
-            @Valid @RequestBody final CreatePassportRequest request) {
+            @Valid @RequestBody final CreatePassportRequest request,
+            final java.security.Principal principal) {
+        if (principal != null && !request.email().equals(principal.getName())) {
+            throw new org.springframework.security.access.AccessDeniedException(
+                    "Access Denied: Cannot create passport for a different email");
+        }
         final PassportId id =
                 service.initialize(
                         new Name(request.name()),
@@ -43,19 +49,35 @@ public class PassportController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PassportResponse> findById(@PathVariable final UUID id) {
-        return ResponseEntity.ok(PassportResponse.from(service.findById(id)));
+    public ResponseEntity<PassportResponse> findById(
+            @PathVariable final UUID id, final java.security.Principal principal) {
+        final CareerPassport passport = service.findById(id);
+        if (principal != null && !passport.getEmail().value().equals(principal.getName())) {
+            throw new org.springframework.security.access.AccessDeniedException(
+                    "Access Denied: Passport does not belong to the authenticated user");
+        }
+        return ResponseEntity.ok(PassportResponse.from(passport));
     }
 
     @GetMapping
     public ResponseEntity<Page<PassportResponse>> findAll(
             @PageableDefault(size = 20) final Pageable pageable,
-            @RequestParam(required = false) final String name) {
-        final Page<PassportResponse> page;
-        if (name != null && !name.isBlank()) {
-            page = service.searchByName(name, pageable).map(PassportResponse::from);
+            @RequestParam(required = false) final String name,
+            final java.security.Principal principal) {
+        Page<PassportResponse> page;
+        if (principal != null) {
+            // For security, only return the passport belonging to the authenticated user
+            try {
+                final CareerPassport passport =
+                        service.findByEmail(new EmailAddress(principal.getName()));
+                final java.util.List<PassportResponse> list =
+                        java.util.List.of(PassportResponse.from(passport));
+                page = new org.springframework.data.domain.PageImpl<>(list, pageable, 1);
+            } catch (com.projectecho.shared.exception.ResourceNotFoundException ex) {
+                page = Page.empty(pageable);
+            }
         } else {
-            page = service.findAll(pageable).map(PassportResponse::from);
+            page = Page.empty(pageable);
         }
         return ResponseEntity.ok(page);
     }

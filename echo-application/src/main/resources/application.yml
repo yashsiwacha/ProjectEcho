@@ -9,13 +9,22 @@ spring:
     password: echo_password
   security:
     user:
-      name: admin
+      name: "${APP_USERNAME:admin}"
       password: "${APP_PASSWORD:adminpwd}"
+jwt:
+  secret: "${JWT_SECRET:dGhpcy1pcy1hLXZlcnktc2VjdXJlLWFuZC1sb25nLXNlY3JldC1rZXktZm9yLXByb2plY3QtZWNoby1hcGk=}"
+  expirationMs: 86400000
 management:
   endpoints:
     web:
       exposure:
-        include: "health,info,metrics,prometheus"
+        include: health,info,prometheus,metrics
+  tracing:
+    sampling:
+      probability: 1.0
+  otlp:
+    tracing:
+      endpoint: "http://localhost:4318/v1/traces"
   endpoint:
     health:
       probes:

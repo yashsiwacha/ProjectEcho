@@ -53,20 +53,20 @@ export default function Sidebar() {
                 href={item.href}
                 className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all group ${
                   isActive
-                    ? 'bg-amber-500/15 text-amber-300 border border-amber-500/40 shadow-lg shadow-amber-500/10'
+                    ? 'bg-muted text-foreground border border-border shadow-lg shadow-sm'
                     : 'text-muted-foreground hover:text-foreground hover:bg-muted/50 border border-transparent'
                 }`}
               >
                 <div className="flex items-center gap-3">
-                  <Icon className={`w-4 h-4 transition-colors ${isActive ? 'text-amber-400' : 'text-muted-foreground group-hover:text-amber-400'}`} />
+                  <Icon className={`w-4 h-4 transition-colors ${isActive ? 'text-foreground' : 'text-muted-foreground group-hover:text-foreground'}`} />
                   <span>{item.label}</span>
                 </div>
 
                 {item.badge && (
                   <span className={`text-[10px] font-mono px-2 py-0.5 rounded-full border ${
                     isActive
-                      ? 'bg-amber-500/25 border-amber-500/40 text-amber-300 font-bold'
-                      : 'bg-muted/60 border-border text-muted-foreground group-hover:border-amber-500/30'
+                      ? 'bg-muted border-border text-foreground font-bold'
+                      : 'bg-muted/60 border-border text-muted-foreground group-hover:border-border'
                   }`}>
                     {item.badge}
                   </span>
@@ -80,7 +80,7 @@ export default function Sidebar() {
       {/* Footer Security Badge */}
       <div className="p-3.5 rounded-xl bg-muted/40 border border-border/60 space-y-2">
         <div className="flex items-center gap-2 text-xs font-semibold text-foreground">
-          <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+          <Sparkles className="w-3.5 h-3.5 text-foreground" />
           <span>Deterministic AI Core</span>
         </div>
         <p className="text-[11px] text-muted-foreground leading-relaxed">

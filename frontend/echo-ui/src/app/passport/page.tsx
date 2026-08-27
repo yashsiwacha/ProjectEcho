@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { motion } from 'framer-motion';
 import { api } from '@/lib/api';
 import AppLayout from '@/components/AppLayout';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/Card';
@@ -67,9 +68,27 @@ export default function PassportPage() {
     createMutation.mutate({ name, email, jobTitle });
   };
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: { staggerChildren: 0.1 }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0, transition: { type: 'spring' as const, stiffness: 300, damping: 24 } }
+  };
+
   return (
     <AppLayout>
-      <div className="space-y-8 max-w-5xl">
+      <motion.div 
+        variants={containerVariants}
+        initial="hidden"
+        animate="show"
+        className="space-y-8 max-w-5xl"
+      >
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
@@ -86,19 +105,19 @@ export default function PassportPage() {
             variant="outline"
             size="sm"
             onClick={() => setQrModalOpen(true)}
-            className="gap-2 text-xs border-amber-500/40 text-amber-300 hover:bg-amber-500/10"
+            className="gap-2 text-xs border-border text-foreground hover:bg-muted"
           >
             <QrCode className="w-4 h-4" /> Verify QR Seal
           </Button>
         </div>
 
         {/* 3D Holographic Passport Card Display */}
-        <div className="space-y-3">
+        <motion.div variants={itemVariants} className="space-y-3">
           <div className="flex items-center justify-between px-2">
             <span className="text-xs font-mono text-muted-foreground uppercase tracking-wider font-semibold">
               Interactive 3D Holographic Card (Hover & Tilt)
             </span>
-            <span className="text-xs font-mono text-amber-400">
+            <span className="text-xs font-mono text-foreground">
               ● Gyroscope Active
             </span>
           </div>
@@ -114,15 +133,15 @@ export default function PassportPage() {
             } : undefined}
             onOpenQR={() => setQrModalOpen(true)}
           />
-        </div>
+        </motion.div>
 
         {/* Two Column Grid: Form & Passport Gallery */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
+        <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-12 gap-8">
           {/* Create Passport Form */}
           <Card champagneBorder className="md:col-span-5 p-6">
             <CardHeader className="p-0 pb-4">
               <CardTitle className="flex items-center gap-2 text-base font-bold text-white">
-                <Plus className="w-4 h-4 text-amber-400" /> Initialize New Passport
+                <Plus className="w-4 h-4 text-foreground" /> Initialize New Passport
               </CardTitle>
               <CardDescription className="text-xs">Create a verified aggregate root career identity</CardDescription>
             </CardHeader>
@@ -158,7 +177,7 @@ export default function PassportPage() {
                 <Button
                   type="submit"
                   variant="champagne"
-                  className="w-full font-bold shadow-lg shadow-amber-500/20"
+                  className="w-full font-bold shadow-lg shadow-sm"
                   disabled={createMutation.isPending}
                 >
                   {createMutation.isPending ? 'Initializing...' : 'Initialize Career Passport'}
@@ -171,7 +190,7 @@ export default function PassportPage() {
           <Card champagneBorder className="md:col-span-7 p-6">
             <CardHeader className="p-0 pb-4">
               <CardTitle className="flex items-center gap-2 text-base font-bold text-white">
-                <UserCheck className="w-4 h-4 text-emerald-400" /> Active Verified Passports
+                <UserCheck className="w-4 h-4 text-foreground" /> Active Verified Passports
               </CardTitle>
               <CardDescription className="text-xs">Click a passport to preview in 3D studio</CardDescription>
             </CardHeader>
@@ -195,13 +214,13 @@ export default function PassportPage() {
                         onClick={() => setSelectedPassport(passport)}
                         className={`p-4 rounded-xl border transition-all cursor-pointer flex items-center justify-between ${
                           isSelected
-                            ? 'bg-amber-500/15 border-amber-500/60 shadow-lg shadow-amber-500/10'
-                            : 'bg-slate-900/60 border-border hover:border-amber-500/30'
+                            ? 'bg-amber-500/10 border-amber-500/40 shadow-lg'
+                            : 'bg-card border-border hover:border-amber-500/30'
                         }`}
                       >
                         <div className="space-y-1">
                           <div className="flex items-center gap-2">
-                            <h4 className="font-bold text-sm text-white">{passport.name}</h4>
+                            <h4 className={`font-bold text-sm ${isSelected ? 'text-amber-500' : 'text-foreground'}`}>{passport.name}</h4>
                             <Badge variant="success" className="text-[10px] gap-1 py-0.5">
                               <CheckCircle2 className="w-3 h-3" /> Tier 4
                             </Badge>
@@ -210,7 +229,7 @@ export default function PassportPage() {
                           <p className="text-[10px] text-muted-foreground font-mono">{passport.email}</p>
                         </div>
                         <div className="text-right">
-                          <span className="text-[10px] font-mono text-amber-400 block font-bold">
+                          <span className={`text-[10px] font-mono block font-bold ${isSelected ? 'text-amber-500' : 'text-foreground'}`}>
                             {isSelected ? 'ACTIVE 3D' : 'SELECT'}
                           </span>
                           <span className="text-[10px] font-mono text-muted-foreground">{passport.id.substring(0, 8)}...</span>
@@ -222,16 +241,16 @@ export default function PassportPage() {
               )}
             </CardContent>
           </Card>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
 
       {/* QR Code Verification Modal */}
       {qrModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
-          <div className="relative w-full max-w-md rounded-2xl bg-card border border-amber-500/40 p-6 glass-panel-glow space-y-6">
+          <div className="relative w-full max-w-md rounded-2xl bg-card border border-border p-6 glass-panel space-y-6">
             <div className="flex items-center justify-between border-b border-border pb-3">
               <div className="flex items-center gap-2">
-                <ShieldCheck className="w-5 h-5 text-amber-400" />
+                <ShieldCheck className="w-5 h-5 text-foreground" />
                 <h3 className="font-bold text-base text-white">Cryptographic QR Verification</h3>
               </div>
               <button onClick={() => setQrModalOpen(false)} className="text-muted-foreground hover:text-white">
@@ -261,7 +280,7 @@ export default function PassportPage() {
             <div className="text-center space-y-1 text-xs font-mono text-muted-foreground">
               <p className="text-white font-semibold">Passport ID: {activePassport?.id}</p>
               <p>Cryptographic SHA-256 Hash: 0x9f8b...21e7</p>
-              <p className="text-emerald-400">Status: PASS (0 Hallucinations)</p>
+              <p className="text-foreground">Status: PASS (0 Hallucinations)</p>
             </div>
 
             <Button

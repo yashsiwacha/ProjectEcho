@@ -23,13 +23,13 @@ public class MissionApplicationService {
         this.missionRepository = missionRepository;
     }
 
-    public UUID createMission(final String title) {
+    public UUID createMission(final String title, final UUID passportId) {
         final UUID id = UUID.randomUUID();
-        final Mission mission = Mission.draft(id, title);
+        final Mission mission = Mission.draft(id, title, passportId);
         missionRepository.save(mission);
 
         if (LOG.isInfoEnabled()) {
-            LOG.info("Mission created: {} ({})", title, id);
+            LOG.info("Mission created: {} ({}) for passport {}", title, id, passportId);
         }
 
         return id;
@@ -68,6 +68,17 @@ public class MissionApplicationService {
     @Transactional(readOnly = true)
     public Page<Mission> findByStatus(final MissionStatus status, final Pageable pageable) {
         return missionRepository.findByStatus(status, pageable);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<Mission> findByPassportId(final UUID passportId, final Pageable pageable) {
+        return missionRepository.findByPassportId(passportId, pageable);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<Mission> findByPassportIdAndStatus(
+            final UUID passportId, final MissionStatus status, final Pageable pageable) {
+        return missionRepository.findByPassportIdAndStatus(passportId, status, pageable);
     }
 
     private Mission findMissionById(final UUID missionId) {

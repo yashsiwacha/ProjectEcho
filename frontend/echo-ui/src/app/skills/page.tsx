@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { motion } from 'framer-motion';
 import { api } from '@/lib/api';
 import AppLayout from '@/components/AppLayout';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/Card';
@@ -50,14 +51,32 @@ export default function SkillsPage() {
     activeFilter === 'All' ? true : s.category.toLowerCase() === activeFilter.toLowerCase()
   );
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: { staggerChildren: 0.1 }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0, transition: { type: 'spring' as const, stiffness: 300, damping: 24 } }
+  };
+
   return (
     <AppLayout>
-      <div className="space-y-8 max-w-5xl">
+      <motion.div 
+        variants={containerVariants}
+        initial="hidden"
+        animate="show"
+        className="space-y-8 max-w-5xl"
+      >
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="text-3xl font-extrabold tracking-tight text-white">Skills Taxonomy Galaxy</h1>
+              <h1 className="text-3xl font-extrabold tracking-tight text-foreground">Skills Taxonomy Galaxy</h1>
               <Badge variant="champagne" className="text-[10px]">3D WebGL Constellation</Badge>
             </div>
             <p className="text-muted-foreground text-sm mt-1">
@@ -67,21 +86,21 @@ export default function SkillsPage() {
         </div>
 
         {/* 3D WebGL Skill Universe Canvas */}
-        <div className="space-y-3">
+        <motion.div variants={itemVariants} className="space-y-3">
           <div className="flex items-center justify-between px-2">
             <span className="text-xs font-mono text-muted-foreground uppercase tracking-wider font-semibold">
               Interactive 3D Competency Orbit (Rotate & Inspect)
             </span>
-            <span className="text-xs font-mono text-cyan-400">
+            <span className="text-xs font-mono text-foreground">
               ● 60 FPS WebGL
             </span>
           </div>
 
           <ThreeSkillGalaxy />
-        </div>
+        </motion.div>
 
         {/* Category Filters */}
-        <div className="flex flex-wrap items-center gap-2 pt-2">
+        <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-2 pt-2">
           <span className="text-xs font-mono text-muted-foreground mr-2 flex items-center gap-1">
             <Filter className="w-3.5 h-3.5" /> Filter by Domain:
           </span>
@@ -91,22 +110,22 @@ export default function SkillsPage() {
               onClick={() => setActiveFilter(cat)}
               className={`px-3 py-1 rounded-full text-xs font-mono font-medium transition-all ${
                 activeFilter === cat
-                  ? 'bg-amber-500 text-black font-bold shadow-md shadow-amber-500/20'
+                  ? 'bg-muted text-white font-bold shadow-md shadow-sm'
                   : 'bg-slate-900 text-muted-foreground hover:text-white border border-border'
               }`}
             >
               {cat}
             </button>
           ))}
-        </div>
+        </motion.div>
 
         {/* Two Column Grid: Form & List */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
+        <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-12 gap-8">
           {/* Create Skill Form */}
           <Card champagneBorder className="md:col-span-5 p-6">
             <CardHeader className="p-0 pb-4">
               <CardTitle className="flex items-center gap-2 text-base font-bold text-white">
-                <Plus className="w-4 h-4 text-amber-400" /> Register Skill in Ontology
+                <Plus className="w-4 h-4 text-foreground" /> Register Skill in Ontology
               </CardTitle>
               <CardDescription className="text-xs">
                 Add a new verified capability to the platform taxonomy
@@ -124,9 +143,10 @@ export default function SkillsPage() {
                 <div className="space-y-1.5">
                   <label className="text-xs font-mono text-muted-foreground uppercase font-semibold">Domain Category</label>
                   <select
+                    aria-label="Domain Category"
                     value={selectedCategory}
                     onChange={(e) => setSelectedCategory(e.target.value)}
-                    className="w-full rounded-xl bg-slate-900 border border-border p-2.5 text-xs text-white outline-none focus:border-amber-500/60"
+                    className="w-full rounded-xl bg-slate-900 border border-border p-2.5 text-xs text-white outline-none focus:border-border"
                   >
                     {CATEGORIES.filter((c) => c !== 'All').map((c) => (
                       <option key={c} value={c}>
@@ -139,7 +159,7 @@ export default function SkillsPage() {
                 <Button
                   type="submit"
                   variant="champagne"
-                  className="w-full font-bold shadow-lg shadow-amber-500/20"
+                  className="w-full font-bold shadow-lg shadow-sm"
                   disabled={createMutation.isPending}
                 >
                   {createMutation.isPending ? 'Registering...' : 'Add to Taxonomy Galaxy'}
@@ -152,7 +172,7 @@ export default function SkillsPage() {
           <Card champagneBorder className="md:col-span-7 p-6">
             <CardHeader className="p-0 pb-4">
               <CardTitle className="flex items-center gap-2 text-base font-bold text-white">
-                <Zap className="w-4 h-4 text-cyan-400" /> Active Taxonomy Directory
+                <Zap className="w-4 h-4 text-foreground" /> Active Taxonomy Directory
               </CardTitle>
               <CardDescription className="text-xs">
                 Ontological nodes registered in the database
@@ -163,7 +183,7 @@ export default function SkillsPage() {
                 {filteredSkills?.map((s) => (
                   <div
                     key={s.id}
-                    className="p-3.5 rounded-xl bg-slate-900/60 border border-border flex items-center justify-between hover:border-cyan-500/40 transition-all"
+                    className="p-3.5 rounded-xl bg-slate-900/60 border border-border flex items-center justify-between hover:border-border transition-all"
                   >
                     <div>
                       <h4 className="font-semibold text-sm text-white">{s.name}</h4>
@@ -177,8 +197,8 @@ export default function SkillsPage() {
               </div>
             </CardContent>
           </Card>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </AppLayout>
   );
 }

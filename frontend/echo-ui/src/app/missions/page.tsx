@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { motion } from 'framer-motion';
 import { api } from '@/lib/api';
 import AppLayout from '@/components/AppLayout';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/Card';
@@ -49,9 +50,27 @@ export default function MissionsPage() {
     createMutation.mutate({ title: missionTitle });
   };
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: { staggerChildren: 0.1 }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0, transition: { type: 'spring' as const, stiffness: 300, damping: 24 } }
+  };
+
   return (
     <AppLayout>
-      <div className="space-y-8 max-w-5xl">
+      <motion.div 
+        variants={containerVariants}
+        initial="hidden"
+        animate="show"
+        className="space-y-8 max-w-5xl"
+      >
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
@@ -66,12 +85,12 @@ export default function MissionsPage() {
         </div>
 
         {/* Two Column Grid: Creation & Quest Board */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
+        <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-12 gap-8">
           {/* Create Mission Form */}
           <Card champagneBorder className="md:col-span-5 p-6">
             <CardHeader className="p-0 pb-4">
               <CardTitle className="flex items-center gap-2 text-base font-bold text-white">
-                <Plus className="w-4 h-4 text-amber-400" /> Create Executive Mission
+                <Plus className="w-4 h-4 text-foreground" /> Create Executive Mission
               </CardTitle>
               <CardDescription className="text-xs">
                 Define a target career objective or strategic engineering role
@@ -98,7 +117,7 @@ export default function MissionsPage() {
                 <Button
                   type="submit"
                   variant="champagne"
-                  className="w-full font-bold shadow-lg shadow-amber-500/20"
+                  className="w-full font-bold shadow-lg shadow-sm"
                   disabled={createMutation.isPending}
                 >
                   {createMutation.isPending ? 'Establishing...' : 'Publish Mission'}
@@ -111,7 +130,7 @@ export default function MissionsPage() {
           <Card champagneBorder className="md:col-span-7 p-6">
             <CardHeader className="p-0 pb-4">
               <CardTitle className="flex items-center gap-2 text-base font-bold text-white">
-                <Compass className="w-4 h-4 text-emerald-400" /> Active Career Quests
+                <Compass className="w-4 h-4 text-foreground" /> Active Career Quests
               </CardTitle>
               <CardDescription className="text-xs">
                 Evaluate your verified passport against active mission criteria
@@ -124,7 +143,7 @@ export default function MissionsPage() {
                   return (
                     <div
                       key={m.id}
-                      className="p-5 rounded-2xl bg-slate-900/60 border border-border hover:border-amber-500/40 transition-all space-y-3"
+                      className="p-5 rounded-2xl bg-slate-900/60 border border-border hover:border-border transition-all space-y-3"
                     >
                       <div className="flex items-start justify-between gap-4">
                         <div>
@@ -153,7 +172,7 @@ export default function MissionsPage() {
                       </div>
 
                       <div className="flex items-center justify-between pt-2 border-t border-border/60 text-xs font-mono">
-                        <div className="flex items-center gap-1.5 text-emerald-400">
+                        <div className="flex items-center gap-1.5 text-foreground">
                           <CheckCircle2 className="w-3.5 h-3.5" /> Ready for Rule Engine
                         </div>
                         <span className="text-muted-foreground">{m.createdAt}</span>
@@ -164,8 +183,8 @@ export default function MissionsPage() {
               </div>
             </CardContent>
           </Card>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </AppLayout>
   );
 }

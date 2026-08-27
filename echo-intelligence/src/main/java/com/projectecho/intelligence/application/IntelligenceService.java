@@ -11,6 +11,7 @@ import java.util.Objects;
 import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -22,9 +23,12 @@ public class IntelligenceService {
 
     private static final Logger LOG = LoggerFactory.getLogger(IntelligenceService.class);
     private final ReasoningCardRepository repository;
+    private final LlmReasoningEngine llmEngine;
 
-    public IntelligenceService(final ReasoningCardRepository repository) {
+    public IntelligenceService(
+            final ReasoningCardRepository repository, final LlmReasoningEngine llmEngine) {
         this.repository = Objects.requireNonNull(repository);
+        this.llmEngine = Objects.requireNonNull(llmEngine);
     }
 
     public ReasoningCard generateReasoningCard(
@@ -60,6 +64,7 @@ public class IntelligenceService {
     }
 
     @Transactional(readOnly = true)
+    @Cacheable("reasoningCards")
     public ReasoningCard findById(final UUID cardId) {
         return repository
                 .findById(cardId)
@@ -73,13 +78,31 @@ public class IntelligenceService {
     }
 
     @Transactional(readOnly = true)
+    @Cacheable(value = "reasoningCardsByPassport", key = "#passportId.value()")
     public Page<ReasoningCard> findByPassportId(
             final PassportId passportId, final Pageable pageable) {
         return repository.findByPassportId(passportId, pageable);
     }
 
     @Transactional(readOnly = true)
+    @Cacheable(value = "reasoningCardsByMission", key = "#missionId.value()")
     public Page<ReasoningCard> findByMissionId(final MissionId missionId, final Pageable pageable) {
         return repository.findByMissionId(missionId, pageable);
+    }
+
+    public void evaluateClaimWithLlm(final String claimDescription, final String skillNode) {
+        llmEngine
+                .evaluateEvidence(claimDescription, skillNode)
+                .thenAccept(
+                        result -> {
+                            if (LOG.isInfoEnabled()) {
+                                LOG.info(
+                                        "Async LLM evaluation resulted in match: {} with confidence {}",
+                                        result.isMatch(),
+                                        result.confidence());
+                            }
+                            // Future: dispatch a domain event to update the graph based on LLM
+                            // reasoning
+                        });
     }
 }

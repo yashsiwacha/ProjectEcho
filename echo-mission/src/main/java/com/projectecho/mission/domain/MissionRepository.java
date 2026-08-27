@@ -10,4 +10,9 @@ import org.springframework.stereotype.Repository;
 public interface MissionRepository extends JpaRepository<Mission, UUID> {
 
     Page<Mission> findByStatus(MissionStatus status, Pageable pageable);
+
+    Page<Mission> findByPassportId(UUID passportId, Pageable pageable);
+
+    Page<Mission> findByPassportIdAndStatus(
+            UUID passportId, MissionStatus status, Pageable pageable);
 }

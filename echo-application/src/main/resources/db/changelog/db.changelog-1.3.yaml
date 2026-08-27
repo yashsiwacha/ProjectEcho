@@ -1,0 +1,99 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1.3.0
+      author: projectecho
+      comment: "Add JPA auditing columns (created_by, last_modified_by) to all aggregate tables. Required by AggregateRoot @CreatedBy / @LastModifiedBy Spring Data JPA auditing."
+      changes:
+        # identity_passports
+        - addColumn:
+            tableName: identity_passports
+            columns:
+              - column:
+                  name: created_by
+                  type: varchar(255)
+              - column:
+                  name: last_modified_by
+                  type: varchar(255)
+
+        # taxonomy_skills
+        - addColumn:
+            tableName: taxonomy_skills
+            columns:
+              - column:
+                  name: created_by
+                  type: varchar(255)
+              - column:
+                  name: last_modified_by
+                  type: varchar(255)
+
+        # evidence_claims
+        - addColumn:
+            tableName: evidence_claims
+            columns:
+              - column:
+                  name: created_by
+                  type: varchar(255)
+              - column:
+                  name: last_modified_by
+                  type: varchar(255)
+              - column:
+                  name: text
+                  type: varchar(2000)
+                  remarks: "Embedded Description.text value object field"
+
+        # missions
+        - addColumn:
+            tableName: missions
+            columns:
+              - column:
+                  name: created_by
+                  type: varchar(255)
+              - column:
+                  name: last_modified_by
+                  type: varchar(255)
+
+        # readiness_assessments
+        - addColumn:
+            tableName: readiness_assessments
+            columns:
+              - column:
+                  name: created_by
+                  type: varchar(255)
+              - column:
+                  name: last_modified_by
+                  type: varchar(255)
+
+        # reasoning_cards
+        - addColumn:
+            tableName: reasoning_cards
+            columns:
+              - column:
+                  name: created_by
+                  type: varchar(255)
+              - column:
+                  name: last_modified_by
+                  type: varchar(255)
+
+  - changeSet:
+      id: 1.3.1
+      author: projectecho
+      dbms: postgresql
+      comment: "Add vector embedding columns — PostgreSQL only (float8[] not supported by H2 used in tests)."
+      changes:
+        # taxonomy_skills — vector embedding
+        - addColumn:
+            tableName: taxonomy_skills
+            columns:
+              - column:
+                  name: embedding
+                  type: float8[]
+                  remarks: "Vector embedding array for ML skill matching"
+
+        # evidence_claims — vector embedding
+        - addColumn:
+            tableName: evidence_claims
+            columns:
+              - column:
+                  name: embedding
+                  type: float8[]
+                  remarks: "Vector embedding array for ML evidence matching"

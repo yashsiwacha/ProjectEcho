@@ -2,15 +2,13 @@ package com.projectecho.ruleengine.presentation;
 
 import com.projectecho.ruleengine.application.RuleEngineService;
 import com.projectecho.ruleengine.domain.BusinessRule;
-import com.projectecho.ruleengine.domain.DecisionGraph;
 import com.projectecho.ruleengine.domain.MissionStateSnapshot;
 import com.projectecho.ruleengine.domain.PassportStateSnapshot;
 import com.projectecho.ruleengine.domain.ReadinessAssessment;
+import com.projectecho.ruleengine.domain.StandardReadinessRule;
 import jakarta.validation.Valid;
 import java.net.URI;
-import java.time.Instant;
 import java.util.Collections;
-import java.util.List;
 import java.util.UUID;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -94,40 +92,5 @@ public class ReadinessAssessmentController {
         return ResponseEntity.ok(page);
     }
 
-    private static class StandardReadinessRule implements BusinessRule {
-        private final UUID ruleId = UUID.randomUUID();
-
-        @Override
-        public UUID getRuleId() {
-            return ruleId;
-        }
-
-        @Override
-        public String getDescription() {
-            return "Standard Skill Matching Readiness Rule";
-        }
-
-        @Override
-        public DecisionGraph evaluate(
-                final PassportStateSnapshot passport, final MissionStateSnapshot mission) {
-            final boolean eligible =
-                    passport.isVerified()
-                            && mission.isActive()
-                            && passport.skills().containsAll(mission.requiredSkills());
-            final int score = eligible ? 100 : passport.skills().isEmpty() ? 0 : 50;
-
-            return new DecisionGraph(
-                    UUID.randomUUID(),
-                    Instant.now(),
-                    ruleId,
-                    passport.passportId(),
-                    mission.missionId(),
-                    List.of(),
-                    List.of(),
-                    eligible,
-                    score,
-                    "Evaluated standard readiness",
-                    UUID.randomUUID());
-        }
-    }
+    // Removed inner StandardReadinessRule class since it's now in the domain module
 }

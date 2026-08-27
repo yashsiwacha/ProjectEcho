@@ -1,52 +1,86 @@
+version: '3.8'
+
 services:
   postgres:
-    image: postgres:16
-    ports:
-      - "5432:5432"
+    image: pgvector/pgvector:pg15
+    container_name: echo-postgres
     environment:
       POSTGRES_USER: echo
       POSTGRES_PASSWORD: echo_password
       POSTGRES_DB: project_echo
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U echo -d project_echo"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   redis:
     image: redis:7-alpine
+    container_name: echo-redis
     ports:
       - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
-  backend:
+  echo-backend:
     build:
       context: .
       dockerfile: backend/Dockerfile
-    image: ghcr.io/projectecho/backend:latest
+    container_name: echo-backend
     ports:
-      - "8080:8080"
+      - "8081:8080"
     environment:
-      SPRING_PROFILES_ACTIVE: prod
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/project_echo
-      SPRING_DATASOURCE_USERNAME: echo
-      SPRING_DATASOURCE_PASSWORD: echo_password
-      APP_PASSWORD: ${APP_PASSWORD:-adminpwd}
-      OTEL_EXPORTER_OTLP_ENDPOINT: http://otel-collector:4317
+      - SPRING_PROFILES_ACTIVE=prod
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/project_echo
+      - SPRING_DATASOURCE_USERNAME=echo
+      - SPRING_DATASOURCE_PASSWORD=echo_password
+      - SPRING_DATA_REDIS_HOST=redis
+      - SPRING_DATA_REDIS_PORT=6379
+      - JWT_SECRET=dGhpcy1pcy1hLXNlY3JldC1rZXktZm9yLXRlc3RpbmctcHVycG9zZXMtcGxlYXNlLWNoYW5nZS1pdC1pbi1wcm9kdWN0aW9uCg==
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4317
     depends_on:
-      - postgres
-      - redis
-      - otel-collector
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8080/actuator/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
-  otel-collector:
-    image: otel/opentelemetry-collector:0.99.0
-    command: ["--config", "/etc/otel-collector-config.yaml"]
-    volumes:
-      - ./otel-collector-config.yaml:/etc/otel-collector-config.yaml
-    ports:
-      - "4317:4317"
-      - "4318:4318"
-
-  frontend:
+  echo-frontend:
     build:
       context: ./frontend/echo-ui
       dockerfile: Dockerfile
-    image: ghcr.io/projectecho/frontend:latest
+    container_name: echo-frontend
     ports:
-      - "80:80"
+      - "3000:80"
     depends_on:
-      - backend
+      echo-backend:
+        condition: service_healthy
+
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:0.95.0
+    container_name: echo-otel-collector
+    volumes:
+      - ./otel-collector-config.yaml:/etc/otelcol/config.yaml
+    ports:
+      - "4317:4317" # OTLP gRPC
+      - "4318:4318" # OTLP HTTP
+      - "8889:8889" # Prometheus metrics exporter
+    depends_on:
+      - echo-backend
+
+volumes:
+  postgres_data:
+  redis_data:

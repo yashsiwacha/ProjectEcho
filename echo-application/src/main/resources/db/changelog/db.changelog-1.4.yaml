@@ -1,0 +1,51 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1.4.0
+      author: projectecho
+      changes:
+        - createTable:
+            tableName: user_accounts
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: email
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: password_hash
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: timestamp
+                  constraints:
+                    nullable: false
+        - addColumn:
+            tableName: identity_passports
+            columns:
+              - column:
+                  name: user_account_id
+                  type: uuid
+        - addForeignKeyConstraint:
+            baseTableName: identity_passports
+            baseColumnNames: user_account_id
+            referencedTableName: user_accounts
+            referencedColumnNames: id
+            constraintName: fk_identity_passports_user_account

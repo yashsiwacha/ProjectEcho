@@ -22,18 +22,27 @@ public class Mission extends AggregateRoot {
     @Column(nullable = false, length = 50)
     private MissionStatus status;
 
+    @Column(nullable = false)
+    private UUID passportId;
+
     protected Mission() {
         super();
     }
 
-    private Mission(final UUID id, final MissionTitle title, final MissionStatus status) {
+    private Mission(
+            final UUID id,
+            final MissionTitle title,
+            final MissionStatus status,
+            final UUID passportId) {
         super(id);
         this.title = Objects.requireNonNull(title, "Title cannot be null");
         this.status = Objects.requireNonNull(status, "Status cannot be null");
+        this.passportId = Objects.requireNonNull(passportId, "PassportId cannot be null");
     }
 
-    public static Mission draft(final UUID id, final String title) {
-        final Mission mission = new Mission(id, new MissionTitle(title), MissionStatus.DRAFT);
+    public static Mission draft(final UUID id, final String title, final UUID passportId) {
+        final Mission mission =
+                new Mission(id, new MissionTitle(title), MissionStatus.DRAFT, passportId);
         mission.registerEvent(
                 new MissionCreatedEvent(
                         UUID.randomUUID(),
@@ -44,6 +53,10 @@ public class Mission extends AggregateRoot {
                         id,
                         title));
         return mission;
+    }
+
+    public UUID getPassportId() {
+        return passportId;
     }
 
     public void activate() {

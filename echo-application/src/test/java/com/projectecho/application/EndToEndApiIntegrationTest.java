@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ActiveProfiles;
 
 @Tag("integration")
@@ -33,14 +34,32 @@ public class EndToEndApiIntegrationTest {
 
     @Test
     void executeCompleteBackendWorkflow() {
-        // 1. Initialize Career Passport
-        final String email = "john.doe." + UUID.randomUUID() + "@example.com";
-        final String passportId =
+        // 0. Sign Up
+        final String email = "testadmin." + UUID.randomUUID() + "@echo.local";
+        final String signupPayload =
+                "{\"username\":\"testadmin\", \"email\":\""
+                        + email
+                        + "\", \"password\":\"testadminpwd\", \"name\":\"Test Admin\"}";
+        final io.restassured.response.Response authResponse =
                 given().contentType(ContentType.JSON)
+                        .body(signupPayload)
+                        .when()
+                        .post("/api/v1/auth/signup")
+                        .then()
+                        .statusCode(HttpStatus.OK.value())
+                        .extract()
+                        .response();
+
+        final String tokenCookie = authResponse.getCookie("echo_jwt");
+
+        // 1. Initialize Career Passport
+        final String passportId =
+                given().cookie("echo_jwt", tokenCookie)
+                        .contentType(ContentType.JSON)
                         .body(
                                 Map.of(
                                         "name",
-                                        "John Doe",
+                                        "Test Admin",
                                         "email",
                                         email,
                                         "jobTitle",
@@ -50,7 +69,7 @@ public class EndToEndApiIntegrationTest {
                         .then()
                         .statusCode(201)
                         .body("id", notNullValue())
-                        .body("name", equalTo("John Doe"))
+                        .body("name", equalTo("Test Admin"))
                         .body("email", equalTo(email))
                         .extract()
                         .path("id");
@@ -58,7 +77,8 @@ public class EndToEndApiIntegrationTest {
         // 2. Register Skill
         final String skillName = "Java 21 - " + UUID.randomUUID();
         final String skillId =
-                given().contentType(ContentType.JSON)
+                given().cookie("echo_jwt", tokenCookie)
+                        .contentType(ContentType.JSON)
                         .body(Map.of("name", skillName, "category", "Backend Engineering"))
                         .when()
                         .post("/api/v1/skills")
@@ -71,7 +91,8 @@ public class EndToEndApiIntegrationTest {
 
         // 3. Submit Evidence Claim
         final String evidenceId =
-                given().contentType(ContentType.JSON)
+                given().cookie("echo_jwt", tokenCookie)
+                        .contentType(ContentType.JSON)
                         .body(
                                 Map.of(
                                         "passportId", passportId,
@@ -87,7 +108,8 @@ public class EndToEndApiIntegrationTest {
                         .path("id");
 
         // 4. Verify Evidence Claim
-        given().contentType(ContentType.JSON)
+        given().cookie("echo_jwt", tokenCookie)
+                .contentType(ContentType.JSON)
                 .body(Map.of("trustTier", "TIER_4"))
                 .when()
                 .put("/api/v1/evidence/" + evidenceId + "/verify")
@@ -98,7 +120,8 @@ public class EndToEndApiIntegrationTest {
 
         // 5. Create & Activate Mission
         final String missionId =
-                given().contentType(ContentType.JSON)
+                given().cookie("echo_jwt", tokenCookie)
+                        .contentType(ContentType.JSON)
                         .body(Map.of("title", "Lead System Architect Mission"))
                         .when()
                         .post("/api/v1/missions")
@@ -109,14 +132,16 @@ public class EndToEndApiIntegrationTest {
                         .extract()
                         .path("id");
 
-        given().when()
+        given().cookie("echo_jwt", tokenCookie)
+                .when()
                 .put("/api/v1/missions/" + missionId + "/activate")
                 .then()
                 .statusCode(200)
                 .body("status", equalTo("ACTIVE"));
 
         // 6. Trigger Readiness Assessment via Rule Engine
-        given().contentType(ContentType.JSON)
+        given().cookie("echo_jwt", tokenCookie)
+                .contentType(ContentType.JSON)
                 .body(
                         Map.of(
                                 "passportId",
@@ -139,7 +164,8 @@ public class EndToEndApiIntegrationTest {
                 .body("score", equalTo(100));
 
         // 7. Verify Reasoning Card query endpoint
-        given().when()
+        given().cookie("echo_jwt", tokenCookie)
+                .when()
                 .get("/api/v1/reasoning-cards?passportId=" + passportId)
                 .then()
                 .statusCode(200);

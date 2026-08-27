@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { motion } from 'framer-motion';
 import { api } from '@/lib/api';
 import AppLayout from '@/components/AppLayout';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/Card';
@@ -37,9 +38,27 @@ export default function ReasoningPage() {
     createdAt: '2026-08-08',
   };
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: { staggerChildren: 0.1 }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0, transition: { type: 'spring' as const, stiffness: 300, damping: 24 } }
+  };
+
   return (
     <AppLayout>
-      <div className="space-y-8 max-w-5xl">
+      <motion.div 
+        variants={containerVariants}
+        initial="hidden"
+        animate="show"
+        className="space-y-8 max-w-5xl"
+      >
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
@@ -56,17 +75,17 @@ export default function ReasoningPage() {
             variant="champagne"
             size="sm"
             onClick={() => setCertModalOpen(true)}
-            className="gap-2 text-xs font-bold shadow-lg shadow-amber-500/20"
+            className="gap-2 text-xs font-bold shadow-lg shadow-sm"
           >
             <Download className="w-4 h-4" /> Download Certificate
           </Button>
         </div>
 
         {/* Primary Reasoning Card Showcase */}
-        <div className="rounded-2xl glass-panel-glow p-8 border border-amber-500/40 space-y-6">
+        <motion.div variants={itemVariants} className="rounded-2xl glass-panel p-8 border border-border space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-border/80 pb-4">
             <div className="flex items-center gap-3">
-              <div className="p-2.5 rounded-xl bg-amber-500/20 text-amber-300 border border-amber-500/30">
+              <div className="p-2.5 rounded-xl bg-muted text-foreground border border-border">
                 <Award className="w-6 h-6" />
               </div>
               <div>
@@ -79,7 +98,7 @@ export default function ReasoningPage() {
               <Badge variant="success" className="gap-1 py-1 px-3 text-xs font-bold">
                 <CheckCircle2 className="w-3.5 h-3.5" /> 98.6% Confidence
               </Badge>
-              <span className="text-xs font-mono text-emerald-400 font-bold bg-emerald-500/10 px-2.5 py-1 rounded-md border border-emerald-500/30">
+              <span className="text-xs font-mono text-foreground font-bold bg-muted px-2.5 py-1 rounded-md border border-border">
                 QUALIFIED
               </span>
             </div>
@@ -105,30 +124,30 @@ export default function ReasoningPage() {
               <div className="space-y-1">
                 <div className="flex justify-between text-xs font-mono">
                   <span className="text-muted-foreground">1. Tier 4 Cryptographic Evidence Backing</span>
-                  <span className="text-emerald-400 font-bold">100% Full Proof</span>
+                  <span className="text-foreground font-bold">100% Full Proof</span>
                 </div>
                 <div className="w-full h-2 rounded-full bg-slate-900 overflow-hidden">
-                  <div className="h-full bg-emerald-400 rounded-full w-full" />
+                  <div className="h-full bg-muted rounded-full w-full" />
                 </div>
               </div>
 
               <div className="space-y-1">
                 <div className="flex justify-between text-xs font-mono">
                   <span className="text-muted-foreground">2. Spring Boot & Java 21 Taxonomy Alignment</span>
-                  <span className="text-amber-400 font-bold">98.5% Match</span>
+                  <span className="text-foreground font-bold">98.5% Match</span>
                 </div>
                 <div className="w-full h-2 rounded-full bg-slate-900 overflow-hidden">
-                  <div className="h-full bg-amber-400 rounded-full w-[98.5%]" />
+                  <div className="h-full bg-muted rounded-full w-[98.5%]" />
                 </div>
               </div>
 
               <div className="space-y-1">
                 <div className="flex justify-between text-xs font-mono">
                   <span className="text-muted-foreground">3. OWASP Security & Architectural Compliance</span>
-                  <span className="text-cyan-400 font-bold">100% Clean</span>
+                  <span className="text-foreground font-bold">100% Clean</span>
                 </div>
                 <div className="w-full h-2 rounded-full bg-slate-900 overflow-hidden">
-                  <div className="h-full bg-cyan-400 rounded-full w-full" />
+                  <div className="h-full bg-muted rounded-full w-full" />
                 </div>
               </div>
             </div>
@@ -142,31 +161,31 @@ export default function ReasoningPage() {
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <div className="p-3 rounded-xl bg-slate-900/60 border border-border space-y-1">
-                <span className="text-[10px] font-mono text-amber-400 font-bold">STEP 01</span>
+                <span className="text-[10px] font-mono text-foreground font-bold">STEP 01</span>
                 <h4 className="text-xs font-bold text-white">Identity Root</h4>
                 <p className="text-[11px] text-muted-foreground">Passport authenticated in Spring Boot context.</p>
               </div>
 
               <div className="p-3 rounded-xl bg-slate-900/60 border border-border space-y-1">
-                <span className="text-[10px] font-mono text-emerald-400 font-bold">STEP 02</span>
+                <span className="text-[10px] font-mono text-foreground font-bold">STEP 02</span>
                 <h4 className="text-xs font-bold text-white">Evidence Hash</h4>
                 <p className="text-[11px] text-muted-foreground">SHA-256 commit verified against public repository.</p>
               </div>
 
               <div className="p-3 rounded-xl bg-slate-900/60 border border-border space-y-1">
-                <span className="text-[10px] font-mono text-cyan-400 font-bold">STEP 03</span>
+                <span className="text-[10px] font-mono text-foreground font-bold">STEP 03</span>
                 <h4 className="text-xs font-bold text-white">Rule Execution</h4>
                 <p className="text-[11px] text-muted-foreground">Readiness qualification score synthesized to 98.6%.</p>
               </div>
             </div>
           </div>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
 
       {/* Printable Certificate Modal */}
       {certModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-in fade-in duration-200">
-          <div className="relative w-full max-w-2xl rounded-2xl bg-card border-2 border-amber-500/50 p-8 shadow-2xl glass-panel-glow space-y-6">
+          <div className="relative w-full max-w-2xl rounded-2xl bg-card border-2 border-border p-8 shadow-2xl glass-panel space-y-6">
             <button
               onClick={() => setCertModalOpen(false)}
               className="absolute top-4 right-4 text-muted-foreground hover:text-white"
@@ -175,9 +194,9 @@ export default function ReasoningPage() {
             </button>
 
             {/* Certificate Border & Header */}
-            <div className="border-4 border-double border-amber-500/60 p-8 rounded-xl text-center space-y-6 bg-gradient-to-b from-slate-950 via-slate-900 to-black">
+            <div className="border-4 border-double border-border p-8 rounded-xl text-center space-y-6 bg-gradient-to-b from-slate-950 via-slate-900 to-black">
               <div className="space-y-1">
-                <div className="text-xs font-mono font-bold text-amber-400 tracking-widest uppercase">
+                <div className="text-xs font-mono font-bold text-foreground tracking-widest uppercase">
                   PROJECT ECHO SOVEREIGN CERTIFICATION
                 </div>
                 <h2 className="text-3xl font-serif font-bold text-white tracking-wide">
@@ -192,13 +211,13 @@ export default function ReasoningPage() {
               <div className="py-2 space-y-1">
                 <span className="text-[10px] font-mono text-muted-foreground uppercase">Certified Subject</span>
                 <div className="text-xl font-bold text-white">Jane Doe</div>
-                <div className="text-xs font-mono text-amber-300">Principal Distributed Systems Architect</div>
+                <div className="text-xs font-mono text-foreground">Principal Distributed Systems Architect</div>
               </div>
 
-              <div className="grid grid-cols-2 gap-4 border-t border-b border-amber-500/30 py-4 text-xs font-mono">
+              <div className="grid grid-cols-2 gap-4 border-t border-b border-border py-4 text-xs font-mono">
                 <div>
                   <span className="text-muted-foreground block text-[10px]">QUALIFICATION SCORE</span>
-                  <span className="text-emerald-400 font-bold text-base">98.6% (PASS)</span>
+                  <span className="text-foreground font-bold text-base">98.6% (PASS)</span>
                 </div>
                 <div>
                   <span className="text-muted-foreground block text-[10px]">VERIFICATION DATE</span>

@@ -34,7 +34,8 @@ public class ArchitectureTest {
         "com.projectecho.evidence.presentation..",
         "com.projectecho.intelligence.presentation..",
         "com.projectecho.mission.presentation..",
-        "com.projectecho.ruleengine.presentation.."
+        "com.projectecho.ruleengine.presentation..",
+        "com.projectecho.application.controller.."
     };
 
     private static final String[] APPLICATION_PACKAGES = {

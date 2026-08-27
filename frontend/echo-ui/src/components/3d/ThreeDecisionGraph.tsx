@@ -156,12 +156,12 @@ export default function ThreeDecisionGraph({
     window.addEventListener('mouseup', onMouseUp);
 
     // 5. Animation Loop
-    let frameId: number;
-    const clock = new THREE.Clock();
+    let animationFrameId: number;
+    const startTime = performance.now();
 
     const animate = () => {
-      frameId = requestAnimationFrame(animate);
-      const t = clock.getElapsedTime();
+      animationFrameId = requestAnimationFrame(animate);
+      const elapsedTime = (performance.now() - startTime) / 1000;
 
       group.rotation.y += (rotY - group.rotation.y) * 0.05 + 0.001;
       group.rotation.x += (rotX - group.rotation.x) * 0.05;
@@ -170,7 +170,7 @@ export default function ThreeDecisionGraph({
       EDGES.forEach(([src, dst], i) => {
         const p1 = new THREE.Vector3(...GRAPH_NODES[src].position);
         const p2 = new THREE.Vector3(...GRAPH_NODES[dst].position);
-        const progress = (t * 0.8 + i * 0.3) % 1;
+        const progress = (elapsedTime * 0.8 + i * 0.3) % 1;
         const currentPos = new THREE.Vector3().lerpVectors(p1, p2, progress);
         pulseMeshes[i].position.copy(currentPos);
       });
@@ -192,7 +192,7 @@ export default function ThreeDecisionGraph({
     window.addEventListener('resize', handleResize);
 
     return () => {
-      cancelAnimationFrame(frameId);
+      cancelAnimationFrame(animationFrameId);
       container.removeEventListener('mousedown', onMouseDown);
       window.removeEventListener('mousemove', onMouseMove);
       window.removeEventListener('mouseup', onMouseUp);
@@ -205,12 +205,12 @@ export default function ThreeDecisionGraph({
   }, [onSelectNode]);
 
   return (
-    <div className={`relative rounded-2xl overflow-hidden glass-panel-glow ${className}`}>
+    <div className={`relative rounded-2xl overflow-hidden bg-zinc-950 border border-zinc-800 shadow-2xl ${className}`}>
       <div ref={containerRef} className="w-full h-full cursor-grab active:cursor-grabbing" />
 
       {/* Floating Header */}
       <div className="absolute top-4 left-4 z-10 flex items-center gap-2 pointer-events-none">
-        <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping" />
+        <span className="w-2.5 h-2.5 rounded-full bg-muted animate-ping" />
         <span className="text-xs font-mono font-semibold tracking-wider text-foreground uppercase bg-background/80 px-2.5 py-1 rounded-md border border-border backdrop-blur-md">
           3D Cryptographic DAG Trace
         </span>
@@ -221,7 +221,7 @@ export default function ThreeDecisionGraph({
         <div className="absolute bottom-4 right-4 z-20 p-4 rounded-xl bg-card/95 border border-border shadow-2xl backdrop-blur-xl max-w-sm flex flex-col gap-2">
           <div className="flex items-center justify-between">
             <span className="text-[10px] font-mono text-accent font-bold uppercase tracking-wider">{selectedNode.type}</span>
-            <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 font-bold border border-emerald-500/30">
+            <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-muted text-foreground font-bold border border-border">
               {selectedNode.status}
             </span>
           </div>

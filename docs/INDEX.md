@@ -37,23 +37,23 @@ None. Statuses shown are derived from each artifact's own metadata block and lin
 |---|---|---|
 | [ADR-001 — Career Intelligence Framework Foundations](adr/ADR-001-career-intelligence-framework-foundations.md) | Approved — Frozen | ✅ |
 | [ADR-0002 — Modular Monolith Foundational Architecture](adr/ADR-0002-modular-monolith-foundational-architecture.md) | Approved — Frozen | ✅ |
-| [ARBR-0001 — Architecture Review Board Report](arbr/ARBR-0001.md) | Proposed for Founder Approval | ⚠️ [CR-008](reports/engineering/CONFLICT_REGISTER.md#cr-008) |
-| **Framework Governance Model (FGM)** | *Not yet available* | ⛔ [CR-002](reports/engineering/CONFLICT_REGISTER.md#cr-002) |
-| **Career Intelligence Framework (CIF)** | *Not yet available* | ⛔ [CR-003](reports/engineering/CONFLICT_REGISTER.md#cr-003) |
-| **Product Impact Report 001** | *Not yet available* | ⛔ [CR-011](reports/engineering/CONFLICT_REGISTER.md#cr-011) |
+| [ARBR-0001 — Architecture Review Board Report](arbr/ARBR-0001.md) | Approved | ✅ |
+| [Framework Governance Model (FGM)](fgm/FGM.md) | Active | ✅ |
+| [Career Intelligence Framework (CIF)](cif/CIF.md) | Active | ✅ |
+| [Product Impact Report 001 (Ratified in FD-005)](decisions/founders/FD-005-sprint-5-resolutions.md) | Active | ✅ |
 | **RAR — Repository Architecture Reports** | *Not yet available* | ⛔ |
 | **GAR — Governance Audit Reports** | *Not yet available* | ⛔ |
 
-`decisions/founders/`, `decisions/engineering/` and `decisions/product/` are empty. No founder decision is recorded as an artifact anywhere in the repository.
+`decisions/founders/` contains FD-005 and FDR-001 to FDR-003.
 
 ## Architecture
 
 | Document | Status | Reliance |
 |---|---|---|
-| [EAF v1.0 Revision 2](eaf/EAF-v1.0-revision-2.md) | Draft | ⚠️ [CR-009](reports/engineering/CONFLICT_REGISTER.md#cr-009) |
-| **EAD — Engineering Architecture Document** | *Not yet available* | ⛔ blocked |
-| **EDF — Engineering Design Framework** | *Not yet available* | ⛔ blocked |
-| **PRD — Product Requirements Documents** | *Not yet available* | ⛔ blocked by [CR-001](reports/engineering/CONFLICT_REGISTER.md#cr-001) |
+| [EAF v1.0 Revision 2](eaf/EAF-v1.0-revision-2.md) | Approved | ✅ |
+| [EAD — Engineering Architecture Document](ead/EAD-0001-architecture-baseline.md) | Active | ✅ |
+| [EDF — Engineering Design Framework](edf/EDF-0001-engineering-design-baseline.md) | Active | ✅ |
+| [PRD — Product Requirements Document](prd/PRD-0001-career-intelligence-baseline.md) | Active | ✅ |
 
 ## Standards and reports
 

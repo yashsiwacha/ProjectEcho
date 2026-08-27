@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
+import { motion } from 'framer-motion';
 
 export default function HologramOrb({
   size = 220,
@@ -32,12 +33,16 @@ export default function HologramOrb({
 
     // 1. Core Sphere
     const coreGeo = new THREE.SphereGeometry(0.55, 32, 32);
-    const coreMat = new THREE.MeshStandardMaterial({
+    const coreMat = new THREE.MeshPhysicalMaterial({
       color: primaryColor,
       emissive: primaryColor,
-      emissiveIntensity: 0.4,
+      emissiveIntensity: 0.2,
       roughness: 0.1,
-      metalness: 0.9,
+      metalness: 0.8,
+      transmission: 0.9,
+      thickness: 0.5,
+      clearcoat: 1.0,
+      clearcoatRoughness: 0.1,
       wireframe: true,
     });
     const core = new THREE.Mesh(coreGeo, coreMat);
@@ -59,7 +64,8 @@ export default function HologramOrb({
     const ringMat = new THREE.MeshBasicMaterial({
       color: primaryColor,
       transparent: true,
-      opacity: 0.5,
+      opacity: 0.3,
+      blending: THREE.AdditiveBlending,
     });
 
     const ring1 = new THREE.Mesh(ringGeo, ringMat);
@@ -98,12 +104,12 @@ export default function HologramOrb({
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
     scene.add(ambientLight);
 
-    let frameId: number;
-    const clock = new THREE.Clock();
+    let animationFrameId: number;
+    const startTime = performance.now();
 
     const animate = () => {
-      frameId = requestAnimationFrame(animate);
-      const t = clock.getElapsedTime();
+      animationFrameId = requestAnimationFrame(animate);
+      const t = (performance.now() - startTime) / 1000;
 
       core.rotation.y = t * 0.5;
       core.rotation.x = t * 0.3;
@@ -125,7 +131,7 @@ export default function HologramOrb({
     animate();
 
     return () => {
-      cancelAnimationFrame(frameId);
+      cancelAnimationFrame(animationFrameId);
       if (renderer.domElement && container.contains(renderer.domElement)) {
         container.removeChild(renderer.domElement);
       }
@@ -134,9 +140,14 @@ export default function HologramOrb({
   }, [size, verified]);
 
   return (
-    <div className={`relative flex items-center justify-center ${className}`}>
+    <motion.div 
+      initial={{ scale: 0.8, opacity: 0, filter: 'blur(10px)' }}
+      animate={{ scale: 1, opacity: 1, filter: 'blur(0px)' }}
+      transition={{ type: 'spring' as const, stiffness: 200, damping: 20, delay: 0.2 }}
+      className={`relative flex items-center justify-center ${className}`}
+    >
       <div ref={containerRef} style={{ width: size, height: size }} />
       <div className="absolute inset-0 rounded-full radial-glow pointer-events-none" />
-    </div>
+    </motion.div>
   );
 }

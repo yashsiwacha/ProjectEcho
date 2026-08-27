@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { motion } from 'framer-motion';
 import { api } from '@/lib/api';
 import AppLayout from '@/components/AppLayout';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/Card';
@@ -70,9 +71,27 @@ export default function EvidencePage() {
     }, 600);
   };
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: { staggerChildren: 0.1 }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0, transition: { type: 'spring' as const, stiffness: 300, damping: 24 } }
+  };
+
   return (
     <AppLayout>
-      <div className="space-y-8 max-w-5xl">
+      <motion.div 
+        variants={containerVariants}
+        initial="hidden"
+        animate="show"
+        className="space-y-8 max-w-5xl"
+      >
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
@@ -87,12 +106,12 @@ export default function EvidencePage() {
         </div>
 
         {/* Interactive Verification Stepper & Uploader */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
+        <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-12 gap-8">
           {/* Uploader Box */}
           <Card champagneBorder className="md:col-span-6 p-6 space-y-6">
             <CardHeader className="p-0">
               <CardTitle className="text-base font-bold text-white flex items-center gap-2">
-                <UploadCloud className="w-5 h-5 text-amber-400" /> Ingest Competency Evidence
+                <UploadCloud className="w-5 h-5 text-foreground" /> Ingest Competency Evidence
               </CardTitle>
               <CardDescription className="text-xs">
                 Link verifiable git commits, pull requests, or artifact hashes
@@ -104,9 +123,10 @@ export default function EvidencePage() {
               <div className="space-y-1.5">
                 <label className="text-xs font-mono text-muted-foreground uppercase font-semibold">Target Skill</label>
                 <select
+                  aria-label="Target Skill"
                   value={selectedSkillId}
                   onChange={(e) => setSelectedSkillId(e.target.value)}
-                  className="w-full rounded-xl bg-slate-900 border border-border p-2.5 text-xs text-white outline-none focus:border-amber-500/60"
+                  className="w-full rounded-xl bg-slate-900 border border-border p-2.5 text-xs text-white outline-none focus:border-border"
                 >
                   {skills?.content.map((s) => (
                     <option key={s.id} value={s.id}>
@@ -140,7 +160,7 @@ export default function EvidencePage() {
                       onClick={() => setTrustTier(tier)}
                       className={`p-2 rounded-xl border text-center font-bold transition-all ${
                         trustTier === tier
-                          ? 'bg-amber-500/20 border-amber-500 text-amber-300 shadow-md shadow-amber-500/10'
+                          ? 'bg-muted border-border text-foreground shadow-md shadow-sm'
                           : 'bg-slate-900 border-border text-muted-foreground hover:border-slate-700'
                       }`}
                     >
@@ -154,15 +174,15 @@ export default function EvidencePage() {
               <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 space-y-1">
                 <div className="flex items-center justify-between text-[10px] font-mono text-muted-foreground">
                   <span>SHA-256 PROOF DIGEST</span>
-                  <span className="text-emerald-400">IMMUTABLE</span>
+                  <span className="text-foreground">IMMUTABLE</span>
                 </div>
-                <div className="text-xs font-mono text-amber-400 truncate">{shaHash}</div>
+                <div className="text-xs font-mono text-foreground truncate">{shaHash}</div>
               </div>
 
               <Button
                 type="submit"
                 variant="champagne"
-                className="w-full font-bold shadow-lg shadow-amber-500/20"
+                className="w-full font-bold shadow-lg shadow-sm"
                 disabled={submitMutation.isPending || isHashing}
               >
                 {isHashing ? 'Computing Hash & Verifying...' : 'Verify & Anchor Evidence'}
@@ -175,7 +195,7 @@ export default function EvidencePage() {
             <div>
               <CardHeader className="p-0 pb-3">
                 <CardTitle className="text-base font-bold text-white flex items-center gap-2">
-                  <ShieldCheck className="w-5 h-5 text-emerald-400" /> Evidence Trust Tier Standard
+                  <ShieldCheck className="w-5 h-5 text-foreground" /> Evidence Trust Tier Standard
                 </CardTitle>
                 <CardDescription className="text-xs">
                   Hierarchical verification levels enforced by Project Echo rule engines
@@ -183,8 +203,8 @@ export default function EvidencePage() {
               </CardHeader>
 
               <div className="space-y-3 pt-2">
-                <div className="p-3 rounded-xl bg-slate-900/80 border border-emerald-500/30 space-y-1">
-                  <div className="flex items-center justify-between text-xs font-bold text-emerald-300">
+                <div className="p-3 rounded-xl bg-slate-900/80 border border-border space-y-1">
+                  <div className="flex items-center justify-between text-xs font-bold text-foreground">
                     <span>Tier 4: Sovereign Cryptographic Proof</span>
                     <Badge variant="success" className="text-[10px]">Highest Trust</Badge>
                   </div>
@@ -194,7 +214,7 @@ export default function EvidencePage() {
                 </div>
 
                 <div className="p-3 rounded-xl bg-slate-900/60 border border-border space-y-1">
-                  <div className="flex items-center justify-between text-xs font-bold text-cyan-300">
+                  <div className="flex items-center justify-between text-xs font-bold text-foreground">
                     <span>Tier 3: Verified Assessment Record</span>
                     <span className="text-[10px] font-mono text-muted-foreground">Standard</span>
                   </div>
@@ -215,18 +235,19 @@ export default function EvidencePage() {
               </div>
             </div>
 
-            <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs flex items-center gap-2">
+            <div className="p-3 rounded-xl bg-muted border border-border text-foreground text-xs flex items-center gap-2">
               <Sparkles className="w-4 h-4 flex-shrink-0" />
               <span>Zero hallucination policy: Unverified claims are filtered from reasoning cards.</span>
             </div>
           </Card>
-        </div>
+        </motion.div>
 
         {/* Verified Claims Log Table */}
-        <Card champagneBorder className="p-6">
+        <motion.div variants={itemVariants}>
+          <Card champagneBorder className="p-6">
           <CardHeader className="p-0 pb-4">
             <CardTitle className="text-base font-bold text-white flex items-center gap-2">
-              <FileCheck className="w-4 h-4 text-amber-400" /> Active Evidence Registry
+              <FileCheck className="w-4 h-4 text-foreground" /> Active Evidence Registry
             </CardTitle>
             <CardDescription className="text-xs">
               Cryptographically verified evidence claims linked to active passports
@@ -237,7 +258,7 @@ export default function EvidencePage() {
               {evidenceList?.content.map((ev) => (
                 <div
                   key={ev.id}
-                  className="p-4 rounded-xl bg-slate-900/60 border border-border flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:border-emerald-500/40 transition-all"
+                  className="p-4 rounded-xl bg-slate-900/60 border border-border flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:border-border transition-all"
                 >
                   <div className="space-y-1">
                     <div className="flex items-center gap-2">
@@ -247,13 +268,13 @@ export default function EvidencePage() {
                       </Badge>
                     </div>
                     <div className="flex items-center gap-1.5 text-xs text-muted-foreground font-mono truncate max-w-lg">
-                      <LinkIcon className="w-3 h-3 text-amber-400 flex-shrink-0" />
+                      <LinkIcon className="w-3 h-3 text-foreground flex-shrink-0" />
                       <span className="truncate">{ev.sourceUri}</span>
                     </div>
                   </div>
 
                   <div className="flex items-center gap-3 self-end sm:self-center text-xs font-mono">
-                    <span className="text-emerald-400 font-semibold">{ev.validationStatus}</span>
+                    <span className="text-foreground font-semibold">{ev.validationStatus}</span>
                     <span className="text-muted-foreground">{ev.createdAt}</span>
                   </div>
                 </div>
@@ -261,7 +282,8 @@ export default function EvidencePage() {
             </div>
           </CardContent>
         </Card>
-      </div>
+        </motion.div>
+      </motion.div>
     </AppLayout>
   );
 }

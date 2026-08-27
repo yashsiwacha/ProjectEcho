@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
+import { motion } from 'framer-motion';
 
 interface SkillNode {
   id: string;
@@ -88,18 +89,31 @@ export default function ThreeSkillGalaxy({
     const constellationGroup = new THREE.Group();
     scene.add(constellationGroup);
 
+    // Labels Container for Name Tags
+    const labelsContainer = document.createElement('div');
+    labelsContainer.style.position = 'absolute';
+    labelsContainer.style.top = '0';
+    labelsContainer.style.left = '0';
+    labelsContainer.style.width = '100%';
+    labelsContainer.style.height = '100%';
+    labelsContainer.style.pointerEvents = 'none';
+    labelsContainer.style.overflow = 'hidden';
+    container.appendChild(labelsContainer);
+
     // Skill Spheres
     const nodeMeshes: THREE.Mesh[] = [];
+    const labelElements: HTMLDivElement[] = [];
     const sphereGeometry = new THREE.SphereGeometry(0.12, 24, 24);
 
     DEFAULT_NODES.forEach((node, index) => {
       const isChampagne = index % 2 === 0;
-      const material = new THREE.MeshStandardMaterial({
+      const material = new THREE.MeshPhysicalMaterial({
         color: isChampagne ? 0xd4af37 : 0x10b981,
         emissive: isChampagne ? 0xb78a02 : 0x059669,
-        emissiveIntensity: 0.6,
-        roughness: 0.2,
-        metalness: 0.8,
+        emissiveIntensity: 0.8,
+        roughness: 0.1,
+        metalness: 0.9,
+        transmission: 0.5,
       });
       const mesh = new THREE.Mesh(sphereGeometry, material);
       mesh.position.set(...node.position);
@@ -113,24 +127,37 @@ export default function ThreeSkillGalaxy({
         color: isChampagne ? 0xf6e05e : 0x34d399,
         side: THREE.DoubleSide,
         transparent: true,
-        opacity: 0.35,
+        opacity: 0.25,
+        blending: THREE.AdditiveBlending,
       });
       const halo = new THREE.Mesh(haloGeo, haloMat);
       halo.position.set(...node.position);
       halo.lookAt(camera.position);
       constellationGroup.add(halo);
+
+      // Create subtle name tag DOM element
+      const label = document.createElement('div');
+      label.textContent = node.name;
+      label.className = "absolute text-[9px] font-mono text-white/50 tracking-wider pointer-events-none whitespace-nowrap transition-opacity duration-150";
+      label.style.transform = "translate(-50%, 15px)"; // center horizontally, push down slightly
+      label.style.textShadow = "0 1px 3px rgba(0,0,0,0.8)";
+      labelsContainer.appendChild(label);
+      labelElements.push(label);
     });
 
-    // Constellation Lines
+    // Constellation Lines & Traveling Pulses
     const lineMaterial = new THREE.LineBasicMaterial({
       color: 0xd4af37,
       transparent: true,
-      opacity: 0.25,
+      opacity: 0.15,
+      blending: THREE.AdditiveBlending,
     });
 
+    const edgePairs: [number, number][] = [];
     DEFAULT_NODES.forEach((node, i) => {
       node.connections.forEach((targetIndex) => {
         if (targetIndex > i && DEFAULT_NODES[targetIndex]) {
+          edgePairs.push([i, targetIndex]);
           const target = DEFAULT_NODES[targetIndex];
           const lineGeo = new THREE.BufferGeometry().setFromPoints([
             new THREE.Vector3(...node.position),
@@ -140,6 +167,16 @@ export default function ThreeSkillGalaxy({
           constellationGroup.add(line);
         }
       });
+    });
+
+    // Create traveling energy pulses for each edge
+    const pulseGeo = new THREE.SphereGeometry(0.025, 16, 16);
+    const pulseMat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.8 });
+    const pulseMeshes: THREE.Mesh[] = [];
+    edgePairs.forEach(() => {
+      const pulse = new THREE.Mesh(pulseGeo, pulseMat);
+      constellationGroup.add(pulse);
+      pulseMeshes.push(pulse);
     });
 
     // 6. Raycasting & Interaction
@@ -203,11 +240,11 @@ export default function ThreeSkillGalaxy({
 
     // 7. Animation Loop
     let animationFrameId: number;
-    const clock = new THREE.Clock();
+    const startTime = performance.now();
 
     const animate = () => {
       animationFrameId = requestAnimationFrame(animate);
-      const elapsedTime = clock.getElapsedTime();
+      const elapsedTime = (performance.now() - startTime) / 1000;
 
       // Smooth damped rotation
       constellationGroup.rotation.y += (targetRotationY - constellationGroup.rotation.y) * 0.05 + 0.0015;
@@ -215,10 +252,38 @@ export default function ThreeSkillGalaxy({
 
       starField.rotation.y = elapsedTime * 0.02;
 
-      // Pulse nodes
+      // Pulse nodes (planets) & Update label positions
+      const tempV = new THREE.Vector3();
       nodeMeshes.forEach((mesh, idx) => {
         const scale = 1 + Math.sin(elapsedTime * 2 + idx) * 0.08;
         mesh.scale.set(scale, scale, scale);
+
+        // Project 3D position to 2D screen space
+        mesh.getWorldPosition(tempV);
+        tempV.project(camera);
+
+        const x = (tempV.x * 0.5 + 0.5) * renderer.domElement.clientWidth;
+        const y = (tempV.y * -0.5 + 0.5) * renderer.domElement.clientHeight;
+
+        const label = labelElements[idx];
+        label.style.left = `${x}px`;
+        label.style.top = `${y}px`;
+
+        // Hide labels if they are behind the camera (z > 1) or visually behind the globe (z > 0.8)
+        if (tempV.z > 0.9) {
+          label.style.opacity = '0';
+        } else {
+          label.style.opacity = '1';
+        }
+      });
+
+      // Animate traveling pulses along edges
+      edgePairs.forEach(([src, dst], i) => {
+        const p1 = new THREE.Vector3(...DEFAULT_NODES[src].position);
+        const p2 = new THREE.Vector3(...DEFAULT_NODES[dst].position);
+        const progress = (elapsedTime * 0.6 + i * 0.25) % 1;
+        const currentPos = new THREE.Vector3().lerpVectors(p1, p2, progress);
+        pulseMeshes[i].position.copy(currentPos);
       });
 
       renderer.render(scene, camera);
@@ -247,19 +312,28 @@ export default function ThreeSkillGalaxy({
       if (renderer.domElement && container.contains(renderer.domElement)) {
         container.removeChild(renderer.domElement);
       }
+      if (labelsContainer && container.contains(labelsContainer)) {
+        container.removeChild(labelsContainer);
+      }
       renderer.dispose();
     };
   }, [onSelectNode]);
 
   return (
-    <div className={`relative rounded-2xl overflow-hidden glass-panel-glow ${className}`}>
+    <motion.div 
+      initial={{ opacity: 0, scale: 0.95, y: 20 }}
+      whileInView={{ opacity: 1, scale: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ type: 'spring' as const, stiffness: 200, damping: 25 }}
+      className={`relative rounded-2xl overflow-hidden bg-zinc-950 border border-zinc-800 shadow-2xl ${className}`}
+    >
       {/* 3D Canvas Host */}
       <div ref={containerRef} className="w-full h-full cursor-grab active:cursor-grabbing" />
 
       {/* Floating HUD Overlay */}
       <div className="absolute top-4 left-4 z-10 flex items-center gap-2 pointer-events-none">
         <span className="inline-block w-2.5 h-2.5 rounded-full bg-accent animate-ping" />
-        <span className="text-xs font-mono font-semibold tracking-wider text-accent uppercase bg-background/80 px-2.5 py-1 rounded-md border border-accent/30 backdrop-blur-md">
+        <span className="text-xs font-mono font-semibold tracking-wider text-accent uppercase bg-zinc-950/80 px-2.5 py-1 rounded-md border border-accent/30 backdrop-blur-md shadow-sm">
           3D Competency Universe Active
         </span>
       </div>
@@ -273,7 +347,7 @@ export default function ThreeSkillGalaxy({
         <div className="absolute top-4 right-4 z-20 p-3.5 rounded-xl bg-card/95 border border-accent/40 shadow-2xl backdrop-blur-xl pointer-events-none animate-in fade-in zoom-in-95 duration-150 max-w-xs">
           <div className="flex items-center justify-between gap-3">
             <span className="text-xs font-bold text-foreground">{hoveredNode.name}</span>
-            <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 font-semibold border border-emerald-500/30">
+            <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-muted text-foreground font-semibold border border-border">
               {hoveredNode.tier}
             </span>
           </div>
@@ -302,6 +376,6 @@ export default function ThreeSkillGalaxy({
           </div>
         </div>
       )}
-    </div>
+    </motion.div>
   );
 }

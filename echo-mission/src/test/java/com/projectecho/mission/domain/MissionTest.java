@@ -13,7 +13,7 @@ class MissionTest {
         final UUID id = UUID.randomUUID();
         final String title = "Senior Software Engineer";
 
-        final Mission mission = Mission.draft(id, title);
+        final Mission mission = Mission.draft(id, title, java.util.UUID.randomUUID());
 
         assertThat(mission.getId()).isEqualTo(id);
         assertThat(mission.getTitle().value()).isEqualTo(title);
@@ -23,14 +23,14 @@ class MissionTest {
 
     @Test
     void shouldActivateMission() {
-        final Mission mission = Mission.draft(UUID.randomUUID(), "Test");
+        final Mission mission = Mission.draft(UUID.randomUUID(), "Test", UUID.randomUUID());
         mission.activate();
         assertThat(mission.getStatus()).isEqualTo(MissionStatus.ACTIVE);
     }
 
     @Test
     void shouldFailToActivateIfArchived() {
-        final Mission mission = Mission.draft(UUID.randomUUID(), "Test");
+        final Mission mission = Mission.draft(UUID.randomUUID(), "Test", UUID.randomUUID());
         mission.archive();
 
         assertThatThrownBy(mission::activate)
@@ -40,7 +40,7 @@ class MissionTest {
 
     @Test
     void shouldFailToCreateWithBlankTitle() {
-        assertThatThrownBy(() -> Mission.draft(UUID.randomUUID(), "  "))
+        assertThatThrownBy(() -> Mission.draft(UUID.randomUUID(), "  ", UUID.randomUUID()))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }
