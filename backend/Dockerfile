@@ -14,10 +14,8 @@ RUN wget -O /otel-javaagent.jar https://github.com/open-telemetry/opentelemetry-
 # Create non‑root user
 RUN addgroup --system appgroup && adduser --system --ingroup appgroup appuser
 USER appuser
+# Only set profile — DB credentials come from Render environment variables
 ENV SPRING_PROFILES_ACTIVE=prod
-ENV SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/project_echo
-ENV SPRING_DATASOURCE_USERNAME=echo
-ENV SPRING_DATASOURCE_PASSWORD=echo_password
-EXPOSE 8080
-HEALTHCHECK --interval=30s --timeout=5s --start-period=5s CMD wget -qO- http://localhost:8080/actuator/health || exit 1
+EXPOSE 8081
+HEALTHCHECK --interval=30s --timeout=10s --start-period=90s CMD wget -qO- http://localhost:8081/actuator/health || exit 1
 ENTRYPOINT ["java", "-XX:+UseContainerSupport", "-XX:MaxRAMPercentage=75.0", "-javaagent:/otel-javaagent.jar", "-jar", "/app/app.jar"]
