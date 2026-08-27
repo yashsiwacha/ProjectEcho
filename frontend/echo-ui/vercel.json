@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://backendos-1idx.onrender.com/api/:path*"
+      "destination": "https://project-echo-backend-1mcr.onrender.com/api/:path*"
     }
   ],
   "headers": [
