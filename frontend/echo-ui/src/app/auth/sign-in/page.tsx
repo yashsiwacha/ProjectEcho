@@ -37,27 +37,27 @@ export default function SignInPage() {
   return (
     <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div className="mb-10">
-        <h2 className="text-3xl font-bold tracking-tight text-white mb-2">Welcome back</h2>
-        <p className="text-sm text-slate-400 font-mono">Sign in to your Career Passport</p>
+        <h2 className="text-3xl font-bold tracking-tight text-foreground mb-2">Welcome back</h2>
+        <p className="text-sm text-muted-foreground font-mono">Sign in to your Career Passport</p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="space-y-2">
-          <Label htmlFor="email" className="text-slate-300">Email Address</Label>
+          <Label htmlFor="email" className="text-muted-foreground">Email Address</Label>
           <Input 
             id="email" 
             type="email" 
             required 
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="bg-white/5 border-white/10 text-white placeholder:text-slate-600 focus-visible:ring-accent/50"
+            className="bg-card border-border text-foreground placeholder:text-muted-foreground/60 focus-visible:ring-accent/50"
             placeholder="you@example.com"
           />
         </div>
         
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <Label htmlFor="password" className="text-slate-300">Password</Label>
+            <Label htmlFor="password" className="text-muted-foreground">Password</Label>
           </div>
           <Input 
             id="password" 
@@ -65,7 +65,7 @@ export default function SignInPage() {
             required 
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="bg-white/5 border-white/10 text-white focus-visible:ring-accent/50"
+            className="bg-card border-border text-foreground focus-visible:ring-accent/50"
           />
         </div>
 
@@ -84,7 +84,7 @@ export default function SignInPage() {
         </Button>
 
         <div className="text-center mt-6">
-          <span className="text-sm text-slate-400">
+          <span className="text-sm text-muted-foreground">
             Don't have an account?{' '}
             <Link href="/auth/sign-up" className="text-accent hover:underline font-medium">
               Create one
