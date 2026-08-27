@@ -49,7 +49,7 @@ public class AuthController {
             final org.springframework.http.ResponseCookie jwtCookie =
                     org.springframework.http.ResponseCookie.from("echo_jwt", token)
                             .httpOnly(true)
-                            .secure(false) // local dev, set true for prod
+                            .secure(true)
                             .path("/")
                             .maxAge(86_400)
                             .build();
@@ -94,7 +94,7 @@ public class AuthController {
             final org.springframework.http.ResponseCookie jwtCookie =
                     org.springframework.http.ResponseCookie.from("echo_jwt", token)
                             .httpOnly(true)
-                            .secure(false)
+                            .secure(true)
                             .path("/")
                             .maxAge(86_400)
                             .build();
@@ -119,7 +119,7 @@ public class AuthController {
         final org.springframework.http.ResponseCookie clearCookie =
                 org.springframework.http.ResponseCookie.from("echo_jwt", "")
                         .httpOnly(true)
-                        .secure(false)
+                        .secure(true)
                         .path("/")
                         .maxAge(0)
                         .build();
